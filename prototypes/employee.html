@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilibees Zaměstnanec — HiFi Prototype</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        emp: { 50:'#EFF6FF',100:'#DBEAFE',200:'#BFDBFE',300:'#93C5FD',400:'#60A5FA',500:'#3B82F6',600:'#2563EB',700:'#1D4ED8',800:'#1E40AF',900:'#1E3A8A' },
+      },
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  * { font-family: 'Inter', system-ui, sans-serif; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .bnav-item.active { color: #2563EB; }
+  .bnav-item.active svg { stroke: #2563EB; }
+  .bnav-item.active .bnav-dot { display: block; }
+  .stat-card { transition: all 0.2s; }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+  .task-card { transition: all 0.15s; }
+  .task-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .step-active { background: #2563EB; color: white; }
+  .step-done { background: #10B981; color: white; }
+  .step-pending { background: #E5E7EB; color: #9CA3AF; }
+  .msg-bubble-in { background: #F3F4F6; border-radius: 16px 16px 16px 4px; }
+  .msg-bubble-out { background: #2563EB; color: white; border-radius: 16px 16px 4px 16px; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+  .doc-card { transition: all 0.15s; }
+  .doc-card:hover { background: #EFF6FF; }
+  @media (min-width: 1024px) {
+    .mobile-frame { max-width: 430px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,0.1); border-radius: 24px; overflow: hidden; min-height: 100vh; }
+  }
+</style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+<!-- Desktop wrapper to simulate mobile -->
+<div class="mobile-frame bg-white relative pb-20">
+
+<!-- ====== SCREEN 1: ONBOARDING WIZARD ====== -->
+<div id="s-onboard" class="screen active min-h-screen bg-white">
+  <!-- Top bar -->
+  <div class="px-5 pt-12 pb-4">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-emp-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">D</div>
+        <span class="font-semibold">Dilibees</span>
+      </div>
+      <button class="text-sm text-gray-400">Přeskočit</button>
+    </div>
+    <!-- Progress -->
+    <div class="flex items-center gap-2 mb-8">
+      <div class="flex items-center gap-1">
+        <div class="w-7 h-7 rounded-full step-done flex items-center justify-center text-xs font-bold">✓</div>
+        <span class="text-xs text-gray-500 hidden sm:inline">Profil</span>
+      </div>
+      <div class="h-0.5 flex-1 bg-emerald-400"></div>
+      <div class="flex items-center gap-1">
+        <div class="w-7 h-7 rounded-full step-done flex items-center justify-center text-xs font-bold">✓</div>
+        <span class="text-xs text-gray-500 hidden sm:inline">Doklady</span>
+      </div>
+      <div class="h-0.5 flex-1 bg-emerald-400"></div>
+      <div class="flex items-center gap-1">
+        <div class="w-7 h-7 rounded-full step-active flex items-center justify-center text-xs font-bold">3</div>
+        <span class="text-xs text-emp-600 font-medium hidden sm:inline">Smlouva</span>
+      </div>
+      <div class="h-0.5 flex-1 bg-gray-200"></div>
+      <div class="flex items-center gap-1">
+        <div class="w-7 h-7 rounded-full step-pending flex items-center justify-center text-xs font-bold">4</div>
+        <span class="text-xs text-gray-400 hidden sm:inline">Hotovo</span>
+      </div>
+    </div>
+
+    <h1 class="text-xl font-bold mb-1">Podepište smlouvu</h1>
+    <p class="text-sm text-gray-500 mb-6">Smlouva je připravena k elektronickému podpisu</p>
+
+    <!-- Contract preview card -->
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-4">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 bg-emp-100 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-emp-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+        <div class="flex-1">
+          <p class="font-medium text-sm">Pracovní smlouva — Montáž</p>
+          <p class="text-xs text-gray-500">Bosch GmbH · Stuttgat · od 15.3.2026</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-xs bg-emp-100 text-emp-700 px-2 py-0.5 rounded-full">€14.50/hod</span>
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Ubytování v ceně</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key terms -->
+    <div class="space-y-3 mb-6">
+      <div class="flex justify-between text-sm py-2 border-b border-gray-100">
+        <span class="text-gray-500">Pozice</span>
+        <span class="font-medium">Montážní pracovník</span>
+      </div>
+      <div class="flex justify-between text-sm py-2 border-b border-gray-100">
+        <span class="text-gray-500">Mzda</span>
+        <span class="font-medium">€14.50/hod brutto</span>
+      </div>
+      <div class="flex justify-between text-sm py-2 border-b border-gray-100">
+        <span class="text-gray-500">Pracovní doba</span>
+        <span class="font-medium">40 hod/týden, 2 směny</span>
+      </div>
+      <div class="flex justify-between text-sm py-2 border-b border-gray-100">
+        <span class="text-gray-500">Doba trvání</span>
+        <span class="font-medium">12 měsíců (prodloužení)</span>
+      </div>
+      <div class="flex justify-between text-sm py-2">
+        <span class="text-gray-500">Ubytování</span>
+        <span class="font-medium">Sdílený byt, €150/měs</span>
+      </div>
+    </div>
+
+    <!-- Consent -->
+    <label class="flex items-start gap-3 mb-4 cursor-pointer">
+      <input type="checkbox" class="w-5 h-5 mt-0.5 rounded border-gray-300 text-emp-600 focus:ring-emp-500" checked>
+      <span class="text-sm text-gray-600">Souhlasím s podmínkami smlouvy a zpracováním osobních údajů dle GDPR</span>
+    </label>
+
+    <!-- CTA -->
+    <button onclick="showScreen('dashboard')" class="w-full bg-emp-600 hover:bg-emp-700 text-white py-3.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-emp-600/25">
+      ✍️ Podepsat elektronicky
+    </button>
+    <button class="w-full text-emp-600 py-2.5 text-sm font-medium mt-2">
+      Stáhnout PDF k přečtení
+    </button>
+  </div>
+</div>
+
+<!-- ====== SCREEN 2: DASHBOARD ====== -->
+<div id="s-dashboard" class="screen min-h-screen bg-gray-50">
+  <!-- Header -->
+  <div class="bg-emp-600 text-white px-5 pt-12 pb-16 rounded-b-3xl">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-emp-200 text-sm">Dobrý den,</p>
+        <h1 class="text-xl font-bold">Petr Novák 👋</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="relative">
+          <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center font-bold">2</span>
+        </button>
+        <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">PN</div>
+      </div>
+    </div>
+    <!-- Status card -->
+    <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-emp-200 text-xs uppercase tracking-wider">Aktuální přiřazení</p>
+          <p class="font-semibold mt-1">Bosch GmbH — Stuttgart</p>
+          <p class="text-emp-200 text-sm">Montáž · směna A</p>
+        </div>
+        <div class="text-right">
+          <p class="text-2xl font-bold">127</p>
+          <p class="text-emp-200 text-xs">dnů do konce</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick actions (floating above) -->
+  <div class="px-5 -mt-8 mb-4">
+    <div class="bg-white rounded-xl shadow-lg p-4 grid grid-cols-4 gap-2">
+      <button onclick="showScreen('attendance')" class="flex flex-col items-center gap-1.5 py-2">
+        <div class="w-10 h-10 bg-emp-50 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-emp-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <span class="text-[11px] text-gray-600 font-medium">Docházka</span>
+      </button>
+      <button onclick="showScreen('plan')" class="flex flex-col items-center gap-1.5 py-2">
+        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        </div>
+        <span class="text-[11px] text-gray-600 font-medium">Plán</span>
+      </button>
+      <button onclick="showScreen('documents')" class="flex flex-col items-center gap-1.5 py-2">
+        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+        <span class="text-[11px] text-gray-600 font-medium">Dokumenty</span>
+      </button>
+      <button onclick="showScreen('calculator')" class="flex flex-col items-center gap-1.5 py-2">
+        <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        </div>
+        <span class="text-[11px] text-gray-600 font-medium">Kalkulačka</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Upcoming tasks -->
+  <div class="px-5 mb-4">
+    <h2 class="text-sm font-semibold text-gray-900 mb-3">Nejbližší úkoly</h2>
+    <div class="space-y-2">
+      <div class="task-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium">Lékařská prohlídka — expire</p>
+          <p class="text-xs text-red-500 font-medium">Zbývají 3 dny</p>
+        </div>
+        <svg class="w-5 h-5 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </div>
+      <div class="task-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium">Výplatní páska — únor 2026</p>
+          <p class="text-xs text-gray-500">Ke stažení</p>
+        </div>
+        <span class="bg-emp-100 text-emp-700 text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0">Nové</span>
+      </div>
+      <div class="task-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-emp-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-emp-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium">Zpráva od koordinátora</p>
+          <p class="text-xs text-gray-500">Změna směny příští týden</p>
+        </div>
+        <span class="w-2 h-2 bg-emp-500 rounded-full flex-shrink-0"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings summary -->
+  <div class="px-5 mb-4">
+    <h2 class="text-sm font-semibold text-gray-900 mb-3">Výdělek tento měsíc</h2>
+    <div class="bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-end justify-between mb-3">
+        <div>
+          <p class="text-2xl font-bold text-gray-900">€1,842</p>
+          <p class="text-xs text-gray-500">Čistá mzda (odhad)</p>
+        </div>
+        <span class="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">+€124 vs. min. měsíc</span>
+      </div>
+      <!-- Mini bar chart -->
+      <div class="flex items-end gap-1.5 h-16">
+        <div class="flex-1 bg-gray-200 rounded-t" style="height:55%"></div>
+        <div class="flex-1 bg-gray-200 rounded-t" style="height:70%"></div>
+        <div class="flex-1 bg-gray-200 rounded-t" style="height:65%"></div>
+        <div class="flex-1 bg-gray-200 rounded-t" style="height:80%"></div>
+        <div class="flex-1 bg-gray-200 rounded-t" style="height:75%"></div>
+        <div class="flex-1 bg-emp-500 rounded-t" style="height:90%"></div>
+      </div>
+      <div class="flex justify-between mt-1">
+        <span class="text-[10px] text-gray-400">Zář</span>
+        <span class="text-[10px] text-gray-400">Říj</span>
+        <span class="text-[10px] text-gray-400">Lis</span>
+        <span class="text-[10px] text-gray-400">Pro</span>
+        <span class="text-[10px] text-gray-400">Led</span>
+        <span class="text-[10px] text-emp-600 font-medium">Úno</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language tip -->
+  <div class="px-5 mb-4">
+    <div class="bg-gradient-to-r from-emp-50 to-indigo-50 rounded-xl p-4 border border-emp-100">
+      <div class="flex items-center gap-3">
+        <div class="text-2xl">🇩🇪</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Německy za 5 minut</p>
+          <p class="text-xs text-gray-500">Denní lekce: Na pracovišti</p>
+        </div>
+        <button class="bg-emp-600 text-white text-xs px-3 py-1.5 rounded-lg font-medium">Start</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 3: MŮJ PLÁN (Calendar) ====== -->
+<div id="s-plan" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-lg font-bold">Můj plán</h1>
+      <div class="flex gap-2">
+        <button class="text-xs bg-emp-600 text-white px-3 py-1.5 rounded-lg font-medium">Týden</button>
+        <button class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg font-medium">Měsíc</button>
+      </div>
+    </div>
+    <!-- Week view -->
+    <div class="grid grid-cols-7 gap-1 text-center">
+      <div class="text-[10px] text-gray-400 uppercase">Po</div>
+      <div class="text-[10px] text-gray-400 uppercase">Út</div>
+      <div class="text-[10px] text-gray-400 uppercase">St</div>
+      <div class="text-[10px] text-gray-400 uppercase">Čt</div>
+      <div class="text-[10px] text-gray-400 uppercase">Pá</div>
+      <div class="text-[10px] text-gray-400 uppercase">So</div>
+      <div class="text-[10px] text-gray-400 uppercase">Ne</div>
+
+      <div class="py-1.5 text-sm text-gray-400">2</div>
+      <div class="py-1.5 text-sm bg-emp-600 text-white rounded-lg font-bold">3</div>
+      <div class="py-1.5 text-sm">4</div>
+      <div class="py-1.5 text-sm">5</div>
+      <div class="py-1.5 text-sm">6</div>
+      <div class="py-1.5 text-sm text-gray-400">7</div>
+      <div class="py-1.5 text-sm text-gray-400">8</div>
+    </div>
+  </div>
+
+  <div class="px-5 py-4">
+    <p class="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">Úterý, 3. března</p>
+
+    <!-- Timeline -->
+    <div class="space-y-3">
+      <div class="flex gap-3">
+        <div class="text-xs text-gray-400 w-12 pt-1 text-right">05:30</div>
+        <div class="flex-1 bg-emp-50 border-l-4 border-emp-500 rounded-r-lg p-3">
+          <p class="text-sm font-medium text-emp-900">Ranní směna — Montáž</p>
+          <p class="text-xs text-emp-600">05:30 – 14:00 · Hala B3</p>
+          <div class="flex gap-2 mt-2">
+            <span class="text-[10px] bg-white text-emp-600 px-2 py-0.5 rounded border border-emp-200">Směna A</span>
+            <span class="text-[10px] bg-white text-gray-500 px-2 py-0.5 rounded border border-gray-200">8.5h</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="text-xs text-gray-400 w-12 pt-1 text-right">14:30</div>
+        <div class="flex-1 bg-green-50 border-l-4 border-green-500 rounded-r-lg p-3">
+          <p class="text-sm font-medium text-green-900">Transport — autobus</p>
+          <p class="text-xs text-green-600">14:30 · Výrobní areál → Ubytovna</p>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="text-xs text-gray-400 w-12 pt-1 text-right">16:00</div>
+        <div class="flex-1 bg-amber-50 border-l-4 border-amber-500 rounded-r-lg p-3">
+          <p class="text-sm font-medium text-amber-900">Lékařská prohlídka</p>
+          <p class="text-xs text-amber-600">16:00 – 16:30 · Dr. Müller, Hauptstr. 12</p>
+          <span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded mt-1 inline-block">⚠️ Povinné</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next days preview -->
+    <p class="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3 mt-6">Zítřejší směna</p>
+    <div class="bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+      <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
+        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </div>
+      <div>
+        <p class="text-sm font-medium">Odpolední směna</p>
+        <p class="text-xs text-gray-500">14:00 – 22:00 · Hala B3</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 4: EVIDENCE DOCHÁZKY ====== -->
+<div id="s-attendance" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-lg font-bold">Docházka</h1>
+      <button class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg font-medium">Únor 2026 ▾</button>
+    </div>
+    <!-- Summary -->
+    <div class="grid grid-cols-3 gap-3">
+      <div class="text-center">
+        <p class="text-xl font-bold text-gray-900">168.5</p>
+        <p class="text-[10px] text-gray-500 uppercase">Odpracováno</p>
+      </div>
+      <div class="text-center">
+        <p class="text-xl font-bold text-green-600">12</p>
+        <p class="text-[10px] text-gray-500 uppercase">Přesčas</p>
+      </div>
+      <div class="text-center">
+        <p class="text-xl font-bold text-emp-600">22</p>
+        <p class="text-[10px] text-gray-500 uppercase">Prac. dnů</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Current day -->
+    <div class="bg-emp-600 text-white rounded-xl p-4 mb-4">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <p class="text-emp-200 text-xs">Dnes, 3. března</p>
+          <p class="font-semibold">Ranní směna</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xl font-bold">7:42</p>
+          <p class="text-emp-200 text-xs">Odpracováno</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <div class="flex-1 bg-white/10 rounded-lg p-2 text-center">
+          <p class="text-[10px] text-emp-200">Příchod</p>
+          <p class="text-sm font-bold">05:28</p>
+        </div>
+        <div class="flex-1 bg-white/10 rounded-lg p-2 text-center">
+          <p class="text-[10px] text-emp-200">Pauza</p>
+          <p class="text-sm font-bold">30 min</p>
+        </div>
+        <div class="flex-1 bg-white/10 rounded-lg p-2 text-center">
+          <p class="text-[10px] text-emp-200">Odchod</p>
+          <p class="text-sm font-bold">—</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day log list -->
+    <h3 class="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">Tento týden</h3>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-600 text-xs font-bold">Po</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Pondělí, 2. března</p>
+          <p class="text-xs text-gray-500">05:30 – 14:02 · 8.5h</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">✓ OK</span>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center text-amber-600 text-xs font-bold">Pá</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Pátek, 28. února</p>
+          <p class="text-xs text-gray-500">05:30 – 12:00 · 6.5h</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Nemoc</span>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-600 text-xs font-bold">Čt</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Čtvrtek, 27. února</p>
+          <p class="text-xs text-gray-500">05:28 – 14:10 · 8.5h + 0.5h přesčas</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">✓ OK</span>
+      </div>
+    </div>
+
+    <!-- Report issue -->
+    <button class="w-full mt-4 text-emp-600 bg-emp-50 py-3 rounded-xl text-sm font-medium border border-emp-100">
+      🐛 Nahlásit nesrovnalost
+    </button>
+  </div>
+</div>
+
+<!-- ====== SCREEN 5: SLUŽBY ====== -->
+<div id="s-services" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold mb-1">Služby</h1>
+    <p class="text-sm text-gray-500">Požádejte o služby, které potřebujete</p>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Active requests -->
+    <h3 class="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">Aktivní žádosti</h3>
+    <div class="space-y-2 mb-6">
+      <div class="bg-white rounded-xl p-3.5 border border-gray-100">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-lg">🏥</span>
+            </div>
+            <div>
+              <p class="text-sm font-medium">Lékařská prohlídka</p>
+              <p class="text-xs text-gray-500">Podáno: 25. 2. 2026</p>
+            </div>
+          </div>
+          <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Čeká</span>
+        </div>
+        <!-- Progress -->
+        <div class="mt-3 flex items-center gap-2">
+          <div class="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-400 rounded-full" style="width:60%"></div>
+          </div>
+          <span class="text-[10px] text-gray-400">Schvaluje koordinátor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Available services -->
+    <h3 class="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">Dostupné služby</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-emp-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">🏠</span>
+        </div>
+        <p class="text-sm font-medium">Ubytování</p>
+        <p class="text-[10px] text-gray-500">Změna, oprava, reklamace</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">🚗</span>
+        </div>
+        <p class="text-sm font-medium">Transport</p>
+        <p class="text-[10px] text-gray-500">Svoz, přeprava, letiště</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">📋</span>
+        </div>
+        <p class="text-sm font-medium">Dokumenty</p>
+        <p class="text-[10px] text-gray-500">Potvrzení, překlady</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">🆘</span>
+        </div>
+        <p class="text-sm font-medium">Nouzová linka</p>
+        <p class="text-[10px] text-gray-500">24/7 podpora</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">🏥</span>
+        </div>
+        <p class="text-sm font-medium">Zdraví</p>
+        <p class="text-[10px] text-gray-500">Pojištění, lékaři</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mx-auto mb-2">
+          <span class="text-2xl">📱</span>
+        </div>
+        <p class="text-sm font-medium">SIM karta</p>
+        <p class="text-[10px] text-gray-500">Nová, dobíjení</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 6: DOKUMENTY ====== -->
+<div id="s-documents" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold mb-3">Dokumenty</h1>
+    <!-- Search -->
+    <div class="relative">
+      <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      <input type="text" placeholder="Hledat dokument..." class="w-full pl-10 pr-4 py-2.5 bg-gray-50 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-emp-500 focus:ring-2 focus:ring-emp-100">
+    </div>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Category filter pills -->
+    <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+      <button class="text-xs bg-emp-600 text-white px-3 py-1.5 rounded-full font-medium whitespace-nowrap">Vše</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Smlouvy</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Výplatní pásky</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Doklady</button>
+    </div>
+
+    <!-- Doc list -->
+    <div class="space-y-2">
+      <div class="doc-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-red-500">PDF</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">Pracovní smlouva — Bosch GmbH</p>
+          <p class="text-xs text-gray-500">Podepsáno 10. 2. 2026 · 2.4 MB</p>
+        </div>
+        <button class="text-emp-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+      </div>
+      <div class="doc-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-green-500">PDF</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">Výplatní páska — únor 2026</p>
+          <p class="text-xs text-gray-500">Vystaveno 1. 3. 2026 · 0.8 MB</p>
+        </div>
+        <span class="w-2 h-2 bg-emp-500 rounded-full flex-shrink-0 mr-1"></span>
+        <button class="text-emp-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+      </div>
+      <div class="doc-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-emp-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-emp-500">ID</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">Občanský průkaz — kopie</p>
+          <p class="text-xs text-gray-500">Nahráno 8. 2. 2026 · 1.1 MB</p>
+        </div>
+        <button class="text-emp-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+        </button>
+      </div>
+      <div class="doc-card bg-white rounded-xl p-3.5 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="text-sm font-bold text-amber-500">A1</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">Formulář A1 — vyslání</p>
+          <p class="text-xs text-gray-500">Platnost do 15. 3. 2027 · 0.5 MB</p>
+        </div>
+        <button class="text-emp-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload -->
+    <div class="mt-4 border-2 border-dashed border-gray-200 rounded-xl p-6 text-center">
+      <svg class="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+      <p class="text-sm text-gray-500">Nahrát nový dokument</p>
+      <p class="text-[10px] text-gray-400">PDF, JPG, PNG do 10 MB</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 7: MZDOVÁ KALKULAČKA ====== -->
+<div id="s-calculator" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold mb-1">Mzdová kalkulačka</h1>
+    <p class="text-sm text-gray-500">Spočítejte si čistý výdělek</p>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Input card -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 mb-4">
+      <div class="space-y-4">
+        <div>
+          <label class="text-xs text-gray-500 font-medium block mb-1.5">Hodinová sazba (brutto)</label>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+            <input type="number" value="14.50" class="w-full pl-8 pr-4 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:border-emp-500 focus:ring-2 focus:ring-emp-100">
+          </div>
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 font-medium block mb-1.5">Počet hodin / měsíc</label>
+          <input type="number" value="176" class="w-full px-4 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:border-emp-500 focus:ring-2 focus:ring-emp-100">
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 font-medium block mb-1.5">Přesčas (hod)</label>
+          <input type="number" value="12" class="w-full px-4 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:border-emp-500 focus:ring-2 focus:ring-emp-100">
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 font-medium block mb-1.5">Země</label>
+          <select class="w-full px-4 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:border-emp-500">
+            <option>🇩🇪 Německo</option>
+            <option>🇦🇹 Rakousko</option>
+            <option>🇨🇭 Švýcarsko</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-500 font-medium block mb-1.5">Daňová třída (Steuerklasse)</label>
+          <select class="w-full px-4 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium focus:outline-none focus:border-emp-500">
+            <option>Třída I — svobodný</option>
+            <option>Třída III — ženatý</option>
+            <option>Třída V</option>
+          </select>
+        </div>
+      </div>
+      <button class="w-full bg-emp-600 text-white py-3 rounded-xl font-semibold text-sm mt-4 hover:bg-emp-700 transition-colors">
+        Spočítat
+      </button>
+    </div>
+
+    <!-- Result -->
+    <div class="bg-gradient-to-br from-emp-600 to-emp-800 text-white rounded-xl p-5 mb-4">
+      <p class="text-emp-200 text-xs uppercase tracking-wider mb-1">Čistý výdělek / měsíc</p>
+      <p class="text-3xl font-bold mb-4">€1,842</p>
+      <div class="space-y-2">
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">Hrubá mzda</span>
+          <span>€2,552</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">  z toho přesčas (25%)</span>
+          <span>€217.50</span>
+        </div>
+        <div class="h-px bg-white/20 my-1"></div>
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">Daň z příjmu</span>
+          <span>−€312</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">Soc. pojištění</span>
+          <span>−€248</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">Zdrav. pojištění</span>
+          <span>−€150</span>
+        </div>
+        <div class="h-px bg-white/20 my-1"></div>
+        <div class="flex justify-between text-sm">
+          <span class="text-emp-200">Ubytování</span>
+          <span>−€150</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100">
+      <p class="text-xs text-gray-500 font-medium mb-3">Srovnání s CZ (odhad)</p>
+      <div class="flex items-center gap-4">
+        <div class="flex-1">
+          <div class="text-center mb-1">
+            <span class="text-lg font-bold">€1,842</span>
+            <p class="text-[10px] text-gray-500">Čistá DE</p>
+          </div>
+          <div class="h-2 bg-emp-500 rounded-full"></div>
+        </div>
+        <div class="text-gray-300">vs</div>
+        <div class="flex-1">
+          <div class="text-center mb-1">
+            <span class="text-lg font-bold text-gray-400">€980</span>
+            <p class="text-[10px] text-gray-500">Odhad CZ</p>
+          </div>
+          <div class="h-2 bg-gray-300 rounded-full" style="width:53%"></div>
+        </div>
+      </div>
+      <p class="text-xs text-green-600 font-medium text-center mt-3">+88% oproti odhadované CZ mzdě</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 8: MESSAGING ====== -->
+<div id="s-chat" class="screen min-h-screen bg-white flex flex-col">
+  <div class="bg-white px-5 pt-12 pb-3 border-b border-gray-100">
+    <div class="flex items-center gap-3">
+      <button onclick="showScreen('dashboard')" class="text-gray-400">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+      <div class="w-9 h-9 bg-emp-100 rounded-full flex items-center justify-center text-emp-700 text-sm font-bold">JH</div>
+      <div>
+        <p class="text-sm font-semibold">Jana Holá</p>
+        <p class="text-xs text-green-500">Online · Koordinátor</p>
+      </div>
+      <div class="ml-auto flex gap-3">
+        <button class="text-gray-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+        </button>
+        <button class="text-gray-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="flex-1 px-5 py-4 space-y-3 overflow-y-auto bg-gray-50">
+    <p class="text-xs text-gray-400 text-center">Dnes, 10:32</p>
+
+    <div class="flex gap-2 max-w-[80%]">
+      <div class="w-7 h-7 bg-emp-100 rounded-full flex items-center justify-center text-emp-700 text-[10px] font-bold flex-shrink-0 mt-1">JH</div>
+      <div class="msg-bubble-in px-4 py-2.5">
+        <p class="text-sm">Dobrý den Petře, příští týden bude změna směn. Od pondělí jedete odpoledky 14:00-22:00. 🔄</p>
+        <p class="text-[10px] text-gray-400 mt-1">10:32</p>
+      </div>
+    </div>
+
+    <div class="flex gap-2 max-w-[80%] ml-auto flex-row-reverse">
+      <div class="msg-bubble-out px-4 py-2.5">
+        <p class="text-sm">Dobře, děkuji za info. Změní se i transport z ubytovny?</p>
+        <p class="text-[10px] text-white/60 mt-1">10:35</p>
+      </div>
+    </div>
+
+    <div class="flex gap-2 max-w-[80%]">
+      <div class="w-7 h-7 bg-emp-100 rounded-full flex items-center justify-center text-emp-700 text-[10px] font-bold flex-shrink-0 mt-1">JH</div>
+      <div class="msg-bubble-in px-4 py-2.5">
+        <p class="text-sm">Ano, autobus pojede v 13:15 místo 04:45. Nový rozpis najdete v sekci Můj plán. 📋</p>
+        <p class="text-[10px] text-gray-400 mt-1">10:38</p>
+      </div>
+    </div>
+
+    <div class="flex gap-2 max-w-[80%] ml-auto flex-row-reverse">
+      <div class="msg-bubble-out px-4 py-2.5">
+        <p class="text-sm">Super, díky! 👍</p>
+        <p class="text-[10px] text-white/60 mt-1">10:40</p>
+      </div>
+    </div>
+
+    <!-- Quick reply - language -->
+    <div class="bg-emp-50 rounded-xl p-3 border border-emp-100">
+      <p class="text-[10px] text-emp-600 font-medium mb-1">🇩🇪 Auto-překlad k dispozici</p>
+      <p class="text-xs text-gray-500">Konverzace probíhá česky. Zapnout automatický překlad do němčiny?</p>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="bg-white border-t border-gray-100 px-4 py-3 flex items-center gap-2">
+    <button class="text-gray-400 flex-shrink-0">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+    </button>
+    <div class="flex-1 bg-gray-50 rounded-full px-4 py-2.5 text-sm text-gray-400 border border-gray-200">
+      Napište zprávu...
+    </div>
+    <button class="w-9 h-9 bg-emp-600 rounded-full flex items-center justify-center text-white flex-shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ====== BOTTOM NAVIGATION ====== -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-gray-100 px-2 py-2 flex justify-around z-50">
+  <button onclick="showScreen('dashboard')" class="bnav-item active flex flex-col items-center gap-0.5 px-3 py-1" data-screen="dashboard">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+    <span class="text-[10px] font-medium">Domů</span>
+    <div class="bnav-dot w-1 h-1 bg-emp-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('plan')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="plan">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+    <span class="text-[10px] font-medium">Plán</span>
+    <div class="bnav-dot w-1 h-1 bg-emp-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('services')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="services">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+    <span class="text-[10px] font-medium">Služby</span>
+    <div class="bnav-dot w-1 h-1 bg-emp-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('chat')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400 relative" data-screen="chat">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+    <span class="text-[10px] font-medium">Chat</span>
+    <div class="bnav-dot w-1 h-1 bg-emp-600 rounded-full hidden"></div>
+    <span class="absolute -top-0.5 right-1 w-4 h-4 bg-red-500 text-white text-[9px] rounded-full flex items-center justify-center font-bold">1</span>
+  </button>
+  <button onclick="showScreen('documents')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="documents">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+    <span class="text-[10px] font-medium">Více</span>
+    <div class="bnav-dot w-1 h-1 bg-emp-600 rounded-full hidden"></div>
+  </button>
+</nav>
+
+</div><!-- /mobile-frame -->
+
+<script>
+function showScreen(id) {
+  // Hide all screens
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+  // Map screen ids
+  const map = {
+    'onboard': 's-onboard',
+    'dashboard': 's-dashboard',
+    'plan': 's-plan',
+    'attendance': 's-attendance',
+    'services': 's-services',
+    'documents': 's-documents',
+    'calculator': 's-calculator',
+    'chat': 's-chat'
+  };
+
+  const el = document.getElementById(map[id] || 's-' + id);
+  if (el) el.classList.add('active');
+
+  // Update bottom nav
+  document.querySelectorAll('.bnav-item').forEach(btn => {
+    btn.classList.remove('active');
+    btn.classList.add('text-gray-400');
+    const dot = btn.querySelector('.bnav-dot');
+    if (dot) dot.style.display = 'none';
+  });
+
+  // Find matching nav button
+  const navBtn = document.querySelector(`.bnav-item[data-screen="${id}"]`);
+  if (navBtn) {
+    navBtn.classList.add('active');
+    navBtn.classList.remove('text-gray-400');
+    const dot = navBtn.querySelector('.bnav-dot');
+    if (dot) dot.style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
