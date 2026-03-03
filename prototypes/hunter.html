@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilibees Hunter — HiFi Prototype</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        hunt: { 50:'#F0FDF4',100:'#DCFCE7',200:'#BBF7D0',300:'#86EFAC',400:'#4ADE80',500:'#22C55E',600:'#16A34A',700:'#15803D',800:'#166534',900:'#14532D' },
+      },
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  * { font-family: 'Inter', system-ui, sans-serif; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .bnav-item.active { color: #16A34A; }
+  .bnav-item.active .bnav-dot { display: block; }
+  .stat-card { transition: all 0.2s; }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+  .person-card { transition: all 0.15s; }
+  .person-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+  .level-badge { background: linear-gradient(135deg, #16A34A 0%, #059669 100%); }
+  @media (min-width: 1024px) {
+    .mobile-frame { max-width: 430px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,0.1); border-radius: 24px; overflow: hidden; min-height: 100vh; }
+  }
+</style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div class="mobile-frame bg-white relative pb-20">
+
+<!-- ====== SCREEN 1: DASHBOARD ====== -->
+<div id="s-dashboard" class="screen active min-h-screen bg-gray-50">
+  <!-- Header -->
+  <div class="bg-hunt-600 text-white px-5 pt-12 pb-14 rounded-b-3xl">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-hunt-200 text-sm">Vítejte zpět,</p>
+        <h1 class="text-xl font-bold">Tomáš Dvořák 🎯</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="relative">
+          <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center font-bold">1</span>
+        </button>
+        <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">TD</div>
+      </div>
+    </div>
+    <!-- Level card -->
+    <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xl">🥈</span>
+            <span class="font-semibold">Silver Hunter</span>
+          </div>
+          <p class="text-hunt-200 text-sm">Ještě 3 referraly do Gold</p>
+        </div>
+        <div class="text-right">
+          <p class="text-3xl font-bold">12</p>
+          <p class="text-hunt-200 text-xs">celkem referralů</p>
+        </div>
+      </div>
+      <!-- Progress bar to next level -->
+      <div class="mt-3">
+        <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+          <div class="h-full bg-white rounded-full" style="width:80%"></div>
+        </div>
+        <div class="flex justify-between mt-1">
+          <span class="text-[10px] text-hunt-200">12/15 pro Gold</span>
+          <span class="text-[10px] text-hunt-200">80%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats row (floating) -->
+  <div class="px-5 -mt-6 mb-4">
+    <div class="grid grid-cols-3 gap-3">
+      <div class="stat-card bg-white rounded-xl p-3 text-center shadow-sm border border-gray-100">
+        <p class="text-xl font-bold text-hunt-600">€840</p>
+        <p class="text-[10px] text-gray-500">Výdělek celkem</p>
+      </div>
+      <div class="stat-card bg-white rounded-xl p-3 text-center shadow-sm border border-gray-100">
+        <p class="text-xl font-bold text-gray-900">5</p>
+        <p class="text-[10px] text-gray-500">Aktivních</p>
+      </div>
+      <div class="stat-card bg-white rounded-xl p-3 text-center shadow-sm border border-gray-100">
+        <p class="text-xl font-bold text-amber-500">2</p>
+        <p class="text-[10px] text-gray-500">Čeká schválení</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="px-5 mb-4">
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="showScreen('qr')" class="bg-hunt-50 border border-hunt-200 rounded-xl p-4 text-left">
+        <span class="text-2xl mb-2 block">📱</span>
+        <p class="text-sm font-semibold text-hunt-900">Sdílet odkaz</p>
+        <p class="text-[10px] text-hunt-600">QR kód & referral link</p>
+      </button>
+      <button onclick="showScreen('people')" class="bg-white border border-gray-100 rounded-xl p-4 text-left">
+        <span class="text-2xl mb-2 block">👥</span>
+        <p class="text-sm font-semibold">Moji lidé</p>
+        <p class="text-[10px] text-gray-500">12 referralů</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Recent referrals -->
+  <div class="px-5 mb-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-sm font-semibold text-gray-900">Nedávné referraly</h2>
+      <button onclick="showScreen('people')" class="text-xs text-hunt-600 font-medium">Zobrazit vše</button>
+    </div>
+    <div class="space-y-2">
+      <div class="person-card bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-hunt-100 rounded-full flex items-center justify-center text-hunt-700 text-sm font-bold">MK</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Marek Kowalski</p>
+          <p class="text-xs text-gray-500">Registrace: před 2 dny</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Čeká</span>
+      </div>
+      <div class="person-card bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-emp-100 rounded-full flex items-center justify-center text-emp-700 text-sm font-bold">IB</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Ivan Bondarenko</p>
+          <p class="text-xs text-gray-500">Bosch GmbH · od 1. 3. 2026</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Pracuje</span>
+      </div>
+      <div class="person-card bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 text-sm font-bold">AP</div>
+        <div class="flex-1">
+          <p class="text-sm font-medium">Anna Poláková</p>
+          <p class="text-xs text-gray-500">Siemens AG · od 15. 2. 2026</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Pracuje</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings history mini -->
+  <div class="px-5 mb-4">
+    <div class="bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-semibold">Odměny</h3>
+        <button onclick="showScreen('rewards')" class="text-xs text-hunt-600 font-medium">Detail</button>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between py-1.5">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span class="text-sm">Ivan Bondarenko — nástup</span>
+          </div>
+          <span class="text-sm font-semibold text-hunt-600">+€70</span>
+        </div>
+        <div class="flex items-center justify-between py-1.5">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span class="text-sm">Anna Poláková — 1 měsíc</span>
+          </div>
+          <span class="text-sm font-semibold text-hunt-600">+€70</span>
+        </div>
+        <div class="flex items-center justify-between py-1.5">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-gray-300 rounded-full"></span>
+            <span class="text-sm text-gray-400">Marek Kowalski — čeká</span>
+          </div>
+          <span class="text-sm text-gray-400">€70</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 2: MOJI LIDÉ ====== -->
+<div id="s-people" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold mb-3">Moji lidé</h1>
+    <!-- Search -->
+    <div class="relative mb-3">
+      <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      <input type="text" placeholder="Hledat..." class="w-full pl-10 pr-4 py-2.5 bg-gray-50 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-hunt-500 focus:ring-2 focus:ring-hunt-100">
+    </div>
+    <!-- Filter -->
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      <button class="text-xs bg-hunt-600 text-white px-3 py-1.5 rounded-full font-medium whitespace-nowrap">Vše (12)</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Pracuje (5)</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Čeká (2)</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Trial (3)</button>
+      <button class="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-full font-medium border border-gray-200 whitespace-nowrap">Ukončen (2)</button>
+    </div>
+  </div>
+
+  <div class="px-5 py-4 space-y-2">
+    <!-- Person cards -->
+    <div class="person-card bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 bg-hunt-100 rounded-full flex items-center justify-center text-hunt-700 text-sm font-bold">MK</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-0.5">
+            <p class="text-sm font-semibold">Marek Kowalski</p>
+            <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Čeká na schválení</span>
+          </div>
+          <p class="text-xs text-gray-500">🇵🇱 Polsko · Svářeč · Registrace 1. 3. 2026</p>
+          <div class="flex gap-4 mt-2">
+            <span class="text-xs text-gray-400">📋 Doklady: 2/4</span>
+            <span class="text-xs text-gray-400">📞 +48 555 123 456</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="person-card bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 text-sm font-bold">IB</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-0.5">
+            <p class="text-sm font-semibold">Ivan Bondarenko</p>
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Pracuje</span>
+          </div>
+          <p class="text-xs text-gray-500">🇺🇦 Ukrajina · Montáž · Bosch GmbH</p>
+          <div class="flex gap-4 mt-2">
+            <span class="text-xs text-hunt-600 font-medium">💰 €70 vyplaceno</span>
+            <span class="text-xs text-gray-400">Od 1. 3. 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="person-card bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 text-sm font-bold">AP</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-0.5">
+            <p class="text-sm font-semibold">Anna Poláková</p>
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Pracuje</span>
+          </div>
+          <p class="text-xs text-gray-500">🇸🇰 Slovensko · Balení · Siemens AG</p>
+          <div class="flex gap-4 mt-2">
+            <span class="text-xs text-hunt-600 font-medium">💰 €140 vyplaceno</span>
+            <span class="text-xs text-gray-400">Od 15. 2. 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="person-card bg-white rounded-xl p-4 border border-gray-100">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-sm font-bold">JP</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-0.5">
+            <p class="text-sm font-semibold text-gray-400">Jiří Procházka</p>
+            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Ukončen</span>
+          </div>
+          <p class="text-xs text-gray-400">🇨🇿 Česko · Logistika · Ukončil sám po 2 týdnech</p>
+          <div class="flex gap-4 mt-2">
+            <span class="text-xs text-gray-400">💰 €0 — nesplněna podmínka</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 3: QR & SHARING ====== -->
+<div id="s-qr" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold">Sdílet & Získat</h1>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- QR card -->
+    <div class="bg-white rounded-2xl p-6 border border-gray-100 text-center mb-4 shadow-sm">
+      <p class="text-sm font-medium text-gray-900 mb-4">Váš osobní QR kód</p>
+      <!-- Simulated QR code -->
+      <div class="w-48 h-48 mx-auto bg-gray-900 rounded-2xl flex items-center justify-center mb-4 relative overflow-hidden">
+        <div class="absolute inset-2 grid grid-cols-8 grid-rows-8 gap-0.5">
+          <div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div>
+          <div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div>
+          <div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div>
+          <div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div>
+          <div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div>
+          <div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div>
+          <div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div>
+          <div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-gray-900"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div><div class="bg-white rounded-sm"></div>
+        </div>
+        <div class="absolute w-12 h-12 bg-hunt-600 rounded-lg flex items-center justify-center text-white font-bold text-lg z-10">D</div>
+      </div>
+      <p class="text-xs text-gray-400 mb-4">Naskenováním kódu se zájemce registruje pod vámi</p>
+      <button class="w-full bg-hunt-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-hunt-700 transition-colors">
+        📤 Sdílet QR kód
+      </button>
+    </div>
+
+    <!-- Link -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 mb-4">
+      <p class="text-xs text-gray-500 font-medium mb-2">Váš referral odkaz</p>
+      <div class="flex items-center gap-2">
+        <div class="flex-1 bg-gray-50 rounded-lg px-3 py-2 text-xs text-gray-600 truncate border border-gray-200">
+          https://dilibees.com/r/tomas-dvorak-x8k2
+        </div>
+        <button class="bg-hunt-100 text-hunt-700 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap hover:bg-hunt-200 transition-colors">
+          📋 Kopírovat
+        </button>
+      </div>
+    </div>
+
+    <!-- Share channels -->
+    <p class="text-xs text-gray-500 font-medium mb-3 px-1">Sdílet přes</p>
+    <div class="grid grid-cols-4 gap-3">
+      <button class="bg-white rounded-xl p-3 border border-gray-100 text-center">
+        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-1.5">
+          <span class="text-white text-lg">W</span>
+        </div>
+        <span class="text-[10px] text-gray-600">WhatsApp</span>
+      </button>
+      <button class="bg-white rounded-xl p-3 border border-gray-100 text-center">
+        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-1.5">
+          <span class="text-white text-lg">T</span>
+        </div>
+        <span class="text-[10px] text-gray-600">Telegram</span>
+      </button>
+      <button class="bg-white rounded-xl p-3 border border-gray-100 text-center">
+        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-1.5">
+          <span class="text-white text-lg">F</span>
+        </div>
+        <span class="text-[10px] text-gray-600">Facebook</span>
+      </button>
+      <button class="bg-white rounded-xl p-3 border border-gray-100 text-center">
+        <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-1.5">
+          <span class="text-white text-lg">✉</span>
+        </div>
+        <span class="text-[10px] text-gray-600">SMS</span>
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="bg-hunt-50 rounded-xl p-4 border border-hunt-100 mt-4">
+      <p class="text-xs text-hunt-700 font-medium mb-2">📊 Vaše statistiky sdílení</p>
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div>
+          <p class="text-lg font-bold text-hunt-700">34</p>
+          <p class="text-[10px] text-hunt-600">Kliknutí</p>
+        </div>
+        <div>
+          <p class="text-lg font-bold text-hunt-700">12</p>
+          <p class="text-[10px] text-hunt-600">Registrace</p>
+        </div>
+        <div>
+          <p class="text-lg font-bold text-hunt-700">35%</p>
+          <p class="text-[10px] text-hunt-600">Konverze</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 4: ODMĚNY & GAMIFIKACE ====== -->
+<div id="s-rewards" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <h1 class="text-lg font-bold mb-1">Odměny & Úrovně</h1>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Level progress -->
+    <div class="bg-gradient-to-br from-hunt-600 to-emerald-700 text-white rounded-2xl p-5 mb-4">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">🥈</div>
+        <div>
+          <p class="font-bold text-lg">Silver Hunter</p>
+          <p class="text-hunt-200 text-sm">Level 2 ze 4</p>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-hunt-200">Postup k Gold</span>
+            <span class="font-medium">12/15</span>
+          </div>
+          <div class="h-2.5 bg-white/20 rounded-full overflow-hidden">
+            <div class="h-full bg-white rounded-full" style="width:80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Levels -->
+    <div class="space-y-3 mb-6">
+      <div class="bg-white rounded-xl p-4 border border-gray-100 opacity-50">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🥉</span>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Bronze</p>
+            <p class="text-xs text-gray-500">0–4 referraly · €50/referral</p>
+          </div>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Splněno</span>
+        </div>
+      </div>
+      <div class="bg-hunt-50 rounded-xl p-4 border-2 border-hunt-500">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🥈</span>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-hunt-900">Silver — aktuální</p>
+            <p class="text-xs text-hunt-600">5–14 referralů · €70/referral</p>
+          </div>
+          <span class="text-xs bg-hunt-600 text-white px-2 py-0.5 rounded-full">Aktivní</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🥇</span>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Gold</p>
+            <p class="text-xs text-gray-500">15–29 referralů · €100/referral</p>
+          </div>
+          <span class="text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full">3 zbývá</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">💎</span>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Diamond</p>
+            <p class="text-xs text-gray-500">30+ referralů · €150/referral + bonus</p>
+          </div>
+          <span class="text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full">18 zbývá</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payout history -->
+    <h3 class="text-sm font-semibold mb-3">Historie výplat</h3>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium">Výplata — únor</p>
+          <p class="text-xs text-gray-500">Vyplaceno 5. 3. 2026</p>
+        </div>
+        <span class="text-sm font-bold text-hunt-600">€140</span>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium">Výplata — leden</p>
+          <p class="text-xs text-gray-500">Vyplaceno 5. 2. 2026</p>
+        </div>
+        <span class="text-sm font-bold text-hunt-600">€210</span>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium">Bonus — registrace</p>
+          <p class="text-xs text-gray-500">Jednorázový bonus za 10+ ref.</p>
+        </div>
+        <span class="text-sm font-bold text-hunt-600">€100</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 5: ANALYTIKA ====== -->
+<div id="s-analytics" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-4 border-b border-gray-100">
+    <div class="flex items-center justify-between">
+      <h1 class="text-lg font-bold">Analytika</h1>
+      <button class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg font-medium">Posledních 30 dnů ▾</button>
+    </div>
+  </div>
+
+  <div class="px-5 py-4">
+    <!-- Funnel -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 mb-4">
+      <h3 class="text-sm font-semibold mb-3">Referral funnel</h3>
+      <div class="space-y-2">
+        <div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-gray-600">Kliknutí na odkaz</span><span class="font-medium">34</span></div>
+          <div class="h-3 bg-hunt-500 rounded-full"></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-gray-600">Registrace</span><span class="font-medium">12</span></div>
+          <div class="h-3 bg-hunt-400 rounded-full" style="width:35%"></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-gray-600">Doklady komplet</span><span class="font-medium">8</span></div>
+          <div class="h-3 bg-hunt-300 rounded-full" style="width:24%"></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-sm mb-1"><span class="text-gray-600">Přiřazení</span><span class="font-medium">5</span></div>
+          <div class="h-3 bg-emerald-500 rounded-full" style="width:15%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conversion metrics -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <p class="text-2xl font-bold text-hunt-600">35%</p>
+        <p class="text-xs text-gray-500">Konverze click→reg</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-gray-100 text-center">
+        <p class="text-2xl font-bold text-hunt-600">67%</p>
+        <p class="text-xs text-gray-500">Konverze reg→práce</p>
+      </div>
+    </div>
+
+    <!-- Top sources -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 mb-4">
+      <h3 class="text-sm font-semibold mb-3">Zdroje registrací</h3>
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center text-sm">W</div>
+          <div class="flex-1">
+            <div class="flex justify-between text-sm"><span>WhatsApp</span><span class="font-medium">5</span></div>
+            <div class="h-1.5 bg-gray-100 rounded-full mt-1"><div class="h-full bg-green-500 rounded-full" style="width:42%"></div></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-sm">F</div>
+          <div class="flex-1">
+            <div class="flex justify-between text-sm"><span>Facebook</span><span class="font-medium">4</span></div>
+            <div class="h-1.5 bg-gray-100 rounded-full mt-1"><div class="h-full bg-blue-500 rounded-full" style="width:33%"></div></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-sm">📱</div>
+          <div class="flex-1">
+            <div class="flex justify-between text-sm"><span>QR kód</span><span class="font-medium">3</span></div>
+            <div class="h-1.5 bg-gray-100 rounded-full mt-1"><div class="h-full bg-gray-500 rounded-full" style="width:25%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCREEN 6: PROFIL & NASTAVENÍ ====== -->
+<div id="s-profile" class="screen min-h-screen bg-gray-50">
+  <div class="bg-white px-5 pt-12 pb-6 border-b border-gray-100 text-center">
+    <div class="w-20 h-20 bg-hunt-100 rounded-full flex items-center justify-center text-hunt-700 text-2xl font-bold mx-auto mb-3">TD</div>
+    <h1 class="text-lg font-bold">Tomáš Dvořák</h1>
+    <p class="text-sm text-gray-500">tomas.dvorak@email.com</p>
+    <div class="flex items-center justify-center gap-2 mt-2">
+      <span class="text-xs bg-hunt-100 text-hunt-700 px-2.5 py-0.5 rounded-full font-medium">🥈 Silver Hunter</span>
+      <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-full">12 referralů</span>
+    </div>
+  </div>
+
+  <div class="px-5 py-4 space-y-2">
+    <div class="bg-white rounded-xl border border-gray-100">
+      <button class="w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        <span class="text-sm font-medium flex-1">Osobní údaje</span>
+        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+      <button class="w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+        <span class="text-sm font-medium flex-1">Bankovní účet</span>
+        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+      <button class="w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-gray-50">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+        <span class="text-sm font-medium flex-1">Notifikace</span>
+        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+      <button class="w-full flex items-center gap-3 px-4 py-3.5 text-left">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+        <span class="text-sm font-medium flex-1">Jazyk</span>
+        <span class="text-xs text-gray-400">Čeština</span>
+        <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+
+    <a href="index.html" class="block bg-white rounded-xl border border-gray-100 px-4 py-3.5 text-center text-sm text-gray-500 font-medium mt-4">
+      ← Zpět na výběr role
+    </a>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white border-t border-gray-100 px-2 py-2 flex justify-around z-50">
+  <button onclick="showScreen('dashboard')" class="bnav-item active flex flex-col items-center gap-0.5 px-3 py-1" data-screen="dashboard">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+    <span class="text-[10px] font-medium">Domů</span>
+    <div class="bnav-dot w-1 h-1 bg-hunt-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('people')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="people">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+    <span class="text-[10px] font-medium">Lidé</span>
+    <div class="bnav-dot w-1 h-1 bg-hunt-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('qr')" class="bnav-item flex flex-col items-center gap-0.5 px-1 py-1 text-gray-400" data-screen="qr">
+    <div class="w-10 h-10 bg-hunt-600 rounded-full flex items-center justify-center -mt-4 shadow-lg">
+      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+    </div>
+    <span class="text-[10px] font-medium -mt-0.5">Sdílet</span>
+  </button>
+  <button onclick="showScreen('rewards')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="rewards">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <span class="text-[10px] font-medium">Odměny</span>
+    <div class="bnav-dot w-1 h-1 bg-hunt-600 rounded-full hidden"></div>
+  </button>
+  <button onclick="showScreen('profile')" class="bnav-item flex flex-col items-center gap-0.5 px-3 py-1 text-gray-400" data-screen="profile">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+    <span class="text-[10px] font-medium">Profil</span>
+    <div class="bnav-dot w-1 h-1 bg-hunt-600 rounded-full hidden"></div>
+  </button>
+</nav>
+
+</div>
+
+<script>
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const map = { 'dashboard':'s-dashboard','people':'s-people','qr':'s-qr','rewards':'s-rewards','analytics':'s-analytics','profile':'s-profile' };
+  const el = document.getElementById(map[id] || 's-' + id);
+  if (el) el.classList.add('active');
+
+  document.querySelectorAll('.bnav-item').forEach(btn => {
+    btn.classList.remove('active');
+    btn.classList.add('text-gray-400');
+    const dot = btn.querySelector('.bnav-dot');
+    if (dot) dot.style.display = 'none';
+  });
+  const navBtn = document.querySelector(`.bnav-item[data-screen="${id}"]`);
+  if (navBtn) {
+    navBtn.classList.add('active');
+    navBtn.classList.remove('text-gray-400');
+    const dot = navBtn.querySelector('.bnav-dot');
+    if (dot) dot.style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
