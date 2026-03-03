@@ -1,0 +1,2752 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilibees 2.0 ‚ÄĒ Kompletn√≠ Upgrade Dokumentace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;font-size:14px}
+.wrap{max-width:1400px;margin:0 auto;padding:40px 24px 80px}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HEADER */
+.hdr{border-bottom:1px solid #30363d;padding-bottom:30px;margin-bottom:30px}
+.hdr h1{font-size:2.4em;color:#58a6ff;font-weight:800;letter-spacing:-0.5px}
+.hdr .sub{font-size:1.15em;color:#8b949e;margin:8px 0}
+.hdr .meta{font-size:.88em;color:#6e7681;display:flex;gap:20px;flex-wrap:wrap;margin-top:12px}
+.hdr .meta span{background:#161b22;padding:4px 12px;border-radius:4px;border:1px solid #30363d}
+
+/* LEGEND */
+.legend{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:.82em;font-weight:600}
+.b-done{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3)}
+.b-upd{background:rgba(210,153,34,.15);color:#d29922;border:1px solid rgba(210,153,34,.3)}
+.b-new{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.3)}
+.b-info{background:rgba(88,166,255,.12);color:#58a6ff;border:1px solid rgba(88,166,255,.3)}
+.b-auto{background:rgba(163,113,247,.15);color:#a371f7;border:1px solid rgba(163,113,247,.3)}
+
+/* TABS */
+.tabs{display:flex;gap:4px;border-bottom:2px solid #30363d;margin-bottom:30px;flex-wrap:wrap;position:sticky;top:0;background:#0d1117;z-index:100;padding-top:8px}
+.tbtn{padding:12px 22px;background:none;border:none;color:#8b949e;cursor:pointer;font-size:.95em;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;font-family:inherit}
+.tbtn:hover{color:#c9d1d9;background:rgba(88,166,255,.06)}
+.tbtn.on{color:#58a6ff;border-bottom-color:#58a6ff}
+.tc{display:none}.tc.on{display:block}
+
+/* SECTIONS */
+.sec{margin:0 0 16px;border:1px solid #30363d;border-radius:8px;overflow:hidden;background:#161b22}
+.sh{padding:16px 20px;background:#0d1117;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none;transition:.15s}
+.sh:hover{background:#1c2128}
+.sh h3{font-size:1.08em;color:#58a6ff;font-weight:600;flex:1}
+.sh .num{background:#30363d;color:#8b949e;padding:2px 10px;border-radius:12px;font-size:.8em;font-weight:600}
+.sh .arr{color:#6e7681;font-size:.9em;transition:.2s}
+.sec.shut .arr{transform:rotate(-90deg)}
+.sc{padding:20px;border-top:1px solid #30363d}
+.sec.shut .sc{display:none}
+
+/* SUB SECTIONS */
+.sub-sec{margin:16px 0;padding:16px;background:#0d1117;border-radius:6px;border-left:3px solid #58a6ff}
+.sub-sec.green{border-left-color:#3fb950}
+.sub-sec.yellow{border-left-color:#d29922}
+.sub-sec.red{border-left-color:#f85149}
+.sub-sec.purple{border-left-color:#a371f7}
+.sub-sec h4{color:#c9d1d9;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sub-sec p,.sub-sec li{color:#8b949e;font-size:.94em}
+
+/* FEATURE ITEMS */
+.feat{margin:12px 0;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-radius:6px;transition:.15s}
+.feat:hover{border-color:#30363d;background:#161b22}
+.feat-h{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.feat-h strong{color:#c9d1d9;font-size:1em}
+.feat p{color:#8b949e;font-size:.92em;margin:4px 0}
+
+/* LISTS */
+ul.fl{list-style:none;padding:0;margin:10px 0}
+ul.fl li{padding:7px 0 7px 18px;position:relative;color:#8b949e;font-size:.93em}
+ul.fl li::before{content:"‚Ėł";position:absolute;left:0;color:#58a6ff;font-weight:700}
+ul.fl li strong{color:#c9d1d9}
+ol.nl{margin:10px 0 10px 20px;color:#8b949e}
+ol.nl li{padding:4px 0}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.92em}
+th{background:#0d1117;padding:12px;text-align:left;color:#58a6ff;font-weight:600;border-bottom:2px solid #30363d}
+td{padding:10px 12px;border-bottom:1px solid #21262d;color:#c9d1d9}
+tr:hover td{background:rgba(88,166,255,.04)}
+
+/* TECH BOXES */
+.tbox{margin:16px 0;padding:14px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
+.tbox-h{color:#79c0ff;font-weight:600;font-size:.9em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.tbox code{background:#21262d;padding:2px 8px;border-radius:3px;font-size:.88em;color:#79c0ff;font-family:'Fira Code',monospace}
+.tbox p{color:#8b949e;font-size:.9em;margin:4px 0}
+.tbox pre{background:#21262d;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85em;color:#c9d1d9;margin:8px 0;line-height:1.5}
+
+/* NOTE BOXES */
+.note{margin:16px 0;padding:14px 16px;border-radius:6px;font-size:.92em}
+.note-warn{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.3);color:#d29922}
+.note-info{background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.2);color:#79c0ff}
+.note-tip{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);color:#3fb950}
+.note-danger{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);color:#f85149}
+.note-purple{background:rgba(163,113,247,.08);border:1px solid rgba(163,113,247,.2);color:#a371f7}
+
+/* TODO CHECKLIST */
+.todo-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;margin:4px 0;background:#0d1117;border:1px solid #21262d;border-radius:6px;cursor:pointer;transition:.2s;color:#c9d1d9;font-size:.92em;line-height:1.5}
+.todo-item:hover{border-color:#30363d;background:#161b22}
+.todo-item input[type="checkbox"]{margin-top:3px;accent-color:#3fb950;width:16px;height:16px;cursor:pointer;flex-shrink:0}
+.todo-item.done{opacity:.5;text-decoration:line-through;border-color:#21262d;background:#0d1117}
+.todo-item.done:hover{opacity:.7}
+.todo-item code{background:#21262d;padding:1px 6px;border-radius:3px;font-size:.88em;color:#79c0ff;font-family:'Fira Code',monospace}
+
+/* MODE SWITCH */
+.mode-switch{display:flex;gap:4px;margin:16px 0 8px;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:4px;width:fit-content}
+.mode-btn{padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.95em;font-family:inherit;transition:.25s;background:transparent;color:#8b949e}
+.mode-btn:hover{color:#c9d1d9;background:rgba(88,166,255,.06)}
+.mode-btn.mode-on#btn-dev{background:linear-gradient(135deg,#238636,#2ea043);color:#fff;box-shadow:0 2px 12px rgba(35,134,54,.3)}
+.mode-btn.mode-on#btn-ux{background:linear-gradient(135deg,#8957e5,#a371f7);color:#fff;box-shadow:0 2px 12px rgba(137,87,229,.3)}
+.mode-dev-hide{display:none!important}
+.mode-ux-hide{display:none!important}
+
+/* UX SPECIFIC STYLES */
+.ux-wireframe{margin:16px 0;padding:20px;background:#0d1117;border:2px dashed #30363d;border-radius:8px;font-family:'Fira Code',monospace;font-size:.85em;color:#8b949e;line-height:1.6;white-space:pre;overflow-x:auto}
+.ux-before-after{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.ux-before,.ux-after{padding:16px;border-radius:8px;border:1px solid #30363d}
+.ux-before{background:rgba(248,81,73,.04);border-color:rgba(248,81,73,.25)}
+.ux-before::before{content:"‚ĚĆ PŇėED (Aktu√°lnńõ)";display:block;font-weight:700;color:#f85149;margin-bottom:10px;font-size:.85em}
+.ux-after{background:rgba(63,185,80,.04);border-color:rgba(63,185,80,.25)}
+.ux-after::before{content:"‚úÖ PO (N√°vrh)";display:block;font-weight:700;color:#3fb950;margin-bottom:10px;font-size:.85em}
+.ux-before p,.ux-after p{color:#8b949e;font-size:.9em;margin:4px 0}
+.ux-before ul,.ux-after ul{list-style:none;padding:0;margin:6px 0}
+.ux-before li,.ux-after li{padding:4px 0 4px 16px;position:relative;color:#8b949e;font-size:.9em}
+.ux-before li::before{content:"‚ÄĘ";position:absolute;left:0;color:#f85149}
+.ux-after li::before{content:"‚ÄĘ";position:absolute;left:0;color:#3fb950}
+.ux-figma{margin:12px 0;padding:14px 16px;background:rgba(137,87,229,.06);border:1px solid rgba(137,87,229,.25);border-radius:6px}
+.ux-figma::before{content:"ūüé® FIGMA TIP: ";font-weight:700;color:#a371f7;font-size:.85em}
+.ux-figma p{color:#8b949e;display:inline;font-size:.9em}
+.ux-step{margin:12px 0;padding:16px;background:#0d1117;border:1px solid #21262d;border-radius:6px;border-left:4px solid #a371f7;counter-increment:ux-step}
+.ux-step::before{content:"Krok " counter(ux-step);font-weight:700;color:#a371f7;font-size:.85em;display:block;margin-bottom:6px}
+.ux-step p{color:#8b949e;font-size:.92em;margin:4px 0}
+.ux-step strong{color:#c9d1d9}
+.ux-screen{margin:16px 0;padding:16px;background:#161b22;border:1px solid #30363d;border-radius:8px}
+.ux-screen-name{color:#a371f7;font-weight:700;font-size:.95em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.ux-screen-name::before{content:"ūüďĪ";font-size:1.1em}
+.ux-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0;padding:12px;background:#0d1117;border-radius:6px}
+.ux-flow-step{padding:6px 14px;background:#21262d;border-radius:16px;font-size:.85em;color:#c9d1d9;font-weight:500}
+.ux-flow-arrow{color:#a371f7;font-weight:700}
+.ux-metric{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(137,87,229,.1);border:1px solid rgba(137,87,229,.2);border-radius:16px;font-size:.82em;color:#a371f7;font-weight:600;margin:4px 4px 4px 0}
+.ux-sections-counter{counter-reset:ux-step}
+
+/* EDGE CASE */
+.edge{margin:12px 0;padding:12px 16px;background:rgba(210,153,34,.06);border:1px solid rgba(210,153,34,.2);border-radius:6px}
+.edge::before{content:"‚ö† EDGE CASE: ";font-weight:700;color:#d29922;font-size:.85em}
+.edge p{color:#8b949e;display:inline;font-size:.9em}
+
+/* TEST SCENARIO */
+.test{margin:8px 0;padding:10px 14px;background:rgba(63,185,80,.06);border-left:3px solid #3fb950;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
+.test::before{content:"‚úď TEST: ";font-weight:700;color:#3fb950}
+
+/* AUTOMATION */
+.auto{margin:12px 0;padding:12px 16px;background:rgba(163,113,247,.06);border:1px solid rgba(163,113,247,.2);border-radius:6px}
+.auto::before{content:"‚ö° AUTOMATIZACE: ";font-weight:700;color:#a371f7;font-size:.85em}
+.auto p{color:#8b949e;display:inline;font-size:.9em}
+
+/* ERROR STATE */
+.errst{margin:8px 0;padding:10px 14px;background:rgba(248,81,73,.06);border-left:3px solid #f85149;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
+.errst::before{content:"‚úē ERROR STATE: ";font-weight:700;color:#f85149}
+
+/* EMPTY STATE */
+.empty{margin:8px 0;padding:10px 14px;background:rgba(88,166,255,.06);border-left:3px solid #58a6ff;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
+.empty::before{content:"‚óč EMPTY STATE: ";font-weight:700;color:#58a6ff}
+
+/* TIP */
+.tip{margin:12px 0;padding:12px 16px;background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.2);border-radius:6px}
+.tip::before{content:"ūüí° TIP: ";font-weight:700;color:#3fb950;font-size:.85em}
+.tip p{color:#8b949e;display:inline;font-size:.9em}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:768px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.hdr h1{font-size:1.7em}.tabs{gap:0}.tbtn{padding:10px 14px;font-size:.85em}}
+
+/* CARD */
+.card{padding:16px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
+.card-lbl{font-size:.8em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-val{color:#c9d1d9;font-weight:600;font-size:1.1em}
+.card-val.big{font-size:1.4em;color:#58a6ff}
+
+/* PRICE TAG */
+.price{display:inline-block;background:rgba(63,185,80,.15);color:#3fb950;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.95em}
+
+/* PRIORITY */
+.prio{display:inline-block;padding:3px 10px;border-radius:3px;font-size:.78em;font-weight:700;text-transform:uppercase}
+.p-crit{background:#f8514933;color:#f85149}.p-high{background:#d2992233;color:#d29922}.p-med{background:#58a6ff22;color:#58a6ff}.p-low{background:#3fb95022;color:#3fb950}
+
+.divider{border:none;border-top:1px solid #21262d;margin:24px 0}
+
+/* MERMAID */
+.mermaid{background:#161b22;padding:20px;border-radius:8px;margin:16px 0;text-align:center;overflow-x:auto}
+.mermaid svg{max-width:100%}
+
+/* MIGRATION SNIPPET */
+.migr{margin:12px 0;padding:14px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
+.migr-h{color:#a371f7;font-weight:600;font-size:.85em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.migr pre{background:#21262d;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.82em;color:#c9d1d9;line-height:1.5;margin:0}
+
+/* VALIDATION TABLE */
+.val-table td:nth-child(3){color:#f85149;font-weight:500}
+.val-table td:nth-child(4){color:#3fb950;font-size:.85em}
+
+/* PERMISSION MATRIX */
+.perm{font-size:.85em}
+.perm td:first-child{font-weight:600;color:#c9d1d9}
+.perm .yes{color:#3fb950;font-weight:700}.perm .no{color:#f85149;font-weight:700}.perm .partial{color:#d29922;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="hdr">
+<h1>Dilibees 2.0 ‚ÄĒ Kompletn√≠ Upgrade Dokumentace</h1>
+<div class="sub">Detailn√≠ zad√°n√≠ pro developera a designera | Laravel 11+ Migration | KaŇĺd√Ĺ edge case pokryt√Ĺ</div>
+
+<!-- MODE SWITCH -->
+<div class="mode-switch" id="mode-switch">
+<button class="mode-btn mode-on" id="btn-dev" onclick="switchMode('dev')">‚öôÔłŹ DEV m√≥d</button>
+<button class="mode-btn" id="btn-ux" onclick="switchMode('ux')">ūüé® UI/UX m√≥d</button>
+</div>
+<div class="meta">
+<span>BŇôezen 2026</span>
+<span>Verze 2.0 EXTENDED</span>
+<span>Zdrojov√© PDF: 19 souborŇĮ</span>
+<span>3 Profily + Mzdov√° kalkulańćka</span>
+<span>Obsahuje: Diagramy, Edge Cases, Validace, Automatizace, Testy, DB Migrace</span>
+</div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+<span class="badge b-done">&#10003; EXISTUJE</span>
+<span class="badge b-upd">&#9889; AKTUALIZACE</span>
+<span class="badge b-new">&#10024; NOV√Č</span>
+<span class="badge b-info">&#9432; POZN√ĀMKA</span>
+<span class="badge b-auto">&#9889; AUTOMATIZACE</span>
+</div>
+
+<!-- DEV TABS -->
+<div class="tabs dev-tabs" id="tabs-dev">
+<button class="tbtn on" onclick="sw('t-over',this)">PŇôehled</button>
+<button class="tbtn" onclick="sw('t-hunt',this)">N√°bor√°Ňô / Hunter</button>
+<button class="tbtn" onclick="sw('t-agent',this)">Agent</button>
+<button class="tbtn" onclick="sw('t-emp',this)">Zamńõstnanec</button>
+<button class="tbtn" onclick="sw('t-calc',this)">Mzdov√° Kalkulańćka</button>
+<button class="tbtn" onclick="sw('t-arch',this)">Laravel Architektura</button>
+<button class="tbtn" onclick="sw('t-auto',this)">Automatizace &amp; Events</button>
+<button class="tbtn" onclick="sw('t-todo',this)">‚úÖ Dev Checklist</button>
+</div>
+
+<!-- UX TABS -->
+<div class="tabs ux-tabs" id="tabs-ux" style="display:none">
+<button class="tbtn on" onclick="sw('t-ux-system',this)">Design System</button>
+<button class="tbtn" onclick="sw('t-ux-admin',this)">Admin Redesign</button>
+<button class="tbtn" onclick="sw('t-ux-emp',this)">Zamńõstnanec UX</button>
+<button class="tbtn" onclick="sw('t-ux-hunt',this)">Hunter UX</button>
+<button class="tbtn" onclick="sw('t-ux-agent',this)">Agent UX</button>
+<button class="tbtn" onclick="sw('t-ux-flows',this)">UX Flows &amp; Diagramy</button>
+<button class="tbtn" onclick="sw('t-ux-todo',this)">‚úÖ UX Checklist</button>
+</div>
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: PŇėEHLED -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-over" class="tc on">
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Souhrn upgradu Dilibees 2.0</h3><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Tento dokument obsahuje <strong>kompletn√≠ zad√°n√≠ od klienta</strong> pro upgrade syst√©mu Dilibees na verzi 2.0 s migrac√≠ na Laravel. Zad√°n√≠ pokr√Ĺv√° 3 uŇĺivatelsk√© role a 1 cross-cutting feature (Mzdov√° kalkulańćka). KaŇĺd√° sekce obsahuje specifikaci pro developera i designera vńćetnńõ <strong>edge cases, validańćn√≠ch pravidel, stavov√Ĺch diagramŇĮ, automatizac√≠, test sc√©n√°ŇôŇĮ, error states a empty states</strong>.</p>
+
+<div class="grid3">
+<div class="card"><div class="card-lbl">Profil N√°bor√°Ňô/Hunter</div><div class="card-val big">9</div><p style="color:#8b949e;font-size:.85em">menu poloŇĺek</p></div>
+<div class="card"><div class="card-lbl">Profil Agent</div><div class="card-val big">14</div><p style="color:#8b949e;font-size:.85em">sekc√≠</p></div>
+<div class="card"><div class="card-lbl">Profil Zamńõstnanec</div><div class="card-val big">23</div><p style="color:#8b949e;font-size:.85em">sekc√≠ (nejvńõtŇ°√≠)</p></div>
+</div>
+
+<div class="grid4">
+<div class="card"><div class="card-lbl">Mzdov√° kalkulańćka</div><div class="card-val">5 zem√≠</div></div>
+<div class="card"><div class="card-lbl">Nov√© Eloquent modely</div><div class="card-val">22+</div></div>
+<div class="card"><div class="card-lbl">Nov√© DB migrace</div><div class="card-val">18+</div></div>
+<div class="card"><div class="card-lbl">CRON / Observer / Event</div><div class="card-val">15+</div></div>
+</div>
+
+<div class="note note-info" style="margin-top:20px"><strong>St√°vaj√≠c√≠ dokumentace syst√©mu 1.0:</strong> <a href="https://jangronka.cz/dokumentace/system-mapa.html">Syst√©mov√° mapa</a> ¬∑ <a href="https://jangronka.cz/dokumentace/crosscheck-report.html">Crosscheck report</a> ¬∑ <a href="https://jangronka.cz/dokumentace/onboarding-guide.html">Onboarding guide</a> ¬∑ <a href="https://jangronka.cz/dokumentace/tech-debt-roadmap.html">Tech debt roadmap</a></div>
+</div>
+</div>
+
+<!-- PŇė√ćSTUPOV√Ā MATICE -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>PŇô√≠stupov√° matice rol√≠ (Permission Matrix)</h3><span class="num">DŇģLEŇĹIT√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Kdo co vid√≠ a sm√≠ dńõlat. <strong>Developer MUS√ć implementovat middleware pro kaŇĺdou roli.</strong></p>
+<table class="perm">
+<tr><th>Feature</th><th>Admin</th><th>Agent</th><th>Hunter</th><th>Zamńõstnanec</th></tr>
+<tr><td>Ozn√°men√≠ (FB-style)</td><td class="yes">FULL</td><td class="yes">Sv√©</td><td class="yes">Sv√©</td><td class="yes">Sv√©</td></tr>
+<tr><td>Zpr√°vy</td><td class="yes">VŇ°echny konverzace</td><td class="yes">S adminem</td><td class="yes">S adminem</td><td class="yes">S adminem</td></tr>
+<tr><td>Popt√°vky (CRUD)</td><td class="yes">FULL</td><td class="yes">Sv√© (CRUD)</td><td class="partial">READ only (anonymizovanńõ)</td><td class="no">NE</td></tr>
+<tr><td>Kandid√°ti ‚ÄĒ detail profilu</td><td class="yes">FULL</td><td class="partial">PŇôiŇôazen√≠ k popt√°vce</td><td class="no">NE</td><td class="no">NE (svŇĮj vlastn√≠)</td></tr>
+<tr><td>V√Ĺkazy hodin</td><td class="yes">FULL + dispute ŇôeŇ°en√≠</td><td class="yes">Sv√© (zad√°v√°n√≠)</td><td class="no">NE</td><td class="yes">Sv√© (zad√°v√°n√≠)</td></tr>
+<tr><td>Mzdov√° kalkulańćka</td><td class="yes">CRUD sazeb</td><td class="yes">Widget v popt√°vce</td><td class="no">NE</td><td class="yes">V profilu</td></tr>
+<tr><td>SluŇĺby (Kindergeld, Danńõ...)</td><td class="yes">FULL + spr√°va objedn√°vek</td><td class="no">NE</td><td class="no">NE</td><td class="yes">Objedn√°vka + upload</td></tr>
+<tr><td>Hunter profil (lid√©, grafy)</td><td class="yes">FULL</td><td class="no">NE</td><td class="yes">Sv√©</td><td class="partial">Pokud je hunter</td></tr>
+<tr><td>Activity Log</td><td class="yes">FULL (vŇ°ichni)</td><td class="yes">Sv√©</td><td class="no">NE</td><td class="no">NE</td></tr>
+</table>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// Middleware registrace v bootstrap/app.php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+    ]);
+})
+
+// CheckRole middleware
+class CheckRole {
+    public function handle($request, Closure $next, ...$roles) {
+        if (!in_array($request->user()->role, $roles)) {
+            abort(403, 'Nem√°te opr√°vnńõn√≠.');
+        }
+        return $next($request);
+    }
+}
+
+// PouŇĺit√≠ v routes
+Route::middleware(['auth', 'role:agent'])->prefix('agent')->group(fn() => ...);
+Route::middleware(['auth', 'role:hunter'])->prefix('hunter')->group(fn() => ...);
+Route::middleware(['auth', 'role:employee'])->prefix('employee')->group(fn() => ...);</pre></div>
+
+<div class="edge"><p>Zamńõstnanec mŇĮŇĺe b√Ĺt Z√ĀROVEŇá hunter (n√°bor√°Ňô). Middleware mus√≠ umoŇĺnit pŇôep√≠n√°n√≠ kontextu nebo du√°ln√≠ roli. ŇėeŇ°en√≠: <code>user->roles</code> jako JSON pole nebo pivot tabulka <code>role_user</code>.</p></div>
+<div class="edge"><p>Agent mŇĮŇĺe m√≠t v√≠ce firem. PŇôi popt√°vce zad√°v√°, za kterou firmu hled√°. Model <code>Agent hasMany Company</code>.</p></div>
+<div class="tip"><p>PouŇĺ√≠t Laravel Policy pro granul√°rn√≠ autorizaci: <code>php artisan make:policy JobPostingPolicy --model=JobPosting</code>. KaŇĺd√Ĺ model s CRUD = vlastn√≠ Policy.</p></div>
+</div>
+</div>
+
+<!-- GLOB√ĀLN√ć FLOW -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Glob√°ln√≠ Ňĺivotn√≠ cyklus kandid√°ta (State Machine)</h3><span class="num">DIAGRAM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Tento diagram ukazuje cestu kandid√°ta syst√©mem ‚ÄĒ od registrace po ukonńćen√≠. <strong>KaŇĺd√Ĺ pŇôechod = akce v syst√©mu.</strong></p>
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Registrace: Nov√Ĺ uŇĺivatel (web/QR)
+    Registrace --> ŇĹivotopis: Vypln√≠ 14 krokŇĮ CV
+    ŇĹivotopis --> ńĆek√°_na_matching: CV kompletn√≠
+    ńĆek√°_na_matching --> Vhodn√Ĺ_kandid√°t: Admin/CRON pŇôiŇôad√≠ k popt√°vce
+    Vhodn√Ĺ_kandid√°t --> V_ŇôeŇ°en√≠: Agent projev√≠ z√°jem
+    V_ŇôeŇ°en√≠ --> Na_zkouŇ°ku: Domluvena pracovn√≠ zkouŇ°ka
+    Na_zkouŇ°ku --> K_n√°stupu: ZkouŇ°ka OK
+    Na_zkouŇ°ku --> Nedohodli_se: ZkouŇ°ka FAIL
+    K_n√°stupu --> Aktivn√≠_pracovn√≠k: N√°stup probńõhl
+    Aktivn√≠_pracovn√≠k --> Ukonńćen√≠: V√ĹpovńõńŹ / konec smlouvy
+    Nedohodli_se --> ńĆek√°_na_matching: Zpńõt do poolu
+    Ukonńćen√≠ --> ńĆek√°_na_matching: Chce znovu pracovat
+    Ukonńćen√≠ --> [*]: Odchod ze syst√©mu
+</div>
+
+<div class="tbox"><div class="tbox-h">Implementace stavov√©ho automatu</div>
+<pre>// app/Enums/CandidateStatus.php
+enum CandidateStatus: string {
+    case REGISTERED = 'registered';
+    case CV_COMPLETE = 'cv_complete';
+    case WAITING_MATCH = 'waiting_match';
+    case SUITABLE = 'suitable';         // vhodn√Ĺ pro popt√°vku
+    case IN_PROGRESS = 'in_progress';   // v ŇôeŇ°en√≠
+    case TRIAL = 'trial';               // na zkouŇ°ce
+    case HIRED = 'hired';               // k n√°stupu
+    case ACTIVE = 'active';             // aktivn√≠ pracovn√≠k
+    case REJECTED = 'rejected';         // nedohodli se
+    case TERMINATED = 'terminated';     // ukonńćen√≠
+
+    public function canTransitionTo(self $new): bool {
+        return match($this) {
+            self::REGISTERED => in_array($new, [self::CV_COMPLETE]),
+            self::CV_COMPLETE => in_array($new, [self::WAITING_MATCH]),
+            self::WAITING_MATCH => in_array($new, [self::SUITABLE]),
+            self::SUITABLE => in_array($new, [self::IN_PROGRESS]),
+            self::IN_PROGRESS => in_array($new, [self::TRIAL, self::REJECTED]),
+            self::TRIAL => in_array($new, [self::HIRED, self::REJECTED]),
+            self::HIRED => in_array($new, [self::ACTIVE]),
+            self::ACTIVE => in_array($new, [self::TERMINATED]),
+            self::REJECTED => in_array($new, [self::WAITING_MATCH]),
+            self::TERMINATED => in_array($new, [self::WAITING_MATCH]),
+        };
+    }
+}</pre></div>
+
+<div class="auto"><p>Observer <code>UserStatusObserver</code>: pŇôi KAŇĹD√Č zmńõnńõ statusu ‚Üí logovat do activity_log + odeslat notifikaci relevantn√≠m uŇĺivatelŇĮm (admin vŇĺdy, agent pokud pŇôiŇôazen√Ĺ, hunter pokud doporuńćil).</p></div>
+<div class="test">OvńõŇôit, Ňĺe nelze pŇôeskońćit stav (napŇô. z REGISTERED pŇô√≠mo na ACTIVE).</div>
+<div class="test">OvńõŇôit, Ňĺe REJECTED kandid√°t se vr√°t√≠ do poolu a je znovu matchovateln√Ĺ.</div>
+</div>
+</div>
+
+<!-- NOTIFIKAńĆN√ć SYST√ČM GLOB√ĀLN√ć -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Glob√°ln√≠ notifikańćn√≠ syst√©m (sd√≠len√Ĺ vŇ°emi profily)</h3><span class="num">ARCHITEKTURA</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Notifikace funguj√≠ jako Facebook news feed. Jedna implementace, vŇ°echny role ji pouŇĺ√≠vaj√≠.</p>
+
+<div class="mermaid">
+flowchart LR
+    A["Akce v syst√©mu"] --> B["Event dispatched"]
+    B --> C["Notification class"]
+    C --> D["database channel"]
+    C --> E["mail channel"]
+    C --> F["broadcast channel"]
+    D --> G["DB: notifications tabulka"]
+    E --> H["Email (Mailgun/SMTP)"]
+    F --> I["Pusher/Soketi ‚Üí real-time"]
+    G --> J["Zvoneńćek v UI badge"]
+</div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace ‚ÄĒ Notifikańćn√≠ tŇô√≠dy</div>
+<pre>// php artisan make:notification NewMessageNotification
+class NewMessageNotification extends Notification {
+    use Queueable;
+
+    public function __construct(
+        public Message $message,
+        public Conversation $conversation
+    ) {}
+
+    public function via($notifiable): array {
+        return ['database', 'broadcast']; // mail volitelnńõ
+    }
+
+    public function toDatabase($notifiable): array {
+        return [
+            'type' => 'new_message',
+            'title' => 'Nov√° zpr√°va',
+            'body' => Str::limit($this->message->body, 80),
+            'conversation_id' => $this->conversation->id,
+            'sender_id' => $this->message->user_id,
+            'sender_name' => $this->message->user->full_name,
+            'url' => route('messages.show', $this->conversation),
+        ];
+    }
+
+    public function toBroadcast($notifiable): BroadcastMessage {
+        return new BroadcastMessage($this->toDatabase($notifiable));
+    }
+}</pre></div>
+
+<div class="sub-sec red"><h4>Typy notifikac√≠ (KOMPLETN√ć SEZNAM)</h4>
+<table>
+<tr><th>Event</th><th>Komu</th><th>Text vzor</th><th>Priorita</th></tr>
+<tr><td>Nov√° zpr√°va</td><td>PŇô√≠jemce</td><td>‚Äě{jm√©no} v√°m poslal zpr√°vu"</td><td><span class="prio p-high">HIGH</span></td></tr>
+<tr><td>Nov√Ĺ kandid√°t pŇôiŇôazen</td><td>Agent + Admin</td><td>‚ÄěNov√Ĺ kandid√°t {jm√©no} pŇôiŇôazen k {popt√°vka}"</td><td><span class="prio p-high">HIGH</span></td></tr>
+<tr><td>Kandid√°t zmńõnil status</td><td>Admin + Agent + Hunter</td><td>‚Äě{jm√©no} pŇôesunut do: {nov√Ĺ_stav}"</td><td><span class="prio p-med">MEDIUM</span></td></tr>
+<tr><td>Nov√° popt√°vka od agenta</td><td>Admin</td><td>‚ÄěAgent {jm√©no} vytvoŇôil novou popt√°vku: {Ňôemeslo}"</td><td><span class="prio p-high">HIGH</span></td></tr>
+<tr><td>Hodiny neshoda (dispute)</td><td>Admin + Agent + Zamńõstnanec</td><td>‚ÄěNeshoda v hodin√°ch za {mńõs√≠c}: {rozd√≠l}h"</td><td><span class="prio p-crit">CRITICAL</span></td></tr>
+<tr><td>Chybńõj√≠c√≠ √ļdaj v profilu</td><td>Zamńõstnanec</td><td>‚ÄěV√°Ň° profil nen√≠ kompletn√≠ ‚ÄĒ chyb√≠: {pole}"</td><td><span class="prio p-med">MEDIUM</span></td></tr>
+<tr><td>Nezadan√© hodiny</td><td>Zamńõstnanec</td><td>‚ÄěNezadali jste hodiny za {mńõs√≠c}"</td><td><span class="prio p-high">HIGH</span></td></tr>
+<tr><td>Nov√° objedn√°vka sluŇĺby</td><td>Admin</td><td>‚Äě{jm√©no} objednal {sluŇĺba}"</td><td><span class="prio p-med">MEDIUM</span></td></tr>
+<tr><td>Dokument nahr√°n</td><td>Admin</td><td>‚Äě{jm√©no} nahr√°l {typ_dokumentu}"</td><td><span class="prio p-low">LOW</span></td></tr>
+<tr><td>Pl√°n ‚ÄĒ bod splnńõn</td><td>Admin</td><td>‚Äě{jm√©no} splnil bod pl√°nu: {text}"</td><td><span class="prio p-low">LOW</span></td></tr>
+<tr><td>Nov√° registrace pŇôes QR</td><td>Hunter + Admin</td><td>‚ÄěNov√° registrace pŇôes v√°Ň° odkaz: {jm√©no}"</td><td><span class="prio p-high">HIGH</span></td></tr>
+</table></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Zvoneńćek v header:</strong> Ikonka ūüĒĒ s ńćerven√Ĺm badge (pońćet nepŇôeńćten√Ĺch). Max zobrazit ‚Äě99+". Pozice: vpravo v hlavn√≠ navigaci.</li>
+<li><strong>Dropdown:</strong> Klik na zvoneńćek ‚Üí dropdown max 300px Ň°√≠Ňôka, max 5 poloŇĺek viditeln√Ĺch, scroll pro v√≠ce. KaŇĺd√° poloŇĺka: avatar odes√≠latele (40px kruh) + text + relativn√≠ ńćas (pŇôed 2 min / vńćera).</li>
+<li><strong>Kliknut√≠:</strong> Oznańć√≠ jako pŇôeńćten√© + redirect na c√≠lovou str√°nku (conversation, job posting, profil atd.).</li>
+<li><strong>Tlańć√≠tko ‚ÄěOznańćit vŇ°e jako pŇôeńćten√©"</strong> v dropdown headeru.</li>
+<li><strong>Str√°nka vŇ°ech ozn√°men√≠:</strong> /notifications ‚ÄĒ filtr (nepŇôeńćten√©/vŇ°e), paginace, seskupen√≠ dle dne.</li>
+<li><strong>Real-time:</strong> Nov√° notifikace ‚Üí badge se zv√ĹŇ°√≠ + toast popup v prav√©m horn√≠m rohu (auto-dismiss 5s).</li>
+</ul></div>
+
+<div class="edge"><p>UŇĺivatel s du√°ln√≠ rol√≠ (zamńõstnanec + hunter) mus√≠ dostat notifikace pro OBńö role. ŇėeŇ°en√≠: notifikace se pos√≠laj√≠ na user_id, ne na role. User vid√≠ vŇ°echny sv√© notifikace bez ohledu na kontext.</p></div>
+<div class="edge"><p>Offline uŇĺivatel ‚ÄĒ notifikace se kumuluj√≠ v DB. PŇôi pŇôihl√°Ň°en√≠ vid√≠ vŇ°echny nepŇôeńćten√©. Pokud >50 nepŇôeńćten√Ĺch, zobrazit sumarizaci: ‚ÄěM√°te 73 nepŇôeńćten√Ĺch ozn√°men√≠".</p></div>
+<div class="empty">ŇĹ√°dn√° ozn√°men√≠ ‚Üí ikona zvoneńćku, pr√°zdn√Ĺ dropdown s textem ‚ÄěZat√≠m Ňĺ√°dn√° nov√° ozn√°men√≠" + ilustrace (pr√°zdn√Ĺ inbox).</div>
+<div class="test">Badge se aktualizuje real-time pŇôi pŇô√≠chodu nov√© notifikace bez refreshe str√°nky.</div>
+<div class="test">Klik na notifikaci ji oznańć√≠ jako pŇôeńćtenou a badge se sn√≠Ňĺ√≠ o 1.</div>
+<div class="test">Bulk ‚ÄěOznańćit vŇ°e" ‚ÄĒ sn√≠Ňĺ√≠ badge na 0.</div>
+</div>
+</div>
+
+<!-- MESSAGING SYST√ČM -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Glob√°ln√≠ messaging syst√©m (sd√≠len√Ĺ vŇ°emi profily)</h3><span class="num">ARCHITEKTURA</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Zpr√°vy funguj√≠ jako e-mail: konverzace (vl√°kna), pŇôedmńõt, polymorfn√≠ pŇô√≠lohy. <strong>Kl√≠ńćov√Ĺ rozd√≠l mezi rolemi:</strong></p>
+<table>
+<tr><th>Role</th><th>Komunikuje s</th><th>Styl</th><th>PŇô√≠lohy</th></tr>
+<tr><td>Hunter</td><td>POUZE admin</td><td>Jednoduch√Ĺ chat</td><td>Ne</td></tr>
+<tr><td>Agent</td><td>POUZE admin</td><td>E-mail styl (pŇôedmńõt + vl√°kna)</td><td>Ano ‚ÄĒ profil kandid√°ta</td></tr>
+<tr><td>Zamńõstnanec</td><td>POUZE admin</td><td>Jednoduch√Ĺ chat</td><td>Ne</td></tr>
+<tr><td>Admin</td><td>VŇ°ichni</td><td>E-mail styl</td><td>VŇ°e</td></tr>
+</table>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ conversations + messages</div>
+<pre>Schema::create('conversations', function (Blueprint $table) {
+    $table->id();
+    $table->string('subject')->nullable(); // null u chatu, vyplnńõno u agent e-mailu
+    $table->enum('type', ['chat', 'email'])->default('chat');
+    $table->timestamp('last_message_at')->nullable()->index();
+    $table->timestamps();
+    $table->softDeletes();
+});
+
+Schema::create('conversation_user', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('conversation_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->timestamp('last_read_at')->nullable();
+    $table->boolean('is_archived')->default(false);
+    $table->unique(['conversation_id', 'user_id']);
+});
+
+Schema::create('messages', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('conversation_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('user_id')->constrained(); // odes√≠latel
+    $table->text('body');
+    $table->nullableMorphs('attachable'); // polymorphic: User(kandid√°t), Document, atd.
+    $table->timestamps();
+    $table->softDeletes();
+    $table->index(['conversation_id', 'created_at']);
+});</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera ‚ÄĒ Agent messaging (e-mail styl)</h4>
+<ul class="fl">
+<li><strong>Layout desktop:</strong> Split view ‚ÄĒ lev√Ĺ panel 35% (seznam konverzac√≠), prav√Ĺ panel 65% (vl√°kno).</li>
+<li><strong>Lev√Ĺ panel:</strong> KaŇĺd√° konverzace: avatar, jm√©no, subject (bold pokud nepŇôeńćten√©), preview posledn√≠ch 60 znakŇĮ, relativn√≠ ńćas, badge nepŇôeńćten√Ĺch. Ňėazen√≠: nejnovńõjŇ°√≠ nahoŇôe.</li>
+<li><strong>Prav√Ĺ panel:</strong> Header (subject + √ļńćastn√≠ci), zpr√°vy chronologicky (bubliny ‚ÄĒ vlastn√≠ vpravo modr√©, pŇô√≠choz√≠ vlevo Ň°ed√©), compose bar dole s tlańć√≠tky: odeslat, pŇôipojit profil kandid√°ta.</li>
+<li><strong>PŇôipojit profil:</strong> Klik ‚Üí modal s vyhled√°v√°n√≠m kandid√°tŇĮ (autocomplete jm√©no). Vybran√Ĺ kandid√°t = karta s fotkou + jm√©nem + Ňôemeslem pŇôipojen√° ke zpr√°vńõ.</li>
+<li><strong>Mobile:</strong> Full-screen seznam ‚Üí klik ‚Üí full-screen konverzace s back Ň°ipkou.</li>
+<li><strong>Filtr:</strong> VŇ°echny / NepŇôeńćten√© / Archivovan√©. Search bar pro fulltextov√© hled√°n√≠ v konverzac√≠ch.</li>
+</ul></div>
+
+<div class="edge"><p>Konverzace agent-admin: agent poŇ°le zpr√°vu ‚Üí admin ji vid√≠. Jin√Ĺ admin (kolega) ji tak√© mus√≠ vidńõt. ŇėeŇ°en√≠: admin role = VŇ†ICHNI admini maj√≠ pŇô√≠stup ke vŇ°em konverzac√≠m. Scope: <code>Conversation::whereHas('users', fn($q) => $q->where('role', 'admin'))</code>.</p></div>
+<div class="edge"><p>Zpr√°va s pŇôipojen√Ĺm profilem kandid√°ta, ale kandid√°t je mezit√≠m smaz√°n z DB. ŇėeŇ°en√≠: <code>softDeletes</code> na User modelu + zobrazit ‚ÄěProfil smaz√°n" m√≠sto karty.</p></div>
+<div class="edge"><p>Konverzace bez odpovńõdi >7 dn√≠. Automatick√° notifikace adminovi: ‚ÄěKonverzace s {agent} ńćek√° na odpovńõńŹ {X} dn√≠".</p></div>
+<div class="auto"><p>CRON <code>daily</code>: Kontrola konverzac√≠ bez odpovńõdi >7 dn√≠ ‚Üí notifikace admin. Command: <code>php artisan messages:check-stale</code>.</p></div>
+<div class="empty">ŇĹ√°dn√© konverzace ‚Üí ‚ÄěZat√≠m nem√°te Ňĺ√°dn√© zpr√°vy. Komunikace s adminem zańćne zde." + ilustrace pr√°zdn√© schr√°nky + CTA ‚ÄěNapsat zpr√°vu".</div>
+<div class="errst">Zpr√°va se nepodaŇôila odeslat ‚Üí ńćerven√Ĺ vykŇôińćn√≠k u zpr√°vy + ‚ÄěZkusit znovu" tlańć√≠tko. Retry max 3x, pak error modal.</div>
+<div class="test">Agent poŇ°le zpr√°vu s pŇôipojen√Ĺm profilem ‚Üí admin vid√≠ kartu kandid√°ta v konverzaci.</div>
+<div class="test">Admin odpov√≠ ‚Üí agent dostane notifikaci real-time.</div>
+<div class="test">Archivovan√° konverzace se nezobrazuje ve v√Ĺchoz√≠m filtru.</div>
+<div class="test">Fulltext search najde konverzaci dle obsahu zpr√°vy.</div>
+</div>
+</div>
+
+<!-- VERZE ZAMńöSTNANEC -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Mapa verz√≠ Profilu Zamńõstnance (4 iterace od klienta)</h3><span class="num">4 iterace</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Klient dodal 4 iterace. Fin√°ln√≠ = <strong>verze 4</strong> (<code>4-Profil Zamńõstnance Kostra Pdf.pdf</code>).</p>
+<table>
+<tr><th>Verze</th><th>Soubor</th><th>Kl√≠ńćov√© zmńõny</th></tr>
+<tr><td>1 (base)</td><td>Profil Zamńõstnance Kostra Pdf.pdf</td><td>20 poloŇĺek, bez Zpr√°v, bez MŇĮj pl√°n</td></tr>
+<tr><td>2</td><td>2-Profil Zamńõstnance Kostra Pdf.pdf</td><td>+ Evidence doch√°zky ‚Üí Mzdov√° kalkulańćka vizu√°l</td></tr>
+<tr><td>3</td><td>3-Profil Zamńõstnance Kostra Pdf.pdf</td><td>+ MŇĮj pl√°n (checklist + mapa), Odmńõny ‚Üí Profil N√°bor√°Ňô</td></tr>
+<tr><td><strong>4 (FINAL)</strong></td><td>4-Profil Zamńõstnance Kostra Pdf.pdf</td><td><strong>+ Zpr√°vy (komunikace s adminem), 23 sekc√≠ celkem</strong></td></tr>
+</table>
+<div class="note note-warn">Soubor ‚ÄěProfil Zamńõstnance Kostra Pdf (1).pdf" = <strong>kopie verze 4</strong>. Duplicitn√≠ ‚ÄĒ ignorovat.</div>
+</div>
+</div>
+
+<!-- POPISKY SLUŇĹEB -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Popisky sluŇĺeb (Service Descriptions z klientsk√Ĺch PDF)</h3><span class="num">8 PDF</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Hotov√© marketingov√© texty. Developer je vloŇĺ√≠ do Blade views. Designer vytvoŇô√≠ karty s CTA.</p>
+<table>
+<tr><th>SluŇĺba</th><th>Soubor</th><th>Cena</th><th>C√≠lov√° sekce</th><th>CTA text</th></tr>
+<tr><td>Jazykov√© lekce</td><td>Jazykov√© Lekce - Popisky Pdf.pdf</td><td class="price">299 ‚ā¨</td><td>Zamńõst. ‚Üí 7</td><td>‚ÄěObjednat lekce"</td></tr>
+<tr><td>Sv√°Ňôeńćsk√© kurzy</td><td>Profesion√°ln√≠ kurzy pro sv√°Ňôeńće Popisky Pdf.pdf</td><td class="price">od 599 ‚ā¨</td><td>Zamńõst. ‚Üí 8</td><td>‚ÄěObjednat kurz"</td></tr>
+<tr><td>Kindergeld</td><td>PŇô√≠spńõvek na dńõti Popisky Pdf.pdf</td><td class="price">249 ‚ā¨</td><td>Zamńõst. ‚Üí 10</td><td>‚ÄěZaŇĺ√°dat o sluŇĺbu"</td></tr>
+<tr><td>DaŇąov√© pŇôizn√°n√≠</td><td>DaŇąov√© pŇôizn√°n√≠ Popisky Pdf.pdf</td><td>‚ÄĒ</td><td>Zamńõst. ‚Üí 11</td><td>‚ÄěZaŇĺ√°dat o sluŇĺbu"</td></tr>
+<tr><td>Bydlen√≠, √öŇôady, Banky</td><td>Bydlen√≠, √öŇôady, Banky Popisky Pdf.pdf</td><td class="price">1,29 ‚ā¨/min</td><td>Zamńõst. ‚Üí 14‚Äď17</td><td>‚ÄěObjednat asistenci"</td></tr>
+<tr><td>Kari√©rn√≠ poradenstv√≠</td><td>Kari√©rn√≠ poradenstv√≠ popisky Pdf.pdf</td><td class="price">199 ‚ā¨/hod</td><td>Zamńõst. ‚Üí 19</td><td>‚ÄěSjednat konzultaci"</td></tr>
+<tr><td>N√°vod ChatGPT</td><td>N√°vod Chat Gpt popisky Pdf.pdf</td><td>zdarma</td><td>Zamńõst. ‚Üí 12</td><td>‚ÄěZobrazit n√°vod"</td></tr>
+<tr><td>Ukonńćen√≠ pr√°ce</td><td>Ukonńćen√≠ pr√°ce v Zahranińć√≠ Popisky Pdf.pdf</td><td>‚ÄĒ</td><td>Zamńõst. ‚Üí 22</td><td>‚ÄěZobrazit prŇĮvodce"</td></tr>
+</table>
+<div class="tip"><p>VŇ°echny sluŇĺby by mńõly m√≠t jednotn√Ĺ model <code>Service</code> v DB s polemi: slug, title, price, description (Markdown/HTML), cta_text, is_active, sort_order. Admin CRUD pro spr√°vu. Blade: <code>@foreach($services as $service)</code> ‚ÄĒ jednotn√° Ň°ablona karty.</p></div>
+</div>
+</div>
+
+</div><!-- /t-over -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: N√ĀBOR√ĀŇė / HUNTER -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-hunt" class="tc">
+
+<div class="note note-warn" style="margin-bottom:20px"><strong>DŇĮleŇĺit√©:</strong> Profil Huntera je <strong>skryt√Ĺ v profilu zamńõstnance</strong> (zamńõstnanec se stane n√°bor√°Ňôem). UI mus√≠ umoŇĺnit pŇôepnut√≠ kontextu: z√°loŇĺka ‚ÄěOdmńõny" v profilu zamńõstnance ‚Üí redirect na Hunter profil.</div>
+<div class="note note-info" style="margin-bottom:20px"><strong>Provize:</strong> KaŇĺd√Ĺ hunter m√° <strong>individu√°ln√≠ provizi nastavenou adminem</strong> ‚ÄĒ NE syst√©mov√Ĺ fixn√≠ v√Ĺpońćet. Admin pole: <code>users.hunter_commission_rate</code> (decimal, nullable).</div>
+
+<!-- H1: Ozn√°men√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>1. Ozn√°men√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>FB-style notifikace pro huntera</strong></div>
+<p>Viz glob√°ln√≠ notifikańćn√≠ syst√©m v PŇôehledu. Hunter-specifick√© eventy:</p>
+<ul class="fl">
+<li><strong>Nov√° registrace pŇôes QR/link:</strong> ‚Äě{jm√©no} se registroval pŇôes v√°Ň° n√°borov√Ĺ odkaz"</li>
+<li><strong>Kandid√°t zmńõnil status:</strong> ‚Äě{jm√©no} (v√°Ň° doporuńćen√Ĺ) byl pŇôesunut do: Na zkouŇ°ku"</li>
+<li><strong>Odmńõna pŇôips√°na:</strong> ‚ÄěZa mńõs√≠c {mńõs√≠c} v√°m byla pŇôips√°na odmńõna: {ńć√°stka}"</li>
+<li><strong>Nov√° popt√°van√° pozice:</strong> ‚ÄěNov√° pozice: {Ňôemeslo} v {lokalita}" (pokud je funkce povolena)</li>
+</ul></div>
+
+<div class="auto"><p>Observer <code>UserObserver::created()</code>: pokud user m√° <code>referred_by</code> (hunter_id) ‚Üí dispatch <code>NewReferralNotification</code> hunterovi + adminovi.</p></div>
+<div class="edge"><p>Hunter doporuńć√≠ osobu, kter√° se registruje ale NEDOKONńĆ√ć Ňĺivotopis. Hunter st√°le dostane notifikaci o registraci. DalŇ°√≠ notifikace (status change) aŇĺ po dokonńćen√≠ CV.</p></div>
+<div class="test">Registrace pŇôes QR ‚Üí hunter vid√≠ notifikaci do 5 sekund (real-time) nebo ihned po refreshi.</div>
+</div></div>
+
+<!-- H2: Zpr√°vy -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>2. Zpr√°vy</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Chat s adminem (jednoduch√Ĺ styl)</strong></div>
+<p>Hunter komunikuje <strong>V√ĚHRADNńö s adminem</strong>. ŇĹ√°dn√Ĺ kontakt s agenty nebo zamńõstnanci pŇô√≠mo. Styl: jednoduch√Ĺ chat (ne e-mail). Bez pŇôedmńõtu, bez pŇôipojen√≠ profilu.</p></div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<p>Sd√≠len√Ĺ model <code>Conversation</code> + <code>Message</code> (viz glob√°ln√≠ messaging). Konverzace typu <code>chat</code>.</p>
+<pre>// Automatick√© vytvoŇôen√≠ konverzace hunter-admin pŇôi prvn√≠ zpr√°vńõ
+public function getOrCreateHunterConversation(User $hunter): Conversation
+{
+    $admin = User::where('role', 'admin')->first(); // nebo admin pool
+    $existing = $hunter->conversations()
+        ->whereHas('users', fn($q) => $q->where('role', 'admin'))
+        ->where('type', 'chat')
+        ->first();
+    if ($existing) return $existing;
+
+    $conv = Conversation::create(['type' => 'chat']);
+    $conv->users()->attach([$hunter->id, $admin->id]);
+    return $conv;
+}</pre></div>
+
+<div class="edge"><p>V√≠ce adminŇĮ v syst√©mu ‚ÄĒ kdo odpov√≠d√° hunterovi? ŇėeŇ°en√≠: Konverzace je s ‚Äěadmin pool". Jak√Ĺkoliv admin mŇĮŇĺe odpovńõdńõt. Zobrazit jm√©no konkr√©tn√≠ho admina u zpr√°vy.</p></div>
+<div class="edge"><p>Hunter poŇ°le zpr√°vu kdyŇĺ je admin offline. Zpr√°va se uloŇĺ√≠, admin vid√≠ pŇôi pŇôihl√°Ň°en√≠. Email notifikace adminovi (volitelnńõ, nastaviteln√©).</p></div>
+<div class="empty">ŇĹ√°dn√© zpr√°vy ‚Üí ‚ÄěNapiŇ°te n√°m cokoliv ‚ÄĒ jsme tu pro v√°s." + CTA ‚ÄěNapsat zpr√°vu".</div>
+<div class="test">Hunter poŇ°le zpr√°vu ‚Üí admin vid√≠ v admin panelu + notifikace.</div>
+<div class="test">Admin odpov√≠ ‚Üí hunter vid√≠ odpovńõńŹ + notifikace.</div>
+</div></div>
+
+<!-- H3: Popt√°van√© pozice -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>3. Popt√°van√© pozice</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Anonymizovan√Ĺ seznam popt√°vek od agentŇĮ</strong></div>
+<p>Hunter vid√≠ popt√°vky, aby vńõdńõl jak√© profese jsou Ňĺ√°dan√© a mohl c√≠lenńõ nab√≠rat. <strong>Anonymizovan√©</strong> ‚ÄĒ bez jm√©na agenta a firmy.</p></div>
+
+<div class="sub-sec green"><h4>Co hunter VID√ć</h4>
+<ul class="fl">
+<li><strong>Ňėemeslo/profese</strong> + specifikace</li>
+<li><strong>Pońćet hledan√Ĺch osob</strong></li>
+<li><strong>Lokalita</strong> (mńõsto/region, ne pŇôesn√° adresa)</li>
+<li><strong>Typ pomńõru</strong> (HPP / OSVńĆ)</li>
+<li><strong>Orientańćn√≠ finanńćn√≠ rozmez√≠</strong> (brutto od‚Äďdo)</li>
+<li><strong>Datum startu / zkouŇ°ky</strong></li>
+</ul></div>
+
+<div class="sub-sec red"><h4>Co hunter NEVID√ć</h4>
+<ul class="fl">
+<li><strong>N√°zev firmy</strong> ‚ÄĒ skryt√Ĺ</li>
+<li><strong>Jm√©no agenta</strong> ‚ÄĒ skryt√Ĺ</li>
+<li><strong>PŇôesn√° adresa pracoviŇ°tńõ</strong> ‚ÄĒ pouze mńõsto/PSńĆ</li>
+<li><strong>Detaily specifikace</strong> (intern√≠ pozn√°mky agenta)</li>
+</ul></div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// JobPosting model ‚ÄĒ scope pro huntera
+public function scopeVisibleForHunter(Builder $query): Builder
+{
+    return $query->where('status', 'active')
+        ->where('is_public_for_hunters', true)
+        ->select([
+            'id', 'craft_id', 'craft_specification',
+            'employment_type', 'persons_needed',
+            'location_city', 'location_zip', // BEZ pŇôesn√© adresy
+            'salary_range_from', 'salary_range_to',
+            'start_date_from', 'start_date_to',
+            'created_at'
+        ]); // BEZ: company_name, agent_id, internal_notes
+}
+
+// Route
+Route::get('/hunter/positions', [HunterJobPostingController::class, 'index']);
+// Filtr: Ňôemeslo, region, typ, Ňôazen√≠: datum</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Filtr bar nahoŇôe:</strong> Select Ňôemeslo, select region, toggle HPP/OSVńĆ. Klik ‚ÄěFiltrovat" ‚Üí AJAX reload.</li>
+<li><strong>Karta popt√°vky:</strong> Ňėemeslo (velk√Ĺ text), lokalita badge, pońćet osob badge, finanńćn√≠ rozmez√≠, datum. Hover: zv√Ĺraznńõn√≠.</li>
+<li><strong>Ňėazen√≠:</strong> NejnovńõjŇ°√≠ | Nejv√≠c osob | NejlepŇ°√≠ mzda.</li>
+<li><strong>Paginace:</strong> 20 na str√°nku, infinite scroll nebo klasick√° paginace.</li>
+</ul></div>
+
+<div class="edge"><p>Agent nastav√≠ popt√°vku jako ‚Äěnepublikovat pro huntery" (<code>is_public_for_hunters = false</code>). Hunter ji nevid√≠. Default = true.</p></div>
+<div class="edge"><p>Popt√°vka expiruje (datum startu v minulosti + 30 dn√≠). Auto-hide z hunter view. CRON: <code>job_postings:cleanup-expired</code>.</p></div>
+<div class="empty">ŇĹ√°dn√© popt√°vky odpov√≠daj√≠c√≠ filtru ‚Üí ‚ÄěMoment√°lnńõ nejsou Ňĺ√°dn√© pozice odpov√≠daj√≠c√≠ vaŇ°emu v√Ĺbńõru. Zkuste zmńõnit filtry." + CTA reset filtrŇĮ.</div>
+<div class="test">Hunter vid√≠ 10 popt√°vek, Ňĺ√°dn√° nem√° jm√©no firmy ani agenta.</div>
+<div class="test">Filtr ‚ÄěSv√°Ňôeńć" + ‚ÄěBayern" ‚Üí zobraz√≠ pouze relevantn√≠ popt√°vky.</div>
+</div></div>
+
+<!-- H4: QR K√≥d / Link -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>4. QR K√≥d / N√°borov√Ĺ Link</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>PŇôejmenov√°n√≠ + vylepŇ°en√≠</strong></div>
+<p>Z ‚Äěprovizn√≠ odkaz/QR k√≥d" pŇôejmenovat na <strong>‚ÄěN√°borov√Ĺ odkaz/QR k√≥d"</strong>. Vysvńõtlen√≠: tento odkaz sd√≠l√≠te s potenci√°ln√≠mi pracovn√≠ky. KaŇĺd√Ĺ, kdo se pŇôes nńõj zaregistruje, je pŇôiŇôazen k v√°m.</p></div>
+
+<div class="sub-sec"><h4>Funkcionalita</h4>
+<ul class="fl">
+<li><strong>Unik√°tn√≠ URL:</strong> <code>https://dilibees.cz/registrace?ref={referral_code}</code></li>
+<li><strong>QR k√≥d:</strong> SVG inline (simplesoftwareio/simple-qrcode), st√°hnuteln√Ĺ jako PNG</li>
+<li><strong>PDF plak√°t:</strong> Generovan√Ĺ plak√°t s QR k√≥dem, logem Dilibees, textem ‚ÄěHled√°te pr√°ci v zahranińć√≠?" ‚ÄĒ ke staŇĺen√≠/tisku</li>
+<li><strong>Statistika:</strong> Kolik lid√≠ se pŇôes odkaz registrovalo (celkem, tento mńõs√≠c)</li>
+<li><strong>Kop√≠rov√°n√≠:</strong> Tlańć√≠tko ‚ÄěKop√≠rovat odkaz" s clipboard API + toast ‚ÄěZkop√≠rov√°no!"</li>
+</ul></div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// User model
+public function generateReferralCode(): string {
+    return Str::lower(Str::random(8)); // nebo base36(user_id)
+}
+
+// Migration: add to users table
+$table->string('referral_code', 16)->unique()->nullable();
+
+// Registration Controller ‚ÄĒ zachytit ref
+public function showRegistrationForm(Request $request) {
+    $referrer = $request->query('ref')
+        ? User::where('referral_code', $request->query('ref'))->first()
+        : null;
+    session(['referrer_id' => $referrer?->id]);
+    return view('auth.register', compact('referrer'));
+}
+
+// Po registraci
+$user = User::create([...]);
+if ($referrerId = session('referrer_id')) {
+    $user->update(['referred_by' => $referrerId]);
+    session()->forget('referrer_id');
+    // Dispatch notification
+    User::find($referrerId)->notify(new NewReferralNotification($user));
+}
+
+// QR generov√°n√≠
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+$qr = QrCode::format('svg')->size(300)->generate($user->referral_url);
+
+// PDF plak√°t
+return PDF::loadView('hunter.referral-poster', compact('user', 'qr'))->download('nabarovy-plakatcek.pdf');</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Karta s QR k√≥dem:</strong> Velk√Ĺ QR (min 200px), pod n√≠m URL text (zkr√°cen√Ĺ), tlańć√≠tka: ‚ÄěKop√≠rovat odkaz" (zelen√©), ‚ÄěSt√°hnout QR" (modr√©), ‚ÄěSt√°hnout plak√°t PDF" (oranŇĺov√©).</li>
+<li><strong>Statistika:</strong> Mal√° karta vedle: ‚ÄěRegistrace pŇôes v√°Ň° odkaz: {celkem}" / ‚ÄěTento mńõs√≠c: {pońćet}".</li>
+<li><strong>PDF plak√°t design:</strong> A4, Dilibees logo nahoŇôe, velk√Ĺ QR uprostŇôed, text ‚ÄěHled√°te pr√°ci v zahranińć√≠? Naskenujte QR k√≥d a registrujte se!", kontaktn√≠ info dole.</li>
+</ul></div>
+
+<div class="edge"><p>Referral k√≥d kolizn√≠ ‚ÄĒ zajistit unik√°tnost. DB unique constraint + retry loop pŇôi generov√°n√≠.</p></div>
+<div class="edge"><p>Registrace pŇôes ref link, ale link je od deaktivovan√©ho huntera. Registrace probńõhne, ale referred_by se NENASTAV√ć (hunter neexistuje/deaktivovan√Ĺ).</p></div>
+<div class="edge"><p>UŇĺivatel otevŇôe ref link, ale neregistruje se hned. PŇôijde za 3 dny a registruje se pŇô√≠mo. Session expiruje ‚Üí referrer se ztrat√≠. ŇėeŇ°en√≠: uloŇĺit ref do cookie (30 dn√≠) jako fallback.</p></div>
+<div class="auto"><p>Po registraci pŇôes ref link ‚Üí automaticky: 1) pŇôiŇôadit referred_by, 2) notifikovat huntera, 3) notifikovat admina, 4) inkrementovat statistiku huntera.</p></div>
+<div class="test">Registrace pŇôes QR ‚Üí hunter vid√≠ +1 v statistice + notifikace.</div>
+<div class="test">Kop√≠rovat odkaz ‚Üí clipboard obsahuje spr√°vnou URL s ref k√≥dem.</div>
+<div class="test">PDF plak√°t ‚Üí korektn√≠ A4 form√°t s ńćiteln√Ĺm QR.</div>
+</div></div>
+
+<!-- H5: MŇĮj Profil -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>5. MŇĮj Profil</h3><span class="badge b-new">NOV√Č</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Dashboard huntera</strong></div>
+<p>Osobn√≠ √ļdaje + souhrnn√© statistiky na jednom m√≠stńõ.</p>
+<ul class="fl">
+<li><strong>Jm√©no, pŇô√≠jmen√≠, email, telefon</strong> ‚ÄĒ editovateln√©</li>
+<li><strong>Aktivn√≠ od:</strong> datum registrace jako hunter</li>
+<li><strong>Referral k√≥d:</strong> zobrazit + kop√≠rovat</li>
+<li><strong>Celkem doporuńćen√Ĺch:</strong> ńć√≠slo</li>
+<li><strong>Aktivn√≠ch (pracuj√≠c√≠ch):</strong> ńć√≠slo</li>
+<li><strong>Provizn√≠ sazba:</strong> zobrazit (read-only, nastavuje admin)</li>
+<li><strong>Celkem vyplaceno:</strong> suma historick√Ĺch odmńõn</li>
+</ul></div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// HunterProfileController
+public function show(Request $request) {
+    $hunter = $request->user();
+    return view('hunter.profile', [
+        'hunter' => $hunter,
+        'totalReferred' => User::where('referred_by', $hunter->id)->count(),
+        'activeWorkers' => User::where('referred_by', $hunter->id)
+            ->where('candidate_status', CandidateStatus::ACTIVE)->count(),
+        'totalEarned' => $hunter->rewards()->sum('amount'),
+        'commissionRate' => $hunter->hunter_commission_rate,
+    ]);
+}</pre></div>
+
+<div class="edge"><p>Hunter chce zmńõnit email ‚ÄĒ vyŇĺadovat ovńõŇôen√≠ nov√©ho emailu (verification link) pŇôed uloŇĺen√≠m.</p></div>
+<div class="edge"><p>Provizn√≠ sazba = null (admin ji jeŇ°tńõ nenastavil). Zobrazit: ‚ÄěProvizn√≠ sazba: Bude nastavena adminem" m√≠sto pr√°zdn√©ho pole.</p></div>
+</div></div>
+
+<!-- H6: Lid√© -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>6. Lid√©</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Seznam doporuńćen√Ĺch + NOV√Č Data a Grafy</strong></div>
+<p>St√°vaj√≠c√≠ funkce ‚ÄěM√°me" (seznam doporuńćen√Ĺch lid√≠) + nov√° analytick√° sekce.</p></div>
+
+<div class="sub-sec green"><h4>Seznam lid√≠ (st√°vaj√≠c√≠ ‚ÄĒ refresh)</h4>
+<table>
+<tr><th>Sloupec</th><th>Zdroj</th><th>Ňėazen√≠</th></tr>
+<tr><td>Jm√©no</td><td>User.full_name</td><td>ASC/DESC</td></tr>
+<tr><td>Ňėemeslo</td><td>User.craft</td><td>ASC/DESC</td></tr>
+<tr><td>Datum registrace</td><td>User.created_at</td><td>ASC/DESC (default: newest)</td></tr>
+<tr><td>Status</td><td>User.candidate_status (enum badge)</td><td>Filtr</td></tr>
+<tr><td>Lokace (kde pracuje)</td><td>User.work_location</td><td>‚ÄĒ</td></tr>
+</table></div>
+
+<div class="sub-sec red"><h4>Data a Grafy (NOV√Č)</h4>
+<p>Analytick√Ĺ dashboard huntera:</p>
+<ul class="fl">
+<li><strong>Line chart ‚ÄĒ Frekvence nov√Ĺch lid√≠:</strong> X-osa = mńõs√≠ce (posledn√≠ch 12), Y-osa = pońćet nov√Ĺch doporuńćen√Ĺch. Zobrazit trend.</li>
+<li><strong>Donut chart ‚ÄĒ √öspńõŇ°nost:</strong> Segmenty: Aktivn√≠ (pracuj√≠c√≠), Na zkouŇ°ce, ńĆek√° na matching, Nedohodli se, Ukonńćili. Barvy: zelen√°, Ňĺlut√°, modr√°, ńćerven√°, Ň°ed√°.</li>
+<li><strong>KPI karty nahoŇôe:</strong> Celkem doporuńćen√Ĺch | Aktivn√≠ch | √öspńõŇ°nost % | Tento mńõs√≠c nov√Ĺch</li>
+</ul></div>
+
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// HunterAnalyticsController
+public function data(Request $request) {
+    $hunterId = $request->user()->id;
+
+    // Line chart data ‚ÄĒ posledn√≠ch 12 mńõs√≠cŇĮ
+    $monthlyRegistrations = User::where('referred_by', $hunterId)
+        ->where('created_at', '>=', now()->subMonths(12))
+        ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as count")
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    // Donut chart ‚ÄĒ status breakdown
+    $statusBreakdown = User::where('referred_by', $hunterId)
+        ->selectRaw("candidate_status, COUNT(*) as count")
+        ->groupBy('candidate_status')
+        ->pluck('count', 'candidate_status');
+
+    return response()->json([
+        'monthly' => $monthlyRegistrations,
+        'statuses' => $statusBreakdown,
+        'total' => User::where('referred_by', $hunterId)->count(),
+        'active' => $statusBreakdown->get('active', 0),
+        'success_rate' => round(($statusBreakdown->get('active', 0) / max($statusBreakdown->sum(), 1)) * 100, 1),
+    ]);
+}
+
+// Frontend: Chart.js (AJAX load)
+// Route: GET /hunter/analytics/data ‚Üí JSON</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Layout:</strong> 4 KPI karty nahoŇôe (grid), pod nimi 2 grafy vedle sebe (desktop) nebo stack (mobile).</li>
+<li><strong>KPI karta:</strong> Ikona + label + velk√© ńć√≠slo + mal√Ĺ trend indicator (‚ÜĎ12% oproti minul√©mu mńõs√≠ci).</li>
+<li><strong>Line chart:</strong> Plynul√° ńć√°ra, teńćky na datov√Ĺch bodech, tooltip pŇôi hoveru (mńõs√≠c: pońćet).</li>
+<li><strong>Donut chart:</strong> Segmenty s legendou vpravo. Kliknut√≠ na segment ‚Üí filtruje seznam lid√≠ pod grafem.</li>
+<li><strong>Pod grafy:</strong> Tabulka seznamu lid√≠ (viz v√ĹŇ°e) s filtry a Ňôazen√≠m.</li>
+</ul></div>
+
+<div class="edge"><p>Nov√Ĺ hunter bez doporuńćen√Ĺch lid√≠ ‚ÄĒ grafy pr√°zdn√©. Zobrazit placeholder: ‚ÄěZat√≠m nem√°te Ňĺ√°dn√© doporuńćen√© osoby. Sd√≠lejte svŇĮj n√°borov√Ĺ odkaz!" s linkem na bod 4.</p></div>
+<div class="edge"><p>Hunter s 1 osobou ‚ÄĒ donut chart s jedn√≠m segmentem vypad√° divnńõ. Min. zobrazen√≠: pokud <3 osoby, zobrazit pouze ńć√≠sla, ne graf.</p></div>
+<div class="auto"><p>Denn√≠ CRON: pŇôepońć√≠tat a cache-ovat statistiky hunterŇĮ do <code>hunter_stats</code> tabulky (total, active, success_rate, monthly_new). Grafy loaduj√≠ z cache, ne live queries.</p></div>
+<div class="test">Hunter s 50 doporuńćen√Ĺmi vid√≠ korektn√≠ line chart za 12 mńõs√≠cŇĮ.</div>
+<div class="test">Donut chart segmenty odpov√≠daj√≠ skuteńćn√Ĺm statusŇĮm.</div>
+<div class="test">KPI ‚Äě√öspńõŇ°nost" = (aktivn√≠ / celkem) √ó 100, zaokrouhleno na 1 des. m√≠sto.</div>
+</div></div>
+
+<!-- H7: Odmńõny -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>7. Odmńõny</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>PŇôehled proviz√≠ ‚ÄĒ mńõs√≠ńćn√≠ soupis</strong></div>
+<p>Hunter vid√≠ historii sv√Ĺch odmńõn. <strong>Provize jsou individu√°ln√≠</strong> ‚ÄĒ admin je nastavuje a zapisuje ruńćnńõ.</p>
+<ul class="fl">
+<li><strong>Mńõs√≠c:</strong> ‚Äě√önor 2026"</li>
+<li><strong>ńĆ√°stka:</strong> ‚Äě1.250 ‚ā¨"</li>
+<li><strong>Pońćet aktivn√≠ch lid√≠:</strong> kteŇô√≠ ten mńõs√≠c pracovali</li>
+<li><strong>Pozn√°mka admina:</strong> voliteln√Ĺ text</li>
+<li><strong>Status:</strong> PŇôips√°no / ńĆek√° na vyplacen√≠ / Vyplaceno</li>
+</ul></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ hunter_rewards</div>
+<pre>Schema::create('hunter_rewards', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('hunter_id')->constrained('users')->cascadeOnDelete();
+    $table->string('period', 7); // '2026-02' (YYYY-MM)
+    $table->decimal('amount', 10, 2);
+    $table->integer('active_workers_count')->default(0);
+    $table->text('admin_note')->nullable();
+    $table->enum('status', ['pending', 'credited', 'paid'])->default('pending');
+    $table->date('paid_at')->nullable();
+    $table->foreignId('created_by')->nullable()->constrained('users'); // admin
+    $table->timestamps();
+    $table->unique(['hunter_id', 'period']); // max 1 z√°znam za mńõs√≠c
+});</pre></div>
+
+<div class="tbox"><div class="tbox-h">Admin strana</div>
+<p>Admin panel ‚Üí Hunters ‚Üí {hunter} ‚Üí Odmńõny ‚Üí ‚ÄěPŇôidat odmńõnu za mńõs√≠c". Formul√°Ňô: mńõs√≠c (date picker YYYY-MM), ńć√°stka, pozn√°mka. Automatick√Ĺ v√Ĺpońćet: syst√©m navrhne ńć√°stku na z√°kladńõ <code>hunter_commission_rate √ó pońćet_aktivn√≠ch_pracovn√≠kŇĮ</code>, admin mŇĮŇĺe pŇôepsat.</p></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Tabulka:</strong> Mńõs√≠c | ńĆ√°stka | Aktivn√≠ch lid√≠ | Status badge (zelen√°=vyplaceno, Ňĺlut√°=ńćek√°, modr√°=pŇôips√°no) | Pozn√°mka.</li>
+<li><strong>Sumarizace nahoŇôe:</strong> ‚ÄěCelkem vyplaceno: {suma ‚ā¨}" velk√Ĺm p√≠smem.</li>
+<li><strong>Graf:</strong> Mal√Ĺ bar chart ‚ÄĒ v√ĹŇ°e odmńõn za posledn√≠ch 12 mńõs√≠cŇĮ (voliteln√©).</li>
+</ul></div>
+
+<div class="edge"><p>Mńõs√≠c bez odmńõny (hunter nemńõl aktivn√≠ lidi). Nezobrazovat pr√°zdn√© Ňô√°dky ‚ÄĒ filtrovat pouze mńõs√≠ce s odmńõnami. Nebo zobrazit s 0 ‚ā¨ a pozn√°mkou ‚ÄěŇĹ√°dn√≠ aktivn√≠ pracovn√≠ci".</p></div>
+<div class="edge"><p>Hunter sporuje ńć√°stku. V syst√©mu zat√≠m nen√≠ reklamańćn√≠ flow ‚ÄĒ pozn√°mka admina slouŇĺ√≠ jako komunikace. V budoucnu: tlańć√≠tko ‚ÄěReklamovat" ‚Üí zpr√°va adminovi.</p></div>
+<div class="empty">ŇĹ√°dn√© odmńõny ‚Üí ‚ÄěZat√≠m nem√°te Ňĺ√°dn√© pŇôipsan√© odmńõny. Odmńõny se pŇôipisuj√≠ mńõs√≠ńćnńõ na z√°kladńõ vaŇ°ich aktivn√≠ch pracovn√≠kŇĮ."</div>
+<div class="test">Admin pŇôid√° odmńõnu za √ļnor ‚Üí hunter vid√≠ nov√Ĺ Ňô√°dek + notifikace.</div>
+<div class="test">Status change pending‚Üícredited‚Üípaid ‚Üí badge se mńõn√≠.</div>
+</div></div>
+
+<!-- H8: Ceny Ňėemesel -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>8. Ceny Ňėemesel</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>St√°vaj√≠c√≠ funkce ‚ÄĒ pouze UI refresh</strong></div>
+<p>Tabulka prŇĮmńõrn√Ĺch cen Ňôemesel podle regionu. Data spravuje admin. Migrovat st√°vaj√≠c√≠ tabulku <code>ceny_remesel</code> ‚Üí Eloquent model <code>CraftPrice</code>.</p></div>
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// Model: CraftPrice (craft_id, country, region, avg_hourly_rate, currency, updated_at)
+// View: jednoduch√© Blade tabulka s filtrem zem√≠
+// Admin: CRUD na spr√°vu cen. Import z Excel (Maatwebsite/Laravel-Excel).</pre></div>
+<div class="tip"><p>Ceny se mńõn√≠ minim√°lnńõ 1√ó rońćnńõ. Admin by mńõl m√≠t bulk update (Excel import) m√≠sto editace po Ňô√°dc√≠ch.</p></div>
+</div></div>
+
+<!-- H9: Ň†kolen√≠ a Certifikace -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>9. Ň†kolen√≠ a Certifikace</h3><span class="badge b-new">NOV√Č</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Seznam dostupn√Ĺch Ň°kolen√≠ (read-only)</strong></div>
+<p>Hunter vid√≠ jak√° Ň°kolen√≠/certifikace Dilibees nab√≠z√≠. Obsah bude dod√°n klientem. Hunter mŇĮŇĺe doporuńćit konkr√©tn√≠ Ň°kolen√≠ sv√Ĺm lidem.</p></div>
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// Model: Training
+Schema::create('trainings', function (Blueprint $table) {
+    $table->id();
+    $table->string('title');
+    $table->text('description'); // Markdown or HTML
+    $table->string('provider')->nullable();
+    $table->decimal('price', 10, 2)->nullable();
+    $table->string('currency', 3)->default('EUR');
+    $table->string('duration')->nullable(); // "10 t√ĹdnŇĮ", "3 dny"
+    $table->string('certification')->nullable(); // "EN ISO 9606-1"
+    $table->boolean('is_active')->default(true);
+    $table->integer('sort_order')->default(0);
+    $table->timestamps();
+});
+
+// Admin CRUD: php artisan make:filament-resource Training
+// Hunter view: read-only karta per Ň°kolen√≠</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace pro designera</h4>
+<ul class="fl">
+<li><strong>Karta Ň°kolen√≠:</strong> N√°zev (h3), popis (2-3 Ňô√°dky), cena badge, trv√°n√≠ badge, certifikace badge (pokud existuje). CTA: ‚ÄěV√≠ce info" ‚Üí modal/detail str√°nka.</li>
+<li><strong>Grid:</strong> 2-3 karty na Ňô√°dek (desktop), 1 na mobile.</li>
+</ul></div>
+
+<div class="empty">ŇĹ√°dn√° Ň°kolen√≠ (admin je jeŇ°tńõ nepŇôidal) ‚Üí ‚ÄěSeznam Ň°kolen√≠ bude brzy k dispozici."</div>
+</div></div>
+
+</div><!-- /t-hunt -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: AGENT -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-agent" class="tc">
+
+<div class="note note-info" style="margin-bottom:16px"><strong>Agent = zamńõstnavatel / person√°ln√≠ agentura.</strong> Hled√° pracovn√≠ky z CEE pro DE/AT/CH. MŇĮŇĺe m√≠t v√≠ce firem (pobońćek).</div>
+
+<!-- A1: Ozn√°men√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>1. Ozn√°men√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>FB-style. <strong>DŇģLEŇĹIT√Č: KaŇĺd√Ĺ pohyb u zpr√°v mus√≠ j√≠t do ozn√°men√≠ v Admin profilu I Agent profilu souńćasnńõ.</strong></p>
+<div class="sub-sec red"><h4>Agent-specifick√© eventy</h4>
+<ul class="fl">
+<li>Nov√Ĺ kandid√°t pŇôiŇôazen k popt√°vce</li>
+<li>Kandid√°t zmńõnil status (v_ŇôeŇ°en√≠ ‚Üí na_zkouŇ°ku ‚Üí k_n√°stupu)</li>
+<li>Nov√° zpr√°va od admina</li>
+<li>Hodiny: shoda potvrzena / neshoda detekov√°na</li>
+<li>Dokument nahr√°n pracovn√≠kem (smlouva)</li>
+</ul></div>
+<div class="auto"><p>Dual dispatch: kaŇĺd√° notifikace relevantn√≠ pro agenta ‚Üí <code>$agent->notify()</code> + <code>$admin->notify()</code> souńćasnńõ. Implementovat pŇôes Listener: <code>NotifyBothPartiesListener</code>.</p></div>
+</div></div>
+
+<!-- A2: Zpr√°vy -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>2. Zpr√°vy</h3><span class="badge b-new">NOV√Č</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>E-mail styl komunikace agent ‚ÜĒ admin</strong></div>
+<p>Plnohodnotn√Ĺ messaging s pŇôedmńõty, vl√°kny a <strong>polymorfn√≠mi pŇô√≠lohami</strong> (profil kandid√°ta). Viz glob√°ln√≠ messaging syst√©m v PŇôehledu ‚ÄĒ agent pouŇĺ√≠v√° typ <code>email</code>.</p></div>
+
+<div class="sub-sec red"><h4>Kl√≠ńćov√© funkce</h4>
+<ul class="fl">
+<li><strong>Komunikace ohlednńõ kandid√°tŇĮ:</strong> PŇôipojit profil kandid√°ta ke zpr√°vńõ ‚Üí admin vid√≠ kartu s fotkou, jm√©nem, Ňôemeslem, statusem</li>
+<li><strong>PŇôedmńõt konverzace:</strong> Povinn√Ĺ pŇôi zaloŇĺen√≠ nov√© konverzace (jako e-mail)</li>
+<li><strong>Vl√°kna:</strong> Odpovńõdi pod sebou chronologicky</li>
+<li><strong>Filtry:</strong> VŇ°echny / NepŇôeńćten√© / Archivovan√© + fulltext search</li>
+<li><strong>Dotaz z profilu:</strong> Na detailu kandid√°ta tlańć√≠tko ‚ÄěDotaz na tohoto kandid√°ta" ‚Üí otevŇôe novou konverzaci s pŇôedvyplnńõn√Ĺm pŇôedmńõtem a pŇôipojen√Ĺm profilem</li>
+</ul></div>
+
+<div class="tbox"><div class="tbox-h">Zah√°jen√≠ konverzace z profilu kandid√°ta</div>
+<pre>// Na str√°nce kandid√°ta (agent view):
+// Tlańć√≠tko "Dotaz na kandid√°ta" ‚Üí POST /agent/messages/from-candidate/{userId}
+public function createFromCandidate(User $candidate) {
+    $conv = Conversation::create([
+        'subject' => "Dotaz: {$candidate->full_name} ({$candidate->craft})",
+        'type' => 'email',
+    ]);
+    $conv->users()->attach([auth()->id(), $this->getAdminId()]);
+
+    // Automaticky pŇôipojit profil jako prvn√≠ zpr√°vu
+    Message::create([
+        'conversation_id' => $conv->id,
+        'user_id' => auth()->id(),
+        'body' => 'M√°m dotaz ohlednńõ tohoto kandid√°ta:',
+        'attachable_type' => User::class,
+        'attachable_id' => $candidate->id,
+    ]);
+
+    return redirect()->route('agent.messages.show', $conv);
+}</pre></div>
+
+<div class="edge"><p>Agent pŇôipoj√≠ kandid√°ta, kter√Ĺ je v mezińćase pŇôesunut k jin√©mu agentovi. Profil st√°le zobrazit (historick√° pŇô√≠loha), ale s pozn√°mkou ‚ÄěTento kandid√°t je nyn√≠ pŇôiŇôazen jin√©mu agentovi".</p></div>
+<div class="edge"><p>Konverzace s >100 zpr√°vami ‚ÄĒ lazy load: zobrazit posledn√≠ch 20, tlańć√≠tko ‚ÄěNańć√≠st starŇ°√≠" (AJAX pagination).</p></div>
+<div class="test">Nov√° konverzace z profilu kandid√°ta ‚Üí automatick√Ĺ pŇôedmńõt + pŇô√≠loha profilu.</div>
+<div class="test">NepŇôeńćten√© konverzace = bold v seznamu + badge na ikonńõ zpr√°v.</div>
+</div></div>
+
+<!-- A3: M√© popt√°vky AKTU√ĀLN√ć -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>3. M√© popt√°vky ‚ÄĒ AKTU√ĀLN√ć</h3><span class="badge b-new">NOV√Č</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Hlavn√≠ formul√°Ňô pro zad√°v√°n√≠ pracovn√≠ch popt√°vek. <strong>NejkomplexnńõjŇ°√≠ formul√°Ňô v syst√©mu.</strong></p>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Draft: Agent vytv√°Ňô√≠ popt√°vku
+    Draft --> Active: Odeslat / Publikovat
+    Active --> Active: Editace √ļdajŇĮ
+    Active --> Yearly: Checkbox "celorońćn√≠"
+    Active --> Closed: Pozice obsazena
+    Active --> Cancelled: Agent zruŇ°il
+    Closed --> [*]
+    Cancelled --> Active: Znovu otevŇô√≠t
+</div>
+
+<div class="sub-sec red"><h4>Formul√°Ňô ‚ÄĒ kompletn√≠ pole s validacemi</h4>
+<table class="val-table">
+<tr><th>Pole</th><th>Typ</th><th>Validace</th><th>Error message</th></tr>
+<tr><td><strong>Ňėemeslo</strong></td><td>Select (z DB)</td><td>required</td><td>‚ÄěVyberte Ňôemeslo"</td></tr>
+<tr><td>Specifikace Ňôemesla</td><td>Textarea (max 500)</td><td>nullable|max:500</td><td>‚ÄěMax 500 znakŇĮ"</td></tr>
+<tr><td><strong>Typ pomńõru</strong></td><td>Radio: HPP / OSVńĆ</td><td>required|in:hpp,osvc</td><td>‚ÄěVyberte typ pomńõru"</td></tr>
+<tr><td><strong>Pońćet osob</strong></td><td>Number input</td><td>required|integer|min:1|max:100</td><td>‚ÄěZadejte pońćet (1-100)"</td></tr>
+<tr><td><strong>Datum zkouŇ°ky/start</strong></td><td>Date picker (od‚Äďdo)</td><td>required|date|after_or_equal:today</td><td>‚ÄěDatum nesm√≠ b√Ĺt v minulosti"</td></tr>
+<tr><td><strong>Lokalita (PSńĆ)</strong></td><td>Text + geocoding autocomplete</td><td>required|regex:/^\d{5}$/</td><td>‚ÄěZadejte platn√© 5-m√≠stn√© PSńĆ"</td></tr>
+<tr><td>Mńõsto</td><td>Auto-fill z PSńĆ</td><td>auto</td><td>‚ÄĒ</td></tr>
+<tr><td>N√°zev firmy</td><td>Text (max 100)</td><td>nullable|max:100</td><td>‚ÄĒ</td></tr>
+<tr><td><strong>Suma Netto +-</strong></td><td>Number (orientańćn√≠)</td><td>nullable|numeric|min:0</td><td>‚ÄĒ</td></tr>
+<tr><td><strong>Brutto/hod</strong></td><td>Decimal input</td><td>nullable|numeric|min:5|max:200</td><td>‚ÄěRozmez√≠ 5-200 ‚ā¨/hod"</td></tr>
+<tr><td>Dieta typ</td><td>Radio: Na hodinu / Dennńõ</td><td>required_with:diet_amount</td><td>‚ÄĒ</td></tr>
+<tr><td>Dieta ńć√°stka</td><td>Decimal</td><td>nullable|numeric|min:0</td><td>‚ÄĒ</td></tr>
+<tr><td>Zemńõ popt√°vky</td><td>Select (DE/AT/CH/NL/LI)</td><td>required</td><td>‚ÄěVyberte zemi"</td></tr>
+<tr><td>Specifikace</td><td>Textarea (max 2000)</td><td>nullable|max:2000</td><td>‚ÄĒ</td></tr>
+</table>
+<div class="note note-info">Placeholder specifikace: ‚ÄěNapiŇ°te n√°m v√≠ce o popt√°van√© pozici, abychom V√°m pŇôipravili ty nejvhodnńõjŇ°√≠ kandid√°ty."</div>
+</div>
+
+<div class="sub-sec yellow"><h4>Mzdov√° kalkulańćka widget</h4>
+<p>V kontextu popt√°vky: agent zad√° brutto/hod + zemi ‚Üí kalkulańćka zobraz√≠ odhad netta. Tlańć√≠tko ‚ÄěPotvrdit sumu" ‚Üí vypln√≠ pole Netto automaticky. Nebo ‚ÄěNapsat vlastn√≠ ńć√°stku".</p>
+<div class="tip"><p>Kalkulańćka je <strong>Alpine.js component</strong> embeddovan√Ĺ do formul√°Ňôe. V√Ĺpońćet pŇôes AJAX endpoint <code>POST /api/salary/calculate</code>. Viz tab Mzdov√° Kalkulańćka.</p></div>
+</div>
+
+<div class="sub-sec green"><h4>V√Ĺstup: Vhodn√≠ pracovn√≠ci (pŇôiŇôazen√≠ k popt√°vce)</h4>
+<p>Ke kaŇĺd√© popt√°vce se zobrazuj√≠ kandid√°ti ve dvou kategori√≠ch:</p>
+<table>
+<tr><th>Kategorie</th><th>Kdo pŇôiŇôazuje</th><th>V√Ĺznam</th><th>Akce agenta</th></tr>
+<tr><td><strong>PŇėIŇėAZEN√ć</strong> (zelen√°)</td><td>Admin ruńćnńõ</td><td>Kandid√°ti, kteŇô√≠ odsouhlasili nab√≠dku a maj√≠ z√°jem</td><td>Pozvat na zkouŇ°ku / Odm√≠tnout</td></tr>
+<tr><td><strong>VHODN√ć</strong> (modr√°)</td><td>Admin/CRON auto-matching</td><td>Profil odpov√≠d√° popt√°vce (Ňôemeslo + lokalita radius)</td><td>Projevit z√°jem / PŇôeskońćit</td></tr>
+</table>
+</div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ job_postings</div>
+<pre>Schema::create('job_postings', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('agent_id')->constrained('users');
+    $table->foreignId('craft_id')->constrained();
+    $table->string('craft_specification', 500)->nullable();
+    $table->enum('employment_type', ['hpp', 'osvc']);
+    $table->integer('persons_needed')->default(1);
+    $table->date('start_date_from');
+    $table->date('start_date_to')->nullable();
+    $table->string('location_zip', 10);
+    $table->string('location_city', 100)->nullable();
+    $table->string('country', 2); // DE, AT, CH, NL, LI
+    $table->decimal('latitude', 10, 7)->nullable();
+    $table->decimal('longitude', 10, 7)->nullable();
+    $table->string('company_name', 100)->nullable();
+    $table->decimal('salary_netto_approx', 10, 2)->nullable();
+    $table->decimal('salary_brutto_hourly', 10, 2)->nullable();
+    $table->enum('diet_type', ['hourly', 'daily'])->nullable();
+    $table->decimal('diet_amount', 10, 2)->nullable();
+    $table->text('specification')->nullable();
+    $table->enum('status', ['draft', 'active', 'closed', 'cancelled'])->default('draft');
+    $table->boolean('is_yearly')->default(false);
+    $table->boolean('is_public_for_hunters')->default(true);
+    $table->timestamps();
+    $table->softDeletes();
+    $table->index(['status', 'craft_id']);
+    $table->index(['status', 'country']);
+});
+
+// Pivot: pŇôiŇôazen√≠ kandid√°tŇĮ k popt√°vce
+Schema::create('job_posting_user', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('job_posting_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('user_id')->constrained();
+    $table->enum('match_type', ['assigned', 'suitable']); // pŇôiŇôazen√Ĺ vs vhodn√Ĺ
+    $table->enum('status', ['pending', 'interested', 'trial', 'hired', 'rejected'])->default('pending');
+    $table->text('agent_note')->nullable();
+    $table->text('admin_note')->nullable();
+    $table->timestamps();
+    $table->unique(['job_posting_id', 'user_id']);
+});</pre></div>
+
+<div class="edge"><p>Agent vytvoŇô√≠ popt√°vku ale neuloŇĺ√≠ (zavŇôe prohl√≠Ňĺeńć). ŇėeŇ°en√≠: auto-save draft kaŇĺd√Ĺch 30s (AJAX PATCH). Status <code>draft</code> se nezobrazuje ostatn√≠m.</p></div>
+<div class="edge"><p>PSńĆ mimo c√≠lovou zemi (DE PSńĆ v AT popt√°vce). Validace: regex PSńĆ dle zemńõ (DE=5ńć√≠slic, AT=4ńć√≠slic, CH=4ńć√≠slic, NL=4ńć√≠slic+2p√≠smena).</p></div>
+<div class="edge"><p>Agent edituje popt√°vku s pŇôiŇôazen√Ĺmi kandid√°ty. Zmńõna Ňôemesla ‚Üí upozornńõn√≠: ‚ÄěPozor: zmńõn√≠te-li Ňôemeslo, st√°vaj√≠c√≠ pŇôiŇôazen√≠ kandid√°tŇĮ nebudou odpov√≠dat." Confirm dialog.</p></div>
+<div class="edge"><p>Brutto/hod = 0 nebo negativn√≠. Min validace 5 ‚ā¨/hod (realistick√© minimum).</p></div>
+<div class="auto"><p>Geocoding: PSńĆ ‚Üí lat/lng pŇôes Nominatim API (free) nebo Google Geocoding. UloŇĺit do <code>latitude</code>, <code>longitude</code> pro matching radius.</p></div>
+<div class="auto"><p>Auto-matching: CRON <code>hourly</code> ‚ÄĒ pro aktivn√≠ popt√°vky hledat kandid√°ty s matchuj√≠c√≠m Ňôemeslem + PSńĆ radius 50km + status <code>waiting_match</code>. Auto-pŇôidat jako ‚Äěvhodn√≠".</p></div>
+<div class="test">VytvoŇôen√≠ popt√°vky se vŇ°emi povinn√Ĺmi poli ‚Üí status active ‚Üí viditeln√° v admin panelu + pro huntery.</div>
+<div class="test">Draft popt√°vka NEN√ć viditeln√° pro huntery ani v admin panelu ‚Äěaktivn√≠ popt√°vky".</div>
+<div class="test">Auto-matching pŇôiŇôad√≠ kandid√°ta s Ňôemeslem ‚ÄěSv√°Ňôeńć" k popt√°vce ‚ÄěSv√°Ňôeńć" v okruhu 50km.</div>
+</div></div>
+
+<!-- A4: M√© popt√°vky celorońćn√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>4. M√© popt√°vky ‚ÄĒ CELOROńĆN√ć</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Checkbox v aktu√°ln√≠ popt√°vce ‚Üí automatick√Ĺ celorońćn√≠ z√°znam</strong></div>
+<p>Agent zaŇ°krtne ‚ÄěUloŇĺit jako celorońćn√≠" ‚Üí popt√°vka m√° <code>is_yearly = true</code>. Zobraz√≠ se v obou sekc√≠ch (aktu√°ln√≠ i celorońćn√≠).</p></div>
+<div class="auto"><p>Observer <code>JobPostingObserver::updated()</code>: pokud <code>is_yearly</code> se zmńõn√≠ na true ‚Üí spustit matching CRON pro celorońćn√≠ popt√°vky ihned (mimo schedule). PŇôi nov√© registraci kandid√°ta: <code>UserObserver::created()</code> ‚Üí zkontrolovat celorońćn√≠ popt√°vky pro matching.</p></div>
+<div class="edge"><p>Celorońćn√≠ popt√°vka m√° ‚Äěnekoneńćn√©" datum. <code>start_date_from</code> = datum vytvoŇôen√≠, <code>start_date_to</code> = null (celorońćn√≠). UI: zobrazit ‚ÄěPrŇĮbńõŇĺnńõ" m√≠sto data.</p></div>
+<div class="edge"><p>Agent odŇ°krtne ‚Äěcelorońćn√≠" ‚Üí popt√°vka zŇĮstane jako aktu√°ln√≠, ale zmiz√≠ z celorońćn√≠ch. PŇôiŇôazen√≠ kandid√°ti zŇĮst√°vaj√≠.</p></div>
+<div class="test">ZaŇ°krtnut√≠ checkboxu ‚Üí popt√°vka viditeln√° v sekci 3 i 4.</div>
+<div class="test">Nov√° registrace kandid√°ta s matchuj√≠c√≠m Ňôemeslem ‚Üí automaticky pŇôiŇôazen k celorońćn√≠ popt√°vce.</div>
+</div></div>
+
+<!-- A5: Seznam vhodn√Ĺch kandid√°tŇĮ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>5. Seznam vhodn√Ĺch kandid√°tŇĮ</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Agregovan√Ĺ pŇôehled VŇ†ECH vhodn√Ĺch kandid√°tŇĮ</strong></div>
+<p>Cross-popt√°vkov√Ĺ pohled: zobrazit vŇ°echny kandid√°ty seskupen√© dle Ňôemesla, seŇôazen√© od nejv√≠ce po nejm√©nńõ.</p></div>
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Accordion per Ňôemeslo:</strong> ‚ÄěSv√°Ňôeńć (15)" ‚Üí rozbalit ‚Üí seznam profilŇĮ</li>
+<li><strong>Karta profilu:</strong> Foto (50px kruh), jm√©no, Ňôemeslo, status badge, lokalita, ‚ÄěZobrazit detail" link</li>
+<li><strong>Filter bar:</strong> Ňėemeslo select, Status select (vhodn√Ĺ/pŇôiŇôazen√Ĺ/v_ŇôeŇ°en√≠), Lokalita text</li>
+<li><strong>Akce na kartńõ:</strong> ‚ÄěProjevit z√°jem" (pŇôesune do V ŇôeŇ°en√≠), ‚ÄěDotaz" (otevŇôe zpr√°vu s profilem)</li>
+</ul></div>
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// AgentCandidateController::index()
+$candidates = $agent->jobPostings()
+    ->where('status', 'active')
+    ->with(['candidates' => fn($q) => $q->wherePivot('match_type', 'suitable')])
+    ->get()
+    ->flatMap->candidates
+    ->unique('id')
+    ->groupBy('craft.name')
+    ->sortByDesc(fn($group) => $group->count());</pre></div>
+<div class="edge"><p>Kandid√°t vhodn√Ĺ pro v√≠ce popt√°vek stejn√©ho agenta ‚Üí zobrazit pouze jednou (unique). Ale pŇôi detailu uk√°zat ke kter√Ĺm popt√°vk√°m je vhodn√Ĺ.</p></div>
+<div class="empty">ŇĹ√°dn√≠ vhodn√≠ kandid√°ti ‚Üí ‚ÄěZat√≠m nem√°me pro vaŇ°e popt√°vky vhodn√© kandid√°ty. Syst√©m automaticky hled√° shody ‚ÄĒ budete informov√°ni."</div>
+</div></div>
+
+<!-- A6: V ŇôeŇ°en√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>6. V ŇôeŇ°en√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Pipeline ‚ÄĒ kandid√°ti v procesu</strong></div>
+<p>Kandid√°ti, o kter√© agent projevil z√°jem. ZŇĮst√°vaj√≠ zde dokud: 1) agent je pozve na zkouŇ°ku, 2) agent je odm√≠tne, 3) jin√Ĺ agent si je zamluvil dŇô√≠v.</p></div>
+
+<div class="mermaid">
+flowchart LR
+    A["Vhodn√Ĺ kandid√°t"] -->|"Agent: Projevit z√°jem"| B["V ŇôeŇ°en√≠"]
+    B -->|"Agent: Pozvat na zkouŇ°ku"| C["Na zkouŇ°ku (bod 7)"]
+    B -->|"Agent: Odm√≠tnout"| D["Zpńõt do poolu"]
+    B -->|"Jin√Ĺ agent si zamluvil"| E["Nedostupn√Ĺ"]
+</div>
+
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<pre>// Pivot status change
+$jobPosting->candidates()->updateExistingPivot($userId, [
+    'status' => 'interested', // ‚Üí V ŇôeŇ°en√≠
+]);
+
+// Scope: V ŇôeŇ°en√≠ pro agenta
+User::whereHas('jobPostingPivots', fn($q) =>
+    $q->where('status', 'interested')
+      ->whereHas('jobPosting', fn($jq) => $jq->where('agent_id', $agent->id))
+);</pre></div>
+
+<div class="edge"><p>Dva agenti projev√≠ z√°jem o stejn√©ho kandid√°ta souńćasnńõ. ŇėeŇ°en√≠: first-come-first-served, NEBO admin rozhoduje. Doporuńćen√≠: obńõ strany vid√≠ kandid√°ta, admin pŇôiŇôazuje fin√°lnńõ.</p></div>
+<div class="edge"><p>Kandid√°t je ‚ÄěV ŇôeŇ°en√≠" d√©le neŇĺ 14 dn√≠ bez akce. Auto-notifikace agentovi: ‚ÄěM√°te kandid√°ta {jm√©no} v ŇôeŇ°en√≠ 14 dn√≠. Chcete pokrańćovat?" CTA: Pozvat na zkouŇ°ku / Odm√≠tnout.</p></div>
+<div class="auto"><p>CRON <code>daily</code>: <code>pipeline:check-stale</code> ‚ÄĒ kandid√°ti v ŇôeŇ°en√≠ >14 dn√≠ ‚Üí notifikace agentovi + adminovi.</p></div>
+<div class="test">Agent klikne ‚ÄěProjevit z√°jem" ‚Üí kandid√°t se pŇôesune do V ŇôeŇ°en√≠ + notifikace admin.</div>
+<div class="test">Agent odm√≠tne ‚Üí kandid√°t zpńõt do poolu (status waiting_match).</div>
+</div></div>
+
+<!-- A7: Pracovn√≠ci na zkouŇ°ku -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>7. Pracovn√≠ci na zkouŇ°ku</h3><span class="badge b-new">NOV√Č</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Spr√°va pracovn√≠ch zkouŇ°ek ‚ÄĒ komplexn√≠ formul√°Ňô</strong></div></div>
+
+<div class="sub-sec red"><h4>Formul√°Ňô: Profil + Pracovn√≠ zkouŇ°ka</h4>
+<table class="val-table">
+<tr><th>Pole</th><th>Typ</th><th>Validace</th><th>Pozn√°mka</th></tr>
+<tr><td><strong>Datum zkouŇ°ky</strong></td><td>Date picker</td><td>required|date|after_or_equal:today</td><td>‚ÄĒ</td></tr>
+<tr><td>Propojen√≠ s popt√°vkou</td><td>Select z agent.job_postings</td><td>nullable|exists:job_postings,id</td><td>Auto-fill √ļdajŇĮ pŇôi v√Ĺbńõru</td></tr>
+<tr><td>N√°zev firmy</td><td>Text (auto-fill z popt√°vky)</td><td>required_without:job_posting_id</td><td>Povinn√© pokud nen√≠ popt√°vka</td></tr>
+<tr><td>Adresa zkouŇ°ky</td><td>Text + mapa</td><td>required|max:200</td><td>Geocoding ‚Üí zobrazit na mapńõ</td></tr>
+<tr><td>ńĆas zańć√°tku</td><td>Time picker</td><td>required|date_format:H:i</td><td>‚ÄĒ</td></tr>
+<tr><td>Kontaktn√≠ osoba</td><td>Text</td><td>nullable|max:100</td><td>Jak se ohl√°sit</td></tr>
+</table></div>
+
+<div class="sub-sec yellow"><h4>Hotel / Ubytov√°n√≠ (voliteln√©)</h4>
+<table class="val-table">
+<tr><th>Pole</th><th>Typ</th><th>Validace</th></tr>
+<tr><td>Adresa hotelu</td><td>Text + mapa link</td><td>nullable|max:200</td></tr>
+<tr><td>ńĆas pŇô√≠jezdu do</td><td>Time picker</td><td>nullable|date_format:H:i</td></tr>
+<tr><td>Kontaktn√≠ osoba</td><td>Text</td><td>nullable|max:100</td></tr>
+</table></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ trial_works</div>
+<pre>Schema::create('trial_works', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained(); // kandid√°t
+    $table->foreignId('agent_id')->constrained('users');
+    $table->foreignId('job_posting_id')->nullable()->constrained();
+    $table->date('trial_date');
+    $table->time('start_time');
+    $table->string('company_name', 100)->nullable();
+    $table->string('address', 200);
+    $table->decimal('latitude', 10, 7)->nullable();
+    $table->decimal('longitude', 10, 7)->nullable();
+    $table->string('contact_person', 100)->nullable();
+    // Hotel
+    $table->string('hotel_address', 200)->nullable();
+    $table->time('hotel_checkin_until')->nullable();
+    $table->string('hotel_contact', 100)->nullable();
+    // V√Ĺsledek
+    $table->enum('result', ['pending', 'passed', 'failed'])->default('pending');
+    $table->text('result_note')->nullable();
+    $table->timestamps();
+    $table->softDeletes();
+});</pre></div>
+
+<div class="edge"><p>ZkouŇ°ka v minulosti bez zadan√©ho v√Ĺsledku. CRON: <code>trial-works:remind-result</code> ‚ÄĒ pokud <code>trial_date < today</code> a <code>result = pending</code> ‚Üí notifikace agentovi ‚ÄěZadejte v√Ĺsledek zkouŇ°ky pro {jm√©no}".</p></div>
+<div class="edge"><p>Agent vybere popt√°vku ‚Üí auto-fill firma, adresa. Ale pak zmńõn√≠ adresu ruńćnńõ. Auto-fill se nepŇôep√≠Ň°e ‚ÄĒ agent m√° plnou kontrolu nad hodnotami.</p></div>
+<div class="edge"><p>Kandid√°t m√° dvńõ zkouŇ°ky u rŇĮzn√Ĺch agentŇĮ ve stejn√Ĺ den. Syst√©m povol√≠ (nem√° info o vŇ°ech zkouŇ°k√°ch), ale admin by mńõl vidńõt warning v panelu.</p></div>
+<div class="auto"><p>Notifikace kandid√°tovi 24h pŇôed zkouŇ°kou: ‚ÄěZ√≠tra m√°te pracovn√≠ zkouŇ°ku v {mńõsto} v {ńćas}. Adresa: {adresa}." Vńćetnńõ info o hotelu pokud vyplnńõno.</p></div>
+<div class="auto"><p>Po v√Ĺsledku <code>passed</code> ‚Üí automaticky pŇôesunout do ‚ÄěPracovn√≠ci k n√°stupu" (bod 8). Dispatch event <code>TrialWorkPassed</code>.</p></div>
+<div class="auto"><p>Po v√Ĺsledku <code>failed</code> ‚Üí pŇôesunout zpńõt do ‚ÄěNedohodli jsme se" (bod 11). Dispatch event <code>TrialWorkFailed</code>.</p></div>
+<div class="test">VytvoŇôen√≠ zkouŇ°ky s propojen√≠m na popt√°vku ‚Üí auto-fill funguje.</div>
+<div class="test">V√Ĺsledek passed ‚Üí kandid√°t se objev√≠ v sekci 8.</div>
+<div class="test">V√Ĺsledek failed ‚Üí kandid√°t se objev√≠ v sekci 11.</div>
+<div class="test">Notifikace 24h pŇôedem doraz√≠ kandid√°tovi.</div>
+</div></div>
+
+<!-- A8: Pracovn√≠ci k n√°stupu -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>8. Pracovn√≠ci k n√°stupu</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Schv√°len√≠ pracovn√≠ci po √ļspńõŇ°n√© zkouŇ°ce</strong></div>
+<p>Automatick√Ĺ pŇôesun ze sekce 7 po <code>result = passed</code>. Zobrazuje: Profil, Firma k n√°stupu, Datum n√°stupu, Kontakt.</p></div>
+<div class="tbox"><div class="tbox-h">Akce agenta</div>
+<ul class="fl">
+<li><strong>Potvrdit n√°stup:</strong> ‚Üí kandid√°t se pŇôesune do ‚ÄěVaŇ°i pracovn√≠ci" (bod 9). Zadat datum n√°stupu.</li>
+<li><strong>ZruŇ°it n√°stup:</strong> ‚Üí kandid√°t zpńõt do ‚ÄěNedohodli se" (bod 11). VyŇĺadovat dŇĮvod.</li>
+<li><strong>Nahr√°t smlouvu:</strong> Upload pracovn√≠ smlouvy (pŇô√≠prava na bod 9).</li>
+</ul></div>
+<div class="edge"><p>Kandid√°t se nedostav√≠ k n√°stupu. Agent mus√≠ ruńćnńõ zruŇ°it ‚Üí ‚ÄěZruŇ°it n√°stup" s dŇĮvodem ‚ÄěNedostavil se". Notifikace admin.</p></div>
+<div class="auto"><p>CRON <code>daily</code>: Kandid√°ti k n√°stupu s <code>start_date < today - 7 dn√≠</code> bez potvrzen√≠ ‚Üí notifikace agentovi ‚ÄěPotvrńŹte n√°stup pro {jm√©no}".</p></div>
+<div class="empty">ŇĹ√°dn√≠ kandid√°ti k n√°stupu ‚Üí ‚ÄěNem√°te Ňĺ√°dn√© schv√°len√© pracovn√≠ky k n√°stupu. Kandid√°ti se zde objev√≠ po √ļspńõŇ°n√© pracovn√≠ zkouŇ°ce."</div>
+</div></div>
+
+<!-- A9: VaŇ°i pracovn√≠ci -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>9. VaŇ°i pracovn√≠ci</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>St√°vaj√≠c√≠ seznam + NOV√Č nahr√°v√°n√≠ souborŇĮ</strong></div>
+<p>RozŇ°√≠Ňôen√≠: ke kaŇĺd√©mu pracovn√≠kovi lze nahr√°t soubory (zejm√©na <strong>pracovn√≠ smlouva</strong>).</p></div>
+<div class="tbox"><div class="tbox-h">Nahr√°v√°n√≠ souborŇĮ</div>
+<pre>// Spatie MediaLibrary
+$worker->addMediaFromRequest('contract')
+    ->usingFileName("smlouva-{$worker->id}-" . now()->format('Y-m-d') . '.pdf')
+    ->toMediaCollection('contracts');
+
+// Povolen√© typy: PDF, JPG, PNG (foto smlouvy)
+// Max velikost: 10 MB
+// Validace: 'contract' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240'</pre></div>
+<div class="edge"><p>Agent nahraje Ň°patn√Ĺ soubor (omylem jin√° smlouva). UmoŇĺnit smaz√°n√≠ a nahrazen√≠. Soft delete star√©ho souboru (zachovat historii).</p></div>
+<div class="edge"><p>Pracovn√≠k ukonńć√≠ spolupr√°ci (v√ĹpovńõńŹ). ZŇĮst√°v√° v seznamu s badge ‚ÄěUkonńćeno" + datum ukonńćen√≠. Soubory zŇĮst√°vaj√≠ (archiv).</p></div>
+</div></div>
+
+<!-- A10: V√Ĺkazy hodin -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>10. V√Ĺkazy hodin</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Syst√©m kontroly hodin ‚ÄĒ dvoustrann√° verifikace</strong></div>
+<p>NejkritińćtńõjŇ°√≠ business logika: hodiny od pracovn√≠ka vs. hodiny od agenta. Mus√≠ matchovat.</p></div>
+
+<div class="mermaid">
+flowchart TD
+    A["Zamńõstnanec zad√° hodiny za mńõs√≠c"] --> C["Syst√©m porovn√°"]
+    B["Agent zad√° hodiny za mńõs√≠c"] --> C
+    C -->|"Shoda"| D["‚úÖ MATCHED ‚ÄĒ zelen√°"]
+    C -->|"Neshoda"| E["‚ö† DISPUTE ‚ÄĒ oranŇĺov√°"]
+    E --> F["Admin ŇôeŇ°√≠"]
+    F -->|"Oprav√≠"| D
+    F -->|"Akceptuje jednu stranu"| D
+    D --> G["Hodiny fakturovateln√©"]
+</div>
+
+<div class="sub-sec red"><h4>Formul√°Ňô hodin (agent strana)</h4>
+<p>Seznam pracovn√≠kŇĮ z ‚ÄěVaŇ°i pracovn√≠ci" (bod 9). Vedle kaŇĺd√©ho: input pole pro hodiny za aktu√°ln√≠ mńõs√≠c.</p>
+<table class="val-table">
+<tr><th>Pole</th><th>Typ</th><th>Validace</th></tr>
+<tr><td>Pracovn√≠k</td><td>Display (read-only)</td><td>‚ÄĒ</td></tr>
+<tr><td>Hodiny celkem za mńõs√≠c</td><td>Decimal input</td><td>required|numeric|min:0|max:744</td></tr>
+<tr><td>Pozn√°mka</td><td>Text (optional)</td><td>nullable|max:500</td></tr>
+</table>
+<p><strong>Souńćet:</strong> Automatick√Ĺ souńćet vŇ°ech Ňô√°dkŇĮ = celkov√Ĺ v√Ĺkaz k fakturaci.</p></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ hour_entries</div>
+<pre>Schema::create('hour_entries', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained(); // pracovn√≠k
+    $table->foreignId('agent_id')->constrained('users');
+    $table->foreignId('job_posting_id')->nullable()->constrained();
+    $table->string('period', 7); // '2026-03' (YYYY-MM)
+    $table->decimal('hours_worker', 8, 2)->nullable(); // hodiny od pracovn√≠ka
+    $table->decimal('hours_agent', 8, 2)->nullable();  // hodiny od agenta
+    $table->enum('match_status', ['pending', 'matched', 'disputed', 'resolved'])->default('pending');
+    $table->text('worker_note')->nullable();
+    $table->text('agent_note')->nullable();
+    $table->text('admin_resolution')->nullable();
+    $table->foreignId('resolved_by')->nullable()->constrained('users');
+    $table->timestamps();
+    $table->unique(['user_id', 'agent_id', 'period']);
+});</pre></div>
+
+<div class="tbox"><div class="tbox-h">Automatick√Ĺ matching hodin</div>
+<pre>// Observer: HourEntryObserver::updated()
+public function updated(HourEntry $entry) {
+    if ($entry->hours_worker !== null && $entry->hours_agent !== null) {
+        $tolerance = 2; // povolen√Ĺ rozd√≠l 2 hodiny
+        if (abs($entry->hours_worker - $entry->hours_agent) <= $tolerance) {
+            $entry->update(['match_status' => 'matched']);
+        } else {
+            $entry->update(['match_status' => 'disputed']);
+            // Notifikace vŇ°em tŇôem stran√°m
+            Notification::send(
+                [$entry->user, $entry->agent, ...User::admins()->get()],
+                new HoursDisputeNotification($entry)
+            );
+        }
+    }
+}</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Tabulka:</strong> Pracovn√≠k | Hodiny (pracovn√≠k) | Hodiny (agent input) | Status badge | Akce</li>
+<li><strong>Status barvy:</strong> Zelen√° = matched, OranŇĺov√° = dispute, Ň†ed√° = ńćek√° na druhou stranu, Modr√° = pending</li>
+<li><strong>Souńćet Ňô√°dek:</strong> Bold, na konci tabulky. Celkov√© hodiny agent strana.</li>
+<li><strong>Mńõs√≠c selector:</strong> NahoŇôe ‚ÄĒ vybrat obdob√≠ (default: aktu√°ln√≠ mńõs√≠c).</li>
+</ul></div>
+
+<div class="edge"><p>Pracovn√≠k zad√° 180h, agent zad√° 160h. Tolerance 2h ‚Üí DISPUTE. Admin vid√≠ obńõ ńć√≠sla + pozn√°mky obou stran. Admin rozhodne: akceptovat jednu hodnotu, nebo zadat kompromis.</p></div>
+<div class="edge"><p>Pracovn√≠k NEZADAL hodiny za mńõs√≠c. Agent zadal. Status: <code>pending</code> (ńćek√° na pracovn√≠ka). Notifikace pracovn√≠kovi: ‚ÄěZadejte hodiny za {mńõs√≠c}".</p></div>
+<div class="edge"><p>Nov√Ĺ mńõs√≠c = automaticky vytvoŇôit pr√°zdn√© HourEntry pro kaŇĺdou kombinaci pracovn√≠k-agent. CRON 1. den v mńõs√≠ci.</p></div>
+<div class="auto"><p>CRON 1. v mńõs√≠ci: <code>hours:create-entries</code> ‚ÄĒ vytvoŇôit pr√°zdn√© z√°znamy pro aktivn√≠ pracovn√≠ky.</p></div>
+<div class="auto"><p>CRON 5. v mńõs√≠ci: <code>hours:remind-workers</code> ‚ÄĒ pŇôipomenout nezadan√© hodiny.</p></div>
+<div class="auto"><p>CRON 10. v mńõs√≠ci: <code>hours:remind-agents</code> ‚ÄĒ pŇôipomenout nezadan√© hodiny ze strany agenta.</p></div>
+<div class="auto"><p>CRON 15. v mńõs√≠ci: <code>hours:auto-check</code> ‚ÄĒ vŇ°echny z√°znamy kde obńõ strany zadaly ‚Üí automatick√© porovn√°n√≠.</p></div>
+<div class="test">Obńõ strany zadaj√≠ 160h ‚Üí status matched (zelen√°).</div>
+<div class="test">Pracovn√≠k 180h, agent 160h ‚Üí dispute (oranŇĺov√°) + 3 notifikace.</div>
+<div class="test">Admin vyŇôeŇ°√≠ dispute ‚Üí status resolved (zelen√°) + fin√°ln√≠ hodiny.</div>
+</div></div>
+
+<!-- A11-14 -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>11. Nedohodli jsme se</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Seznam kandid√°tŇĮ, se kter√Ĺmi se nedohodli. <strong>St√°vaj√≠c√≠ funkce</strong> ‚ÄĒ pouze UI refresh + migrace na Laravel.</p>
+<div class="tbox"><div class="tbox-h">Zdroje dat</div>
+<p>Kandid√°ti kde <code>job_posting_user.status = 'rejected'</code> pro dan√©ho agenta. Nebo <code>trial_works.result = 'failed'</code>.</p></div>
+<div class="edge"><p>Kandid√°t odm√≠tnut u jedn√© popt√°vky, ale vhodn√Ĺ pro jinou. MŇĮŇĺe se zobrazit v sekci 5 (vhodn√≠) I v sekci 11 (nedohodli se). To je OK ‚ÄĒ rŇĮzn√© kontexty/popt√°vky.</p></div>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>12. VŇ†E</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Kompletn√≠ seznam vŇ°ech kandid√°tŇĮ, kteŇô√≠ kdy byli propojeni s t√≠mto agentem (vŇ°echny stavy). UI refresh + filtry: status, Ňôemeslo, datum. Export do Excel (Maatwebsite).</p>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>13. Historie</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Activity Log ‚ÄĒ filtrovan√Ĺ pro agenta</strong></div>
+<p>Jako m√° admin (<code>log_akci</code>), ale pouze aktivity dan√©ho agenta a jeho popt√°vek/pracovn√≠kŇĮ.</p></div>
+<div class="tbox"><div class="tbox-h">Laravel implementace</div>
+<pre>// Spatie Activity Log
+use Spatie\Activitylog\Traits\LogsActivity;
+
+class JobPosting extends Model {
+    use LogsActivity;
+    protected static $logAttributes = ['status', 'persons_needed', 'craft_id'];
+    protected static $logName = 'job_posting';
+}
+
+// Agent Historie view:
+Activity::where('causer_id', $agent->id)
+    ->orWhere(function($q) use ($agent) {
+        $q->where('subject_type', JobPosting::class)
+          ->whereIn('subject_id', $agent->jobPostings->pluck('id'));
+    })
+    ->orderByDesc('created_at')
+    ->paginate(50);</pre></div>
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Timeline layout:</strong> Vertik√°ln√≠ ńć√°ra s body. KaŇĺd√Ĺ bod: ikona akce, text, ńćas, link na detail.</li>
+<li><strong>Filtr:</strong> Datum (od‚Äďdo), typ akce (popt√°vka/kandid√°t/zpr√°va/hodiny).</li>
+</ul></div>
+<div class="empty">ŇĹ√°dn√° aktivita ‚Üí ‚ÄěZat√≠m nebyla zaznamen√°na Ňĺ√°dn√° aktivita."</div>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>14. DoplŇąkov√© sluŇĺby</h3><span class="badge b-new">NOV√Č</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Prozat√≠m <strong>pr√°zdn√° sekce</strong>. Obsah dod√° klient. PŇôipravit: pr√°zdnou Blade str√°nku s placeholderem a admin CRUD pro budouc√≠ obsah.</p>
+<div class="empty">‚ÄěSekce v pŇô√≠pravńõ. Brzy zde naleznete doplŇąkov√© sluŇĺby pro agenty."</div>
+</div></div>
+
+</div><!-- /t-agent -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: ZAMńöSTNANEC / UCHAZEńĆ -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-emp" class="tc">
+
+<div class="note note-info" style="margin-bottom:16px"><strong>Zdrojov√° verze:</strong> 4-Profil Zamńõstnance Kostra Pdf.pdf (fin√°ln√≠ iterace, 23 sekc√≠). Zamńõstnanec = uchazeńć o pr√°ci v zahranińć√≠ (CEE ‚Üí DE/AT/CH).</div>
+<div class="note note-warn" style="margin-bottom:20px"><strong>Du√°ln√≠ role:</strong> Zamńõstnanec mŇĮŇĺe b√Ĺt z√°roveŇą Hunter/N√°bor√°Ňô. Bod 13 (Odmńõny) odkazuje na Hunter profil. Middleware mus√≠ umoŇĺnit oba kontexty.</div>
+
+<!-- E1: Ozn√°men√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>1. Ozn√°men√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Push notifikace specifick√© pro zamńõstnance. C√≠l: aktivnńõ pŇôipom√≠nat √ļkoly a chybńõj√≠c√≠ √ļdaje.</p>
+<div class="sub-sec red"><h4>Trigger eventy</h4>
+<ul class="fl">
+<li><strong>Nezadal potvrzen√≠ n√°stupu</strong> ‚ÄĒ po pŇôeŇôazen√≠ do ‚Äěk_n√°stupu" ńćek√° na akci od zamńõstnance</li>
+<li><strong>Chyb√≠ √ļdaj v profilu</strong> ‚ÄĒ CV nekompletn√≠, chyb√≠ fotka, chyb√≠ doklady</li>
+<li><strong>Nepsal hodiny za mńõs√≠c</strong> ‚ÄĒ po 5. dni nov√©ho mńõs√≠ce</li>
+<li><strong>Nov√° zpr√°va od admina</strong> ‚ÄĒ konverzace update</li>
+<li><strong>Zmńõna statusu</strong> ‚ÄĒ ‚ÄěByli jste pŇôiŇôazeni k popt√°vce" / ‚ÄěPozv√°nka na zkouŇ°ku"</li>
+<li><strong>Dokument zpracov√°n</strong> ‚ÄĒ ‚ÄěVaŇ°e Ňĺ√°dost o Kindergeld byla odesl√°na"</li>
+<li><strong>Pl√°n ‚ÄĒ nov√Ĺ bod pŇôid√°n adminem</strong></li>
+</ul></div>
+<div class="auto"><p>CRON <code>daily 09:00</code>: <code>employees:check-incomplete-profiles</code> ‚ÄĒ scan profilŇĮ s chybńõj√≠c√≠mi povinn√Ĺmi poli ‚Üí batch notifikace.</p></div>
+<div class="auto"><p>CRON <code>monthly 5th</code>: <code>hours:remind-workers</code> ‚ÄĒ vŇ°ichni aktivn√≠ pracovn√≠ci bez zadan√Ĺch hodin ‚Üí notifikace.</p></div>
+</div></div>
+
+<!-- E2: Zpr√°vy -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>2. Zpr√°vy</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Jednoduch√Ĺ chat s adminem</strong></div>
+<p>Zamńõstnanec komunikuje POUZE s adminem. Jednoduch√Ĺ chat styl (ne e-mail). Bez pŇôedmńõtu, bez pŇô√≠loh profilŇĮ.</p></div>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Sd√≠len√Ĺ <code>Conversation</code> model, typ <code>chat</code>. Jedna konverzace per zamńõstnanec (auto-create pŇôi prvn√≠m pouŇĺit√≠). Viz glob√°ln√≠ messaging syst√©m v PŇôehledu.</p></div>
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Layout:</strong> Full-screen chat (ne split view ‚ÄĒ zamńõstnanec m√° jen jednu konverzaci).</li>
+<li><strong>Bubliny:</strong> Zamńõstnanec vpravo (modr√°), Admin vlevo (Ň°ed√°). Jm√©no admina u kaŇĺd√© zpr√°vy.</li>
+<li><strong>Input:</strong> Textov√© pole + odeslat tlańć√≠tko. Bez pŇô√≠lohy (v1), s pŇô√≠lohou fotky (v2 ‚ÄĒ budouc√≠).</li>
+<li><strong>Mobile-first:</strong> Pln√° Ň°√≠Ňôka, velk√© dotykov√© c√≠le.</li>
+</ul></div>
+<div class="edge"><p>Zamńõstnanec poŇ°le zpr√°vu v noci. Admin odpov√≠ r√°no. Notifikace zamńõstnanci ‚Üí ale mŇĮŇĺe b√Ĺt na nońćn√≠ smńõnńõ. Respektovat ‚ÄĒ nepos√≠lat SMS notifikace v noci (quiet hours 22:00‚Äď07:00).</p></div>
+<div class="empty">Pr√°zdn√Ĺ chat ‚Üí ‚ÄěDobr√Ĺ den! Jsme tu pro v√°s. NapiŇ°te n√°m cokoliv potŇôebujete." (syst√©mov√° uv√≠tac√≠ zpr√°va).</div>
+</div></div>
+
+<!-- E3: MŇĮj √öńćet -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>3. MŇĮj √öńćet</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>St√°vaj√≠c√≠ funkce ‚ÄĒ osobn√≠ √ļdaje, heslo, nastaven√≠. Pouze migrace na Laravel + UI refresh. Blade: <code>employee.account.edit</code>.</p>
+<div class="tip"><p>PŇôidat: jazykov√© preference (CZ/SK/PL/HU/RO), dark mode toggle (voliteln√© v2), nastaven√≠ notifikac√≠ (email on/off).</p></div>
+</div></div>
+
+<!-- E4: MŇĮj Ňĺivotopis -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>4. MŇĮj Ňĺivotopis</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>St√°vaj√≠c√≠ 14-krokov√Ĺ Ňĺivotopis ‚Üí schovat pod tlańć√≠tko</strong></div>
+<p>ŇĹivotopis (14 krokŇĮ) zŇĮst√°v√° beze zmńõny. Jedin√° zmńõna: m√≠sto pŇô√≠m√©ho zobrazen√≠ na dashboard ‚Üí pŇô√≠stup pŇôes tlańć√≠tko v menu jako ostatn√≠ sekce.</p></div>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Route: <code>/employee/cv</code>. St√°vaj√≠c√≠ logika zŇĮst√°v√°. Migrovat Smarty templates ‚Üí Blade multi-step form. Zachovat validace a ukl√°d√°n√≠ po kroc√≠ch.</p></div>
+<div class="edge"><p>Zamńõstnanec nedokonńćil CV (je na kroku 7/14). Zobrazit progress bar: ‚ÄěŇĹivotopis: 50% dokonńćen" + CTA ‚ÄěPokrańćovat".</p></div>
+<div class="edge"><p>Zamńõstnanec chce editovat dŇô√≠ve zadan√© kroky. UmoŇĺnit navigaci zpńõt ke krokŇĮ bez ztr√°ty dat (session/DB persistence).</p></div>
+</div></div>
+
+<!-- E5: MŇĮj pl√°n -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>5. MŇĮj pl√°n</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Kari√©rn√≠ pl√°n s interaktivn√≠m checklistem + mapou</strong></div>
+<p>Admin vypisuje body pl√°nu ruńćnńõ. Zamńõstnanec je zaŇ°krt√°v√°. Pod pl√°nem: mapa.</p></div>
+
+<div class="sub-sec red"><h4>Checklist</h4>
+<ul class="fl">
+<li>Admin vytv√°Ňô√≠ body: textov√© pole + poŇôad√≠ (drag & drop sorting)</li>
+<li>Zamńõstnanec: zaŇ°krt√°vac√≠ koleńćko vedle kaŇĺd√©ho bodu</li>
+<li>Progress bar nahoŇôe: ‚Äě3 z 7 splnńõno" (43%)</li>
+<li>Splnńõn√© body = pŇôeŇ°krtnut√Ĺ text + zelen√Ĺ check</li>
+<li>Nesplnńõn√© body = pr√°zdn√© koleńćko + norm√°ln√≠ text</li>
+</ul></div>
+
+<div class="sub-sec yellow"><h4>Mapa pod pl√°nem</h4>
+<p><strong>Aktu√°ln√≠ probl√©m:</strong> Mapa uj√≠Ňĺd√≠ do stran na telefonu.</p>
+<p><strong>ŇėeŇ°en√≠:</strong></p>
+<ul class="fl">
+<li>PŇôej√≠t z aktu√°ln√≠ho pluginu na <strong>Leaflet.js</strong> s OpenStreetMap tiles</li>
+<li><code>L.map('map', {scrollWheelZoom: false, dragging: !L.Browser.mobile})</code></li>
+<li>CSS: <code>width: 100%; height: 300px; max-width: 100vw; overflow: hidden;</code></li>
+<li>Mobile: touch gesta pro zoom, ale NE horizont√°ln√≠ scroll cel√© str√°nky</li>
+<li>Marker: pracoviŇ°tńõ zamńõstnance (pokud known)</li>
+</ul></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ employee_plans + plan_items</div>
+<pre>Schema::create('employee_plans', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->foreignId('created_by')->constrained('users'); // admin
+    $table->string('title')->default('MŇĮj kari√©rn√≠ pl√°n');
+    $table->timestamps();
+});
+
+Schema::create('plan_items', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('employee_plan_id')->constrained()->cascadeOnDelete();
+    $table->text('text');
+    $table->boolean('is_completed')->default(false);
+    $table->timestamp('completed_at')->nullable();
+    $table->integer('sort_order')->default(0);
+    $table->timestamps();
+});</pre></div>
+
+<div class="tbox"><div class="tbox-h">Toggle completed endpoint</div>
+<pre>// PATCH /employee/plan/items/{item}/toggle
+public function toggle(PlanItem $item) {
+    $this->authorize('toggle', $item); // Policy: only owner
+    $item->update([
+        'is_completed' => !$item->is_completed,
+        'completed_at' => !$item->is_completed ? now() : null,
+    ]);
+    // Notifikace admin
+    $item->plan->createdBy->notify(new PlanItemToggled($item));
+    return back();
+}</pre></div>
+
+<div class="edge"><p>Admin pŇôid√° nov√Ĺ bod do pl√°nu ‚Üí zamńõstnanec dostane notifikaci ‚ÄěNov√Ĺ bod v pl√°nu: {text}".</p></div>
+<div class="edge"><p>Zamńõstnanec omylem zaŇ°krtne bod ‚Üí mus√≠ b√Ĺt moŇĺnost odŇ°krtnout (toggle). Cooldown: max 10 toggle/minutu (rate limit).</p></div>
+<div class="edge"><p>Pl√°n neexistuje (admin ho jeŇ°tńõ nevytvoŇôil). Zobrazit: ‚ÄěV√°Ň° kari√©rn√≠ pl√°n bude brzy vytvoŇôen vaŇ°√≠m poradcem."</p></div>
+<div class="auto"><p>Observer <code>PlanItemObserver::updated()</code>: pŇôi zaŇ°krtnut√≠ ‚Üí notifikace admin. PŇôi 100% dokonńćen√≠ ‚Üí speci√°ln√≠ notifikace ‚Äě{jm√©no} splnil vŇ°echny body pl√°nu! ūüéČ"</p></div>
+<div class="test">Admin vytvoŇô√≠ 5 bodŇĮ ‚Üí zamńõstnanec vid√≠ 5 bodŇĮ s pr√°zdn√Ĺmi koleńćky.</div>
+<div class="test">Zamńõstnanec zaŇ°krtne 3 ‚Üí progress 60% ‚Üí admin dostane 3 notifikace.</div>
+<div class="test">Mapa na iPhone SE (320px) ‚ÄĒ Ňĺ√°dn√Ĺ horizont√°ln√≠ scroll.</div>
+</div></div>
+
+<!-- E6: Evidence doch√°zky a Mzda -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>6. Evidence doch√°zky a Mzdov√° kalkulańćka</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>A) Soupis hodin (st√°vaj√≠c√≠)</strong><span class="badge b-done">EXISTUJE</span></div>
+<p>Zamńõstnanec zad√°v√° hodiny za mńõs√≠c ‚ÄĒ jeho strana dvoustrann√© verifikace (viz Agent bod 10).</p>
+<ul class="fl">
+<li>Input: hodiny za aktu√°ln√≠ mńõs√≠c (decimal)</li>
+<li>V√Ĺstup: porovn√°n√≠ s agentem (matched/disputed badge)</li>
+<li>Historie: pŇôedchoz√≠ mńõs√≠ce read-only</li>
+</ul></div>
+
+<div class="feat"><div class="feat-h"><strong>B) Mzdov√° kalkulańćka (NOV√Ā)</strong><span class="badge b-new">NOV√Č</span></div>
+<p>Integrovan√° mzdov√° kalkulańćka. <strong>Kompletn√≠ specifikace ‚Üí viz tab ‚ÄěMzdov√° Kalkulańćka".</strong></p>
+<p>V kontextu zamńõstnance: zamńõstnanec zad√° sv√© brutto/hod + zemi + daŇąovou tŇô√≠du ‚Üí vid√≠ odhad netta + pŇô√≠spńõvky na dńõti + odhad daŇąov√©ho pŇôizn√°n√≠.</p></div>
+
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Layout:</strong> Dvńõ z√°loŇĺky v jedn√© str√°nce: ‚ÄěMoje hodiny" | ‚ÄěMzdov√° kalkulańćka"</li>
+<li><strong>Hodiny:</strong> Jednoduch√Ĺ formul√°Ňô ‚ÄĒ mńõs√≠c (auto-current), pońćet hodin, pozn√°mka, odeslat. Pod formul√°Ňôem: tabulka pŇôedchoz√≠ch mńõs√≠cŇĮ se statusem.</li>
+<li><strong>Kalkulańćka:</strong> Viz tab Mzdov√° Kalkulańćka ‚ÄĒ UI specs.</li>
+</ul></div>
+<div class="edge"><p>Zamńõstnanec zad√° hodiny za mńõs√≠c, kter√Ĺ jeŇ°tńõ neskonńćil. Povolovat ‚ÄĒ prŇĮbńõŇĺn√© zad√°v√°n√≠. Ale zobrazit varov√°n√≠: ‚ÄěMńõs√≠c jeŇ°tńõ neskonńćil. MŇĮŇĺete hodnotu upravit do 5. n√°sleduj√≠c√≠ho mńõs√≠ce."</p></div>
+<div class="edge"><p>Zamńõstnanec chce opravit hodiny za pŇôedchoz√≠ mńõs√≠c (po deadline). Nepovolit editaci ‚ÄĒ zobrazit ‚ÄěKontaktujte admina pro opravu." + link na zpr√°vy.</p></div>
+</div></div>
+
+<!-- E7: Jazykov√© lekce -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>7. Jazykov√© lekce</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>SluŇĺba: individu√°ln√≠ 1:1 lekce nńõmńćiny</strong></div>
+<p>Lektorka = soudn√≠ tlumońćnice s 20+ let zkuŇ°enost√≠. 10t√Ĺdenn√≠ bal√≠ńćek (cca 2,5 mńõs√≠ce). Cena: <span class="price">299 ‚ā¨</span></p></div>
+<div class="sub-sec green"><h4>Obsah str√°nky (z dodan√©ho PDF)</h4>
+<ul class="fl">
+<li>V√Ĺuka 1 na 1 ‚ÄĒ lektor se vńõnuje jen v√°m</li>
+<li>Bal√≠ńćek na 10 t√ĹdnŇĮ (cca 2,5 mńõs√≠ce)</li>
+<li>Materi√°ly a dom√°c√≠ √ļkoly na m√≠ru</li>
+<li>ZamńõŇôen√≠: bńõŇĺn√° komunikace, pracovn√≠ jazyk, odborn√° slovn√≠ z√°soba</li>
+<li>Flexibiln√≠ term√≠ny ‚ÄĒ pŇôizpŇĮsob√≠me se vaŇ°im smńõn√°m</li>
+</ul></div>
+<div class="tbox"><div class="tbox-h">Implementace ‚ÄĒ objedn√°vkov√Ĺ flow</div>
+<pre>// Univerz√°ln√≠ ServiceRequest model pro vŇ°echny sluŇĺby
+// POST /employee/services/order
+public function order(Request $request) {
+    $validated = $request->validate([
+        'service_type' => 'required|in:language,welding,kindergeld,tax,housing,office,insurance,banking,career',
+        'message' => 'nullable|max:2000',
+    ]);
+    $order = ServiceRequest::create([
+        'user_id' => auth()->id(),
+        'type' => $validated['service_type'],
+        'message' => $validated['message'],
+        'status' => 'pending',
+    ]);
+    // Notifikace admin
+    User::admins()->each(fn($admin) => $admin->notify(new NewServiceOrder($order)));
+    return back()->with('success', 'VaŇ°e objedn√°vka byla odesl√°na!');
+}</pre></div>
+<div class="sub-sec purple"><h4>UI specifikace</h4>
+<ul class="fl">
+<li><strong>Hero sekce:</strong> Nadpis + popis sluŇĺby (z PDF textu) + cena badge</li>
+<li><strong>CTA tlańć√≠tko:</strong> ‚ÄěObjednat lekce" (zelen√©, velk√©) ‚Üí modal s potvrzen√≠m + voliteln√° zpr√°va</li>
+<li><strong>Po objedn√°n√≠:</strong> Toast ‚ÄěObjedn√°vka odesl√°na! Brzy v√°s kontaktujeme." + status na str√°nce: ‚ÄěVaŇ°e objedn√°vka: Zpracov√°v√° se"</li>
+</ul></div>
+<div class="edge"><p>Zamńõstnanec objedn√° 2√ó (double click). Debounce na tlańć√≠tku (3s disable po kliknut√≠) + unique constraint v DB (max 1 pending objedn√°vka per typ per user).</p></div>
+<div class="edge"><p>SluŇĺba dońćasnńõ nedostupn√°. Admin mŇĮŇĺe nastavit <code>is_active = false</code> ‚Üí CTA se zmńõn√≠ na ‚ÄěMoment√°lnńõ nedostupn√©" (disabled).</p></div>
+</div></div>
+
+<!-- E8: Certifikace -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>8. Certifikace (Sv√°Ňôeńćsk√© kurzy)</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Welding Academy ‚ÄĒ mezin√°rodn√≠ certifik√°ty</strong></div>
+<p>Kurzy MIG, MAG, TIG, MMA (elektroda). EN ISO 9606-1 certifikace. Cena: <span class="price">od 599 ‚ā¨</span></p></div>
+<div class="sub-sec green"><h4>Obsah (z dodan√©ho PDF)</h4>
+<ul class="fl">
+<li>Kurzy pro zańć√°teńćn√≠ky i zkuŇ°en√© sv√°Ňôeńće</li>
+<li>Mezin√°rodnńõ platn√© zkouŇ°ky EN ISO 9606-1</li>
+<li>Mal√© skupiny nebo 1:1 v√Ĺuka</li>
+<li>Partnersk√° s√≠Ň• Ň°kol po cel√© ńĆR a Evropńõ</li>
+<li>Typy: MIG/MAG (nejbńõŇĺnńõjŇ°√≠), TIG (hlin√≠k, nerez), MMA/elektroda (ter√©n)</li>
+</ul></div>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Stejn√Ĺ <code>ServiceRequest</code> model, <code>type = 'welding'</code>. Str√°nka: Blade view s obsahem z PDF + CTA ‚ÄěObjednat kurz". Admin zpracuje ruńćnńõ.</p></div>
+<div class="tip"><p>Budoucnost v2: dynamick√Ĺ cen√≠k per typ kurzu (MIG/TIG/MMA) s online pŇôihl√°Ň°kou a v√Ĺbńõrem term√≠nu.</p></div>
+</div></div>
+
+<!-- E9: Smlouvy -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>9. Smlouvy</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Upload pracovn√≠ smlouvy + budouc√≠ AI pŇôeklad</strong></div></div>
+
+<div class="sub-sec red"><h4>A) Pracovn√≠ smlouva</h4>
+<ul class="fl">
+<li>Zamńõstnanec nahraje <strong>foto smlouvy</strong> (telefon) nebo PDF scan</li>
+<li>Syst√©m uloŇĺ√≠ (Spatie MediaLibrary, encrypted disk)</li>
+<li>Admin vid√≠ nahran√Ĺ dokument v admin panelu</li>
+<li><strong>PŇôeklad:</strong> Zat√≠m MANU√ĀLNńö (admin). Budoucnost: AI pŇôeklad (GPT-4 Vision / Claude Vision)</li>
+</ul></div>
+
+<div class="sub-sec yellow"><h4>B) V√ĹpovńõńŹ</h4>
+<ul class="fl">
+<li>Informańćn√≠ sekce: jak podat v√ĹpovńõńŹ, v√Ĺpovńõdn√≠ lhŇĮty per zemńõ</li>
+<li>Upload dokumentu v√Ĺpovńõdi (voliteln√©)</li>
+<li>Link na sekci 22 (Ukonńćen√≠ pr√°ce v zahranińć√≠)</li>
+</ul></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ contracts</div>
+<pre>Schema::create('contracts', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->enum('type', ['employment', 'termination']);
+    $table->string('company_name')->nullable();
+    $table->date('start_date')->nullable();
+    $table->date('end_date')->nullable();
+    $table->text('notes')->nullable();
+    $table->text('translation')->nullable(); // admin manu√°ln√≠ pŇôeklad, budouc√≠ AI
+    $table->enum('translation_status', ['none', 'pending', 'done'])->default('none');
+    $table->timestamps();
+    // MediaLibrary: collection 'contract_documents'
+});</pre></div>
+
+<div class="tbox"><div class="tbox-h">Upload validace</div>
+<pre>$request->validate([
+    'document' => 'required|file|mimes:pdf,jpg,jpeg,png,heic|max:20480', // max 20MB
+    'type' => 'required|in:employment,termination',
+]);
+// HEIC: iPhone foto form√°t ‚Üí server-side konverze na JPG (Imagick)</pre></div>
+
+<div class="edge"><p>iPhone fot√≠ v HEIC form√°tu. Server mus√≠ akceptovat HEIC a konvertovat na JPG (php-imagick nebo ffmpeg). Alternativa: HTML5 <code>accept="image/*"</code> na input ‚Üí telefon nab√≠dne fotku pŇô√≠mo.</p></div>
+<div class="edge"><p>Smlouva v nńõmńćinńõ ‚ÄĒ zamńõstnanec nerozum√≠. Zobrazit info: ‚ÄěNemŇĮŇĺete smlouvńõ rozumńõt? Nahrajte ji a my v√°m pomŇĮŇĺeme s pŇôekladem."</p></div>
+<div class="edge"><p>Zamńõstnanec nahraje Ň°patn√Ĺ soubor. UmoŇĺnit smaz√°n√≠ a nov√© nahr√°n√≠. Soft delete star√©ho souboru.</p></div>
+<div class="auto"><p>Po uploadu smlouvy ‚Üí notifikace admin: ‚Äě{jm√©no} nahr√°l pracovn√≠ smlouvu ‚ÄĒ ke kontrole."</p></div>
+<div class="test">Upload JPG smlouvy (5MB) ‚Üí √ļspńõŇ°nńõ uloŇĺeno, viditeln√© v admin panelu.</div>
+<div class="test">Upload HEIC ‚Üí konvertov√°no na JPG, uloŇĺeno korektnńõ.</div>
+</div></div>
+
+<!-- E10: PŇô√≠spńõvky na dńõti (Kindergeld) -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>10. PŇô√≠spńõvky na dńõti (Kindergeld)</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>SluŇĺba zpracov√°n√≠ Ňĺ√°dosti o Kindergeld</strong></div>
+<p>Kompletn√≠ zpracov√°n√≠ za klienta. Cena: <span class="price">249 ‚ā¨</span>. Zamńõstnanec nahraje potŇôebn√© dokumenty ‚Üí admin/Dilibees zpracuje Ňĺ√°dost.</p></div>
+
+<div class="sub-sec red"><h4>PotŇôebn√© dokumenty ‚ÄĒ upload checklist (9 poloŇĺek)</h4>
+<table>
+<tr><th>#</th><th>Dokument</th><th>Typ uploadu</th><th>Povinn√Ĺ</th></tr>
+<tr><td>1</td><td>Vyplnńõn√Ĺ formul√°Ňô KG1</td><td>PDF/foto</td><td>ANO</td></tr>
+<tr><td>2</td><td>Rodn√© listy dńõt√≠</td><td>PDF/foto (v√≠ce souborŇĮ)</td><td>ANO</td></tr>
+<tr><td>3</td><td>ID (obńćansk√Ĺ prŇĮkaz/pas)</td><td>Foto pŇôedn√≠+zadn√≠</td><td>ANO</td></tr>
+<tr><td>4</td><td>Potvrzen√≠ o zamńõstn√°n√≠</td><td>PDF/foto</td><td>ANO</td></tr>
+<tr><td>5</td><td>V√Ĺplatn√≠ p√°sky / V√Ĺpis v√Ĺplat</td><td>PDF (v√≠ce souborŇĮ)</td><td>ANO</td></tr>
+<tr><td>6</td><td>Potvrzen√≠ o bydliŇ°ti v dan√© zemi</td><td>PDF/foto</td><td>ANO</td></tr>
+<tr><td>7</td><td>Bankovn√≠ spojen√≠</td><td>Text input (IBAN)</td><td>ANO</td></tr>
+<tr><td>8</td><td>Formul√°Ňô E401 + E411 (pokud d√≠tńõ v jin√© zemi)</td><td>PDF/foto</td><td>PODM√ćNńöN√Ě</td></tr>
+<tr><td>9</td><td>Potvrzen√≠, Ňĺe druh√Ĺ rodińć nepob√≠r√° pŇô√≠spńõvky</td><td>PDF/foto</td><td>ANO</td></tr>
+</table></div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ kindergeld_requests</div>
+<pre>Schema::create('kindergeld_requests', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->string('iban', 34)->nullable();
+    $table->integer('children_count')->default(1);
+    $table->boolean('child_in_other_country')->default(false); // podm√≠nka pro dok 8
+    $table->enum('status', ['draft', 'documents_pending', 'submitted', 'processing', 'completed', 'rejected'])->default('draft');
+    $table->text('admin_note')->nullable();
+    $table->date('submitted_at')->nullable();
+    $table->date('completed_at')->nullable();
+    $table->timestamps();
+    // MediaLibrary collections per dokument typ:
+    // 'kg1_form', 'birth_certificates', 'id_document', 'employment_confirmation',
+    // 'payslips', 'residence_confirmation', 'e401_e411', 'no_benefits_confirmation'
+});</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace ‚ÄĒ upload checklist</h4>
+<ul class="fl">
+<li><strong>Checklist layout:</strong> KaŇĺd√Ĺ dokument = Ňô√°dek s: n√°zev, status ikona (‚úÖ nahr√°no / ‚ĚĆ chyb√≠ / ‚Ź≥ zpracov√°v√° se), upload tlańć√≠tko, n√°hled miniatury</li>
+<li><strong>Progress indicator:</strong> ‚Äě6 z 9 dokumentŇĮ nahr√°no" + progress bar</li>
+<li><strong>Podm√≠nńõn√© zobrazen√≠:</strong> Dokument 8 (E401/E411) se zobraz√≠ POUZE pokud zamńõstnanec zaŇ°krtne ‚ÄěD√≠tńõ Ňĺije v jin√© zemi"</li>
+<li><strong>CTA:</strong> ‚ÄěOdeslat Ňĺ√°dost" (aktivn√≠ pouze pokud vŇ°echny povinn√© dokumenty nahr√°ny)</li>
+<li><strong>Po odesl√°n√≠:</strong> Status tracker: Draft ‚Üí Dokumenty ‚Üí Odesl√°no ‚Üí Zpracov√°v√° se ‚Üí Hotovo</li>
+</ul></div>
+
+<div class="edge"><p>Zamńõstnanec m√° 3 dńõti ‚Üí rodn√Ĺ list pro kaŇĺd√© d√≠tńõ. Multi-file upload pro dokument 2. Zobrazit: ‚ÄěRodn√Ĺ list d√≠tńõ 1 ‚úÖ, Rodn√Ĺ list d√≠tńõ 2 ‚ĚĆ, Rodn√Ĺ list d√≠tńõ 3 ‚ĚĆ".</p></div>
+<div class="edge"><p>IBAN validace ‚ÄĒ regex per zemi: DE=DE+2check+18digits, AT=AT+2check+16digits, CZ=CZ+2check+20digits. NPM: <code>iban</code> package pro frontend validaci.</p></div>
+<div class="edge"><p>Zamńõstnanec odeŇ°le Ňĺ√°dost s chybńõj√≠c√≠m dokumentem 8 (d√≠tńõ v jin√© zemi, ale nezaŇ°krtl checkbox). Admin vr√°t√≠ na ‚Äědocuments_pending" s pozn√°mkou. Notifikace zamńõstnanci.</p></div>
+<div class="auto"><p>Po nahr√°n√≠ posledn√≠ho povinn√©ho dokumentu ‚Üí auto-notifikace: ‚ÄěVŇ°echny dokumenty nahr√°ny. MŇĮŇĺete odeslat Ňĺ√°dost!"</p></div>
+<div class="auto"><p>CRON <code>weekly</code>: ŇĹ√°dosti ve stavu <code>draft</code> d√©le neŇĺ 30 dn√≠ ‚Üí reminder notifikace zamńõstnanci.</p></div>
+<div class="test">Upload vŇ°ech 9 dokumentŇĮ ‚Üí progress 100% ‚Üí CTA ‚ÄěOdeslat" je aktivn√≠.</div>
+<div class="test">Checkbox ‚Äěd√≠tńõ v jin√© zemi" ‚Üí zobraz√≠ se dokument 8 (E401/E411).</div>
+<div class="test">IBAN validace: ‚ÄěDE89370400440532013000" ‚Üí OK. ‚ÄěINVALID123" ‚Üí error.</div>
+</div></div>
+
+<!-- E11: DaŇąov√© pŇôizn√°n√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>11. DaŇąov√© pŇôizn√°n√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-crit">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Stromov√° struktura sloŇĺek pro nahr√°v√°n√≠ dokumentŇĮ</strong></div>
+<p>NejkomplexnńõjŇ°√≠ upload feature v syst√©mu ‚ÄĒ 7 kategori√≠ s podkategoriemi.</p></div>
+
+<div class="mermaid">
+flowchart TD
+    R["ūüďĀ DaŇąov√© pŇôizn√°n√≠ 2025"] --> A["1. Osobn√≠ √ļdaje"]
+    R --> B["2. Pracovn√≠ dokumenty"]
+    R --> C["3. Uplatniteln√© n√°klady"]
+    R --> D["4. Ubytov√°n√≠ a dom√°cnost"]
+    R --> E["5. Rodinn√© z√°leŇĺitosti"]
+    R --> F["6. Zdrav√≠, pojiŇ°tńõn√≠ a danńõ"]
+    R --> G["7. DalŇ°√≠ dŇĮleŇĺit√©"]
+    A --> A1["Doklady (ID, Zdravotn√≠ karta)"]
+    A --> A2["Bankovn√≠ spojen√≠"]
+    A --> A3["Rodinn√Ĺ stav"]
+    B --> B1["V√Ĺplatn√≠ p√°sky"]
+    B --> B2["Rońćn√≠ v√Ĺpis mzdy"]
+    B --> B3["Smlouva o zamńõstn√°n√≠"]
+    B --> B4["VedlejŇ°√≠ √ļvazek?"]
+    B4 -->|"ANO"| B4a["V√Ĺpl. p√°sky/Faktury + Smlouva"]
+    C --> C1["Cestovn√≠ n√°klady"]
+    C --> C2["√öroky pŇĮjńćek a hypot√©k"]
+    C --> C3["PojiŇ°tńõn√≠"]
+    C --> C4["SpoŇôen√≠"]
+    C --> C5["Ň†kolen√≠"]
+    C --> C6["Dńõti"]
+    C --> C7["Pracovn√≠ vybaven√≠"]
+</div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ tax_returns + tax_documents</div>
+<pre>Schema::create('tax_returns', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->year('tax_year'); // 2025, 2026...
+    $table->string('country', 2); // DE, AT, CH
+    $table->boolean('has_secondary_job')->default(false); // podm√≠nńõn√© pole
+    $table->enum('status', ['draft', 'uploading', 'submitted', 'processing', 'completed'])->default('draft');
+    $table->text('admin_note')->nullable();
+    $table->timestamps();
+    $table->unique(['user_id', 'tax_year', 'country']);
+});
+
+// Enum kategorie
+// 'personal', 'work', 'deductible', 'housing', 'family', 'health', 'other'
+
+Schema::create('tax_documents', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('tax_return_id')->constrained()->cascadeOnDelete();
+    $table->string('category'); // personal, work, deductible, housing, family, health, other
+    $table->string('subcategory'); // id_card, payslips, travel_costs, etc.
+    $table->string('original_filename');
+    $table->timestamps();
+    // Spatie MediaLibrary per dokument
+});</pre></div>
+
+<div class="sub-sec red"><h4>Kompletn√≠ strom kategori√≠ a subkategori√≠</h4>
+<table>
+<tr><th>Kategorie</th><th>Subkategorie</th><th>Typ</th><th>Podm√≠nka</th></tr>
+<tr><td rowspan="3"><strong>1. Osobn√≠ √ļdaje</strong></td><td>Doklady (ID, zdrav. karta)</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>Bankovn√≠ spojen√≠</td><td>Text (IBAN) + file</td><td>‚ÄĒ</td></tr>
+<tr><td>Rodinn√Ĺ stav</td><td>Select + file</td><td>‚ÄĒ</td></tr>
+<tr><td rowspan="4"><strong>2. Pracovn√≠ dokumenty</strong></td><td>V√Ĺplatn√≠ p√°sky</td><td>Multi-file (12 mńõs√≠cŇĮ)</td><td>‚ÄĒ</td></tr>
+<tr><td>Rońćn√≠ v√Ĺpis mzdy</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>Smlouva + Objedn√°vky</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>VedlejŇ°√≠ √ļvazek: p√°sky/faktury + smlouva</td><td>Multi-file</td><td>has_secondary_job = true</td></tr>
+<tr><td rowspan="7"><strong>3. Uplatniteln√© n√°klady</strong></td><td>Cestovn√≠ n√°klady</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>√öroky pŇĮjńćek a hypot√©k</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>PojiŇ°tńõn√≠</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>SpoŇôen√≠</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>Ň†kolen√≠</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>Dńõti</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>Pracovn√≠ vybaven√≠ a pomŇĮcky</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td rowspan="2"><strong>4. Ubytov√°n√≠</strong></td><td>N√°klady na n√°jem</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>N√°klady na energie</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td rowspan="4"><strong>5. Rodinn√© z√°leŇĺitosti</strong></td><td>Rodn√© listy dńõt√≠</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>Informace o pŇô√≠davc√≠ch</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>V√Ĺdaje na Ň°kolku/p√©ńći o d√≠tńõ</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>PŇô√≠jmy manŇĺela/manŇĺelky</td><td>File</td><td>ŇĹenat√Ĺ/vdan√°</td></tr>
+<tr><td rowspan="2"><strong>6. Zdrav√≠ a pojiŇ°tńõn√≠</strong></td><td>Potvrzen√≠ zdravotn√≠ pojiŇ°tńõn√≠</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>L√©kaŇôsk√© v√Ĺdaje (vlastn√≠ platby)</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td rowspan="3"><strong>7. DalŇ°√≠ dŇĮleŇĺit√©</strong></td><td>VedlejŇ°√≠ pŇô√≠jmy (doloŇĺit)</td><td>Multi-file</td><td>‚ÄĒ</td></tr>
+<tr><td>Nemocensk√° / podpora v nezamńõstnanosti</td><td>File</td><td>‚ÄĒ</td></tr>
+<tr><td>V√Ĺpis z √ļńćtu</td><td>File</td><td>‚ÄĒ</td></tr>
+</table></div>
+
+<div class="sub-sec purple"><h4>UI specifikace ‚ÄĒ file manager styl</h4>
+<ul class="fl">
+<li><strong>Stromov√° navigace:</strong> Lev√Ĺ panel: 7 kategori√≠ (accordion). Klik na kategorii ‚Üí rozbalit subkategorie. Badge s pońćtem nahran√Ĺch/celkem.</li>
+<li><strong>Prav√Ĺ panel:</strong> Upload zone (drag & drop + click browse). N√°hledy nahran√Ĺch souborŇĮ (thumbnail). Smazat tlańć√≠tko per soubor.</li>
+<li><strong>Progress glob√°ln√≠:</strong> ‚Äě4 z 7 kategori√≠ vyplnńõno" + koleńćkov√Ĺ progress.</li>
+<li><strong>Podm√≠nńõn√© zobrazen√≠:</strong> ‚ÄěVedlejŇ°√≠ √ļvazek" subkategorie se zobraz√≠ jen pokud zamńõstnanec zaŇ°krtne ‚ÄěM√°m vedlejŇ°√≠ √ļvazek".</li>
+<li><strong>PŇô√≠jmy manŇĺelky:</strong> Zobraz√≠ se jen pokud rodinn√Ĺ stav = Ňĺenat√Ĺ/vdan√°.</li>
+<li><strong>CTA:</strong> ‚ÄěOdeslat ke zpracov√°n√≠" (aktivn√≠ pouze pokud min. kategorie 1 a 2 kompletn√≠).</li>
+</ul></div>
+
+<div class="edge"><p>12 v√Ĺplatn√≠ch p√°sek ‚ÄĒ multi-upload najednou. Drag & drop 12 souborŇĮ ‚Üí batch upload s progress per soubor.</p></div>
+<div class="edge"><p>Zamńõstnanec nahraje p√°sku za Ň°patn√Ĺ mńõs√≠c. UmoŇĺnit pŇôejmenov√°n√≠/smaz√°n√≠ + nov√Ĺ upload.</p></div>
+<div class="edge"><p>DaŇąov√© pŇôizn√°n√≠ za 2 roky (2024 a 2025). KaŇĺd√Ĺ rok = samostatn√Ĺ <code>TaxReturn</code> z√°znam. Selector roku na str√°nce.</p></div>
+<div class="edge"><p>Zamńõstnanec pracoval ve 2 zem√≠ch v jednom roce (DE + AT). Samostatn√© pŇôizn√°n√≠ per zemńõ ‚Üí <code>unique(['user_id', 'tax_year', 'country'])</code>.</p></div>
+<div class="auto"><p>Po uploadu do kaŇĺd√© kategorie ‚Üí automaticky aktualizovat progress. PŇôi 100% ‚Üí notifikace ‚ÄěVŇ°e nahr√°no, mŇĮŇĺete odeslat."</p></div>
+<div class="auto"><p>CRON <code>monthly January</code>: Auto-create TaxReturn pro vŇ°echny aktivn√≠ zamńõstnance za pŇôedchoz√≠ rok. Notifikace: ‚ÄěNov√Ĺ daŇąov√Ĺ rok ‚ÄĒ zańćnńõte nahr√°vat dokumenty."</p></div>
+<div class="test">Upload 12 v√Ĺplatn√≠ch p√°sek najednou ‚Üí vŇ°echny uloŇĺeny, progress se aktualizuje.</div>
+<div class="test">Checkbox ‚ÄěvedlejŇ°√≠ √ļvazek" ‚Üí zobraz√≠ se dodateńćn√° subkategorie.</div>
+<div class="test">Odeslat bez kategorie 1 a 2 ‚Üí error: ‚ÄěNejprve vyplŇąte osobn√≠ √ļdaje a pracovn√≠ dokumenty."</div>
+</div></div>
+
+<!-- E12: Pomocn√≠ci -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>12. Pomocn√≠ci v nov√©m prostŇôed√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>A) N√°vod: Jak pouŇĺ√≠vat ChatGPT</strong></div>
+<p>4str√°nkov√Ĺ n√°vod pro Ňôemesln√≠ky v zahranińć√≠ (z dodan√©ho PDF). Jednoduch√©: jak se pt√°t, co AI um√≠, pŇô√≠klady dotazŇĮ. Odkazy: staŇĺen√≠ appky iOS + Android.</p></div>
+<div class="feat"><div class="feat-h"><strong>B) Google Mapy v zahranińć√≠</strong></div>
+<p>N√°vod orientace v nov√© lokalitńõ. Zdrojov√Ĺ soubor .pages (Apple) ‚ÄĒ nutn√© pŇôev√©st na text.</p></div>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Statick√© Blade views s obsahem z PDF. <code>Route: /employee/guides/{slug}</code>. Slug: <code>chatgpt</code>, <code>google-maps</code>. Admin mŇĮŇĺe editovat obsah pŇôes WYSIWYG editor (TinyMCE/Trix) v admin panelu.</p></div>
+<div class="tip"><p>Budoucnost: pŇôidat dalŇ°√≠ prŇĮvodce (jak zaloŇĺit bankovn√≠ √ļńćet, jak funguje veŇôejn√° doprava, jak na l√©kaŇôe v zahranińć√≠).</p></div>
+</div></div>
+<!-- E13: Odmńõny -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>13. Odmńõny a Provize</h3><span class="badge b-upd">AKTUALIZACE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Zamńõstnanec, kter√Ĺ je z√°roveŇą Hunter/N√°bor√°Ňô, vid√≠ odkaz na svŇĮj Hunter profil. St√°vaj√≠c√≠ funkce doporuńćen√≠ zŇĮst√°v√°.</p>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<pre>// Blade: employee/rewards.blade.php
+@if(auth()->user()->isHunter())
+    // Zobrazit mini-dashboard huntera (embed)
+    // Nebo redirect: route('hunter.dashboard')
+    &lt;a href="{{ route('hunter.rewards') }}"&gt;Zobrazit odmńõny n√°bor√°Ňôe&lt;/a&gt;
+@else
+    // CTA: "StaŇąte se n√°bor√°Ňôem a vydńõl√°vejte provize!"
+    // + odkaz na registraci jako hunter
+@endif</pre></div>
+<div class="edge"><p>Zamńõstnanec NEN√ć hunter ‚Üí zobrazit CTA ‚ÄěStaŇąte se n√°bor√°Ňôem" + vysvńõtlen√≠ syst√©mu proviz√≠ + tlańć√≠tko ‚ÄěM√°m z√°jem" ‚Üí zpr√°va adminovi.</p></div>
+</div></div>
+
+<!-- E14-17: Bydlen√≠, √öŇôady, PojiŇ°Ň•ovna, Banky -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>14‚Äď17. Bydlen√≠ ¬∑ √öŇôady ¬∑ Zdravotn√≠ pojiŇ°Ň•ovna ¬∑ Bankovn√≠ syst√©m</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="note note-info">VŇ°echny 4 sekce sd√≠l√≠ spoleńćn√Ĺ servisn√≠ model: asistence za <span class="price">1,29 ‚ā¨/min</span> (√ļńćtov√°no po minut√°ch). Spoleńćn√Ĺ <code>ServiceRequest</code> model s typem.</div>
+
+<div class="grid2">
+<div class="sub-sec"><h4>14. Bydlen√≠</h4>
+<p>Pomoc pŇôi hled√°n√≠ bydlen√≠ (n√°jem, energie, smlouvy). SluŇĺby: Hled√°n√≠ bytu, UzavŇôen√≠ n√°jemn√≠ smlouvy, PŇôepis energi√≠, Komunikace s pronaj√≠matelem.</p></div>
+<div class="sub-sec"><h4>15. √öŇôady</h4>
+<p>Vyplnńõn√≠ formul√°ŇôŇĮ, komunikace s √ļŇôady, pŇôeklady, telefon√°ty, emaily. SluŇĺby: Registrace pobytu (Anmeldung), Odhl√°Ň°en√≠ (Abmeldung), DaŇąov√Ĺ √ļŇôad.</p></div>
+<div class="sub-sec"><h4>16. Zdravotn√≠ pojiŇ°Ň•ovna</h4>
+<p>Operace s pojiŇ°Ň•ovnami ‚ÄĒ veŇôejn√© i soukrom√©. SluŇĺby: Registrace, Zmńõna pojiŇ°Ň•ovny, Reklamace, V√ĹpovńõńŹ.</p></div>
+<div class="sub-sec"><h4>17. Bankovn√≠ syst√©m</h4>
+<ul class="fl">
+<li>ZaloŇĺen√≠ bankovn√≠ho √ļńćtu</li>
+<li>PŇĮjńćka ‚ÄĒ poradenstv√≠ a zprostŇôedkov√°n√≠</li>
+<li>Hypot√©ka ‚ÄĒ poradenstv√≠ a zprostŇôedkov√°n√≠</li>
+</ul></div>
+</div>
+
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ service_requests (sd√≠len√° tabulka)</div>
+<pre>Schema::create('service_requests', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->enum('type', ['housing', 'office', 'insurance', 'banking', 'language', 'welding', 'kindergeld', 'tax', 'career']);
+    $table->string('subtype')->nullable(); // 'find_apartment', 'registration', 'account_open'...
+    $table->text('description')->nullable(); // co pŇôesnńõ potŇôebuje
+    $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
+    $table->integer('minutes_spent')->nullable(); // pro 1.29‚ā¨/min sluŇĺby
+    $table->decimal('total_cost', 10, 2)->nullable();
+    $table->text('admin_note')->nullable();
+    $table->enum('contact_method', ['whatsapp', 'phone', 'email'])->nullable();
+    $table->timestamps();
+});</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace ‚ÄĒ jednotn√° Ň°ablona pro 4 sekce</h4>
+<ul class="fl">
+<li><strong>Karta sluŇĺby:</strong> Ikona (ūüŹ†/ūüŹõ/ūüŹ•/ūüŹ¶) + n√°zev + kr√°tk√Ĺ popis + cena badge ‚Äě1,29 ‚ā¨/min"</li>
+<li><strong>CTA:</strong> ‚ÄěObjednat asistenci" ‚Üí formul√°Ňô: PopiŇ°te co potŇôebujete (textarea) + Preferovan√Ĺ kontakt (WhatsApp/Telefon/Email) + Odeslat</li>
+<li><strong>Po odesl√°n√≠:</strong> Status card: ńĆek√° na zpracov√°n√≠ ‚Üí V ŇôeŇ°en√≠ ‚Üí Hotovo + celkov√Ĺ ńćas + cena</li>
+<li><strong>Historie:</strong> PŇôedchoz√≠ Ňĺ√°dosti v accordionu pod formul√°Ňôem</li>
+</ul></div>
+
+<div class="edge"><p>Minuty trackuje admin ruńćnńõ (zat√≠m). Fakturace mimo syst√©m. Budoucnost: integrovan√Ĺ timer v admin panelu.</p></div>
+<div class="edge"><p>Zamńõstnanec nerozum√≠ formul√°Ňôi (jazykov√° bari√©ra). Formul√°Ňô i popisy mus√≠ b√Ĺt v rodn√©m jazyce zamńõstnance (CZ/SK/PL/HU/RO). Lokalizace!</p></div>
+<div class="auto"><p>Po zad√°n√≠ <code>minutes_spent</code> adminem ‚Üí auto-v√Ĺpońćet <code>total_cost = minutes √ó 1.29</code>. Notifikace zamńõstnanci s cenou.</p></div>
+<div class="test">Objedn√°vka bydlen√≠ ‚Üí admin vid√≠ v panelu + notifikace. Status: pending ‚Üí in_progress ‚Üí completed.</div>
+</div></div>
+
+<!-- E18: PojiŇ°tńõn√≠ rizik -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>18. PojiŇ°tńõn√≠ rizik</h3><span class="badge b-new">NOV√Č</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<p>Video v e-booku + textov√Ĺ obsah. Klient dod√°. PŇôipravit: video embed (YouTube/Vimeo iframe) + textov√Ĺ obsah pod n√≠m.</p>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Statick√° Blade str√°nka. <code>Route: /employee/risk-insurance</code>. Admin edituje obsah (HTML/Markdown WYSIWYG). Video URL v settings tabulce.</p></div>
+</div></div>
+
+<!-- E19: Kari√©rn√≠ poradenstv√≠ -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>19. Kari√©rn√≠ poradenstv√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-med">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="sub-sec green"><h4>Cenov√Ĺ model (z dodan√©ho PDF)</h4>
+<table>
+<tr><th>SluŇĺba</th><th>Cena</th><th>Popis</th></tr>
+<tr><td>√övodn√≠ vstupn√≠ poradenstv√≠</td><td><span class="price">ZDARMA</span></td><td>Nez√°vazn√© sezn√°men√≠, zjiŇ°tńõn√≠ potŇôeb</td></tr>
+<tr><td>N√°sledn√° konzultace do 30 minut</td><td><span class="price">ZDARMA</span></td><td>Kr√°tk√© upŇôesnńõn√≠/doplnńõn√≠</td></tr>
+<tr><td>DalŇ°√≠ kari√©rn√≠ poradenstv√≠</td><td><span class="price">199 ‚ā¨/hodina</span></td><td>Intenzivn√≠ veden√≠, mentoring, konkr√©tn√≠ doporuńćen√≠</td></tr>
+</table></div>
+<p style="margin-top:12px;color:#8b949e">Dilibees m√° dlouholet√© zkuŇ°enosti s pracovn√≠mi trhy v zahranińć√≠. D√≠ky dosahu a datŇĮm maj√≠ perfektn√≠ pŇôehled o fungov√°n√≠ trhu pr√°ce v Evropńõ.</p>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p><code>ServiceRequest</code> model, <code>type = 'career'</code>. Str√°nka s popisem + 3 cenov√© karty + CTA ‚ÄěSjednat konzultaci".</p></div>
+</div></div>
+
+<!-- E20-23 -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>20. E-Booky</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc"><p>St√°vaj√≠c√≠ funkce ‚ÄĒ pouze UI refresh pŇôi migraci. Migrovat tabulku e-bookŇĮ na Eloquent model <code>Ebook</code>.</p></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>21. Slevov√© k√≥dy</h3><span class="badge b-done">EXISTUJE</span><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc"><p>K√≥d: <code>Dilibeespartners</code>. St√°vaj√≠c√≠ ‚ÄĒ pouze UI refresh. Model <code>DiscountCode</code> (code, description, is_active).</p></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>22. Ukonńćen√≠ pr√°ce v zahranińć√≠</h3><span class="badge b-new">NOV√Č</span><span class="prio p-high">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="feat"><div class="feat-h"><strong>Komplexn√≠ prŇĮvodce krok za krokem</strong></div></div>
+<div class="sub-sec"><h4>Sekce prŇĮvodce (z dodan√©ho PDF)</h4>
+<ol class="nl">
+<li><strong>V√ĹpovńõńŹ v zamńõstn√°n√≠:</strong> P√≠semn√°, v√Ĺpovńõdn√≠ lhŇĮta 2 dny ‚Äď 2 mńõs√≠ce (dle smlouvy/zemńõ), kopie s potvrzen√≠m, vyzvednout: posledn√≠ v√Ĺplatn√≠ p√°sku + rońćn√≠ pŇôehled pŇô√≠jmŇĮ</li>
+<li><strong>Ubytov√°n√≠:</strong> V√ĹpovńõńŹ n√°jemn√≠ smlouvy (obvykle 1 mńõs√≠c lhŇĮta), pŇôed√°vac√≠ protokol, fotodokumentace, odhl√°Ň°en√≠ energi√≠</li>
+<li><strong>√öŇôady:</strong> Odhl√°Ň°en√≠ z pobytu (DE: Abmeldung, AT: Abmeldung Wohnsitz). Lze i poŇ°tou/online. Nutn√© pro daŇąov√© pŇôizn√°n√≠!</li>
+<li><strong>PojiŇ°Ň•ovny:</strong> V√ĹpovńõńŹ zahranińćn√≠ho zdravotn√≠ho pojiŇ°tńõn√≠, vyŇĺ√°dat potvrzen√≠ o pojiŇ°tńõn√≠, pŇôihl√°sit se zpńõt u dom√°c√≠ pojiŇ°Ň•ovny</li>
+<li><strong>E-Book:</strong> PŇôidat relevantn√≠ e-book k t√©matu ukonńćen√≠ pr√°ce</li>
+</ol></div>
+<p style="margin-top:12px"><strong>CTA:</strong> ‚ÄěPotŇôebujete-li asistenci s tńõmito sluŇĺbami, kliknńõte ZDE" ‚Üí propojen√≠ na sluŇĺby (bod 14‚Äď17, 1.29 ‚ā¨/min).</p>
+<div class="tbox"><div class="tbox-h">Implementace</div>
+<p>Statick√° Blade str√°nka s accordion per krok. Na konci: CTA karty odkazuj√≠c√≠ na body 14‚Äď17. Route: <code>/employee/guides/work-termination</code>.</p></div>
+<div class="tip"><p>Per zemńõ variant: DE Abmeldung vs AT Abmeldung maj√≠ jin√Ĺ postup. Zobrazit obsah dle zemńõ zamńõstnance (z profilu).</p></div>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>23. Placeholder sekce</h3><span class="prio p-low">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc"><p>Rezervov√°no pro budouc√≠ obsah. Pr√°zdn√° Blade str√°nka.</p></div></div>
+
+</div><!-- /t-emp -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: MZDOV√Ā KALKULAńĆKA -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-calc" class="tc">
+
+<div class="note note-info" style="margin-bottom:20px"><strong>Cross-cutting feature:</strong> Kalkulańćka se pouŇĺ√≠v√° v profilu Zamńõstnance (bod 6) i v profilu Agenta (bod 3 ‚ÄĒ finanńćn√≠ podm√≠nky). Jedna Alpine.js komponenta, dva kontexty. API endpoint sd√≠len√Ĺ.</div>
+
+<div class="mermaid">
+flowchart LR
+    A["Input: Brutto/hod"] --> B["Input: Dieta"]
+    B --> C["Input: Zemńõ"]
+    C --> D["Input: DaŇą. tŇô√≠da / stav"]
+    D --> E["Input: Pońćet dńõt√≠"]
+    E --> F["API: POST /api/salary/calculate"]
+    F --> G["Output: Netto/hod"]
+    F --> H["Output: Netto/mńõs√≠c"]
+    F --> I["Output: PŇô√≠spńõvky na dńõti"]
+    F --> J["Output: Odhad daŇą. pŇôizn√°n√≠"]
+    F --> K["Output: Zdravotn√≠ pojiŇ°tńõn√≠ (CH/LI)"]
+</div>
+
+<!-- DE -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>ūüá©ūüá™ Nńõmecko (DE)</h3><span class="badge b-new">NOV√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="grid2">
+<div class="card"><div class="card-lbl">Vstup</div><div class="card-val">Brutto/hod + Dieta</div></div>
+<div class="card"><div class="card-lbl">Dieta varianty</div><div class="card-val">Na hodinu (Netto) / Dennńõ (Netto)</div></div>
+</div>
+<div class="sub-sec red"><h4>DaŇąov√© tŇô√≠dy (Steuerklasse 1‚Äď6)</h4>
+<table>
+<tr><th>TŇô√≠da</th><th>Celkov√© odvody</th><th>Typick√° situace</th><th>V√Ĺpońćet vzorec</th></tr>
+<tr><td>1</td><td>31‚Äď32 %</td><td>Svobodn√Ĺ, bezdńõtn√Ĺ</td><td><code>netto = brutto √ó (1 - 0.315)</code></td></tr>
+<tr><td>2</td><td>29‚Äď30 %</td><td>SamoŇĺivitel</td><td><code>netto = brutto √ó (1 - 0.295)</code></td></tr>
+<tr><td>3</td><td>25‚Äď26 %</td><td>ŇĹenat√Ĺ, partner bez pŇô√≠jmu</td><td><code>netto = brutto √ó (1 - 0.255)</code></td></tr>
+<tr><td>4</td><td>31‚Äď32 %</td><td>ŇĹenat√Ĺ, oba pracuj√≠</td><td><code>netto = brutto √ó (1 - 0.315)</code></td></tr>
+<tr><td>5</td><td>37‚Äď38 %</td><td>Partner tŇô√≠dy 3</td><td><code>netto = brutto √ó (1 - 0.375)</code></td></tr>
+<tr><td>6</td><td>39‚Äď40 %</td><td>VedlejŇ°√≠ √ļvazek</td><td><code>netto = brutto √ó (1 - 0.395)</code></td></tr>
+</table>
+<p style="margin-top:8px;color:#8b949e">Vzorec: <code>netto_hourly = brutto_hourly √ó (1 - rate) + diet</code>. Mńõs√≠ńćn√≠: <code>netto_monthly = netto_hourly √ó working_hours</code> (default 170h/mńõs√≠c).</p></div>
+
+<div class="sub-sec green"><h4>PŇô√≠spńõvky na dńõti (Kindergeld)</h4>
+<p><span class="price">250 ‚ā¨</span> √ó d√≠tńõ/mńõs√≠c (sjednoceno od 2023). Rońćn√≠: <code>250 √ó pońćet_dńõt√≠ √ó 12</code>. Zobrazit ve v√Ĺsledovce jako bonus k netto mzdńõ.</p></div>
+
+<div class="sub-sec"><h4>DaŇąov√© pŇôizn√°n√≠ (PendleŇôi)</h4>
+<p>Vr√°cen√≠ dan√≠: <strong>1 000 ‚Äď 3 000 ‚ā¨/rok</strong> (orientańćn√≠). Zobrazit jako rozmez√≠ v kalkulańćce s pozn√°mkou: ‚ÄěPŇôesn√° ńć√°stka z√°vis√≠ na odpracovan√Ĺch dnech a vzd√°lenosti do pr√°ce."</p></div>
+
+<div class="edge"><p>DaŇąov√° tŇô√≠da 3 vyŇĺaduje, aby partner mńõl tŇô√≠du 5 (a naopak). Kalkulańćka pońć√≠t√° jen JEDNU stranu ‚ÄĒ upozornit: ‚ÄěTŇô√≠da 3/5 se t√Ĺk√° manŇĺelsk√©ho p√°ru. Tento v√Ĺpońćet je za jednu osobu."</p></div>
+</div></div>
+
+<!-- AT -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>ūüá¶ūüáĻ Rakousko (AT)</h3><span class="badge b-new">NOV√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="sub-sec yellow"><h4>Speci√°lnńõ: 13. a 14. plat</h4>
+<p>Vzorec: <code>Brutto/hod √ó 316 = 13. a 14. plat Brutto celkem</code>. Zobrazit jako samostatn√Ĺ Ňô√°dek ve v√Ĺsledovce: ‚ÄěRońćn√≠ bonus (13.+14. plat): {ńć√°stka} ‚ā¨ brutto".</p></div>
+<div class="sub-sec red"><h4>Progresivn√≠ daŇąov√© p√°sma</h4>
+<p>V√Ĺpońćet: <code>Brutto/hod √ó 1700 = pŇôibliŇĺn√Ĺ rońćn√≠ pŇô√≠jem</code> ‚Üí urńćen√≠ p√°sma:</p>
+<table>
+<tr><th>Rońćn√≠ pŇô√≠jem</th><th>Sazba</th></tr>
+<tr><td>Do 11 693 ‚ā¨</td><td>0 %</td></tr>
+<tr><td>11 694 ‚Äď 19 134 ‚ā¨</td><td>20 %</td></tr>
+<tr><td>19 135 ‚Äď 32 075 ‚ā¨</td><td>30 %</td></tr>
+<tr><td>32 076 ‚Äď 62 080 ‚ā¨</td><td>41 %</td></tr>
+<tr><td>62 081 ‚Äď 93 120 ‚ā¨</td><td>48 %</td></tr>
+<tr><td>93 121 ‚Äď 1 000 000 ‚ā¨</td><td>50 %</td></tr>
+<tr><td>Nad 1 000 000 ‚ā¨</td><td>55 %</td></tr>
+</table>
+<p style="margin-top:8px;color:#8b949e"><strong>POZOR:</strong> Progresivn√≠ sazba = kaŇĺd√© p√°smo se pońć√≠t√° zvl√°Ň°Ň•. PŇô√≠jem 25 000 ‚ā¨: prvn√≠ch 11 693 √ó 0% + dalŇ°√≠ch 7 441 √ó 20% + zbyl√Ĺch 5 866 √ó 30%.</p></div>
+<div class="sub-sec green"><h4>PŇô√≠spńõvky na dńõti</h4>
+<p><span class="price">245 ‚Äď 290 ‚ā¨</span> √ó d√≠tńõ/mńõs√≠c (z√°vis√≠ na vńõku d√≠tńõte). V kalkulańćce: input vńõk d√≠tńõte ‚Üí pŇôesn√° ńć√°stka.</p></div>
+<div class="edge"><p>Progresivn√≠ daŇą ‚ÄĒ implementovat pŇôesn√Ĺ v√Ĺpońćet po p√°smech, ne pauŇ°√°ln√≠ sazbu. Jinak v√Ĺpońćet bude nepŇôesn√Ĺ pro pŇô√≠jmy na hranici p√°sem.</p></div>
+</div></div>
+
+<!-- NL -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>ūüá≥ūüáĪ Nizozemsko (NL)</h3><span class="badge b-new">NOV√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="sub-sec red"><h4>DaŇąov√© tarify dle rodinn√©ho stavu</h4>
+<table>
+<tr><th>Situace</th><th>Sazba</th></tr>
+<tr><td>Svobodn√Ĺ bezdńõtn√Ĺ</td><td>24 %</td></tr>
+<tr><td>SamoŇĺivitel + 1 d√≠tńõ</td><td>20‚Äď22 %</td></tr>
+<tr><td>ŇĹenat√Ĺ, partner bez pŇô√≠jmu</td><td>22 %</td></tr>
+<tr><td>ManŇĺel√©, oba pracuj√≠</td><td>24 %</td></tr>
+<tr><td>VedlejŇ°√≠ √ļvazek</td><td>33‚Äď35 %</td></tr>
+</table></div>
+<div class="sub-sec green"><h4>PŇô√≠spńõvky na dńõti + Bonus</h4>
+<p><span class="price">200 ‚Äď 380 ‚ā¨</span> √ó d√≠tńõ/mńõs√≠c (z√°vis√≠ na vńõku).</p></div>
+</div></div>
+
+<!-- CH -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>ūüá®ūüá≠ Ň†v√Ĺcarsko (CH)</h3><span class="badge b-new">NOV√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="sub-sec red"><h4>Volba kantonu + rodinn√Ĺ stav ‚Üí rozmez√≠ od‚Äďdo</h4>
+<p>Pro kaŇĺd√Ĺ kanton a rodinn√Ĺ stav: <strong>rozmez√≠ od‚Äďdo %</strong>. Nutn√° datab√°ze kanton√°ln√≠ch sazeb.</p>
+<ul class="fl">
+<li>Svobodn√Ĺ, bezdńõtn√Ĺ ‚Üí PrŇĮmńõr v kantonu od‚Äďdo</li>
+<li>SamoŇĺivitel + 1 d√≠tńõ ‚Üí PrŇĮmńõr v kantonu od‚Äďdo</li>
+<li>ŇĹenat√Ĺ, partner bez pŇô√≠jmu ‚Üí od‚Äďdo</li>
+<li>ManŇĺel√©, oba pracuj√≠ ‚Üí od‚Äďdo</li>
+<li>VedlejŇ°√≠ √ļvazek ‚Üí od‚Äďdo</li>
+</ul>
+<div class="note note-warn"><strong>Admin requirement:</strong> CRUD na spr√°vu kanton√°ln√≠ch sazeb. 26 kantonŇĮ √ó 5 stavŇĮ = 130 z√°znamŇĮ. Update rońćnńõ. Excel import doporuńćen.</div></div>
+
+<div class="sub-sec yellow"><h4>Zdravotn√≠ pojiŇ°tńõn√≠ (specifick√© pro CH)</h4>
+<ol class="nl">
+<li>Mńõs√≠ńćn√≠ platba zdravotn√≠ pojiŇ°tńõn√≠ √ó 12 = rońćn√≠</li>
+<li>Platba ‚ÄěPr√©mie" √ó 12 = rońćn√≠</li>
+<li>Souńćet (1+2) √∑ 12 = mńõs√≠ńćn√≠ zdravotn√≠ pojiŇ°tńõn√≠</li>
+<li><strong>Netto mzda ‚ąí v√Ĺsledek = skuteńćn√© Netto</strong></li>
+</ol>
+<p style="margin-top:8px;color:#8b949e">Vstupy: mńõs√≠ńćn√≠ pojistn√© (CHF) + pr√©mie (CHF). Kalkulańćka odeńćte od netto ‚Üí zobrazit ‚ÄěSkuteńćn√© netto po zdravotn√≠m pojiŇ°tńõn√≠".</p></div>
+
+<div class="sub-sec green"><h4>PŇô√≠spńõvky na dńõti</h4>
+<table>
+<tr><th>Vńõk d√≠tńõte</th><th>ńĆ√°stka/mńõs√≠c</th></tr>
+<tr><td>Do 16 let</td><td><span class="price">200 CHF</span> (min., kantony mohou nav√ĹŇ°it)</td></tr>
+<tr><td>16‚Äď25 let (studium)</td><td><span class="price">250 CHF</span></td></tr>
+</table></div>
+</div></div>
+
+<!-- LI -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>ūüáĪūüáģ LichtenŇ°tejnsko (LI)</h3><span class="badge b-new">NOV√Č</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="sub-sec red"><h4>DvoustupŇąov√© zdanńõn√≠</h4>
+<p>LI daŇą: <strong>4‚Äď7 %</strong>. PLUS: danńõ v zemi bydliŇ°tńõ (AT, CH nebo DE). Kalkulańćka: <code>celkov√°_daŇą = LI_rate + residence_country_rate</code>. Input: ‚ÄěV kter√© zemi bydl√≠te?" (select: AT/CH/DE).</p></div>
+<div class="sub-sec yellow"><h4>Zdravotn√≠ pojiŇ°tńõn√≠</h4>
+<p>Stejn√Ĺ v√Ĺpońćet jako Ň†v√Ĺcarsko (mńõs√≠ńćn√≠ + pr√©mie ‚Üí odeńćet od netta).</p></div>
+<div class="sub-sec green"><h4>PŇô√≠spńõvky na dńõti</h4>
+<table>
+<tr><th>Vńõk d√≠tńõte</th><th>ńĆ√°stka/mńõs√≠c</th></tr>
+<tr><td>Do 16 let</td><td><span class="price">280 CHF</span></td></tr>
+<tr><td>16‚Äď25 let</td><td><span class="price">330 CHF</span></td></tr>
+</table></div>
+<div class="edge"><p>LI pracovn√≠k bydl√≠c√≠ v AT: LI daŇą 5% + AT progresivn√≠ daŇą. Kalkulańćka mus√≠ kombinovat 2 daŇąov√© syst√©my. Zobrazit: ‚ÄěLI daŇą: X‚ā¨, AT daŇą: Y‚ā¨, Celkem: Z‚ā¨".</p></div>
+</div></div>
+
+<!-- TECH IMPLEMENTACE KALKULAńĆKY -->
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Technick√° implementace kalkulańćky</h3><span class="num">COMPLETE</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="migr"><div class="migr-h">Database migrace ‚ÄĒ tax_rates + child_benefits + cantons</div>
+<pre>Schema::create('tax_rates', function (Blueprint $table) {
+    $table->id();
+    $table->string('country', 2);
+    $table->string('family_status'); // single, single_parent, married_single_income, married_dual, secondary
+    $table->string('tax_class')->nullable(); // DE: 1-6, AT: null (progresivn√≠)
+    $table->decimal('bracket_from', 12, 2)->default(0);
+    $table->decimal('bracket_to', 12, 2)->nullable(); // null = unlimited
+    $table->decimal('rate', 5, 4); // 0.3150 = 31.5%
+    $table->year('valid_year');
+    $table->timestamps();
+    $table->index(['country', 'valid_year']);
+});
+
+Schema::create('child_benefits', function (Blueprint $table) {
+    $table->id();
+    $table->string('country', 2);
+    $table->integer('age_from')->default(0);
+    $table->integer('age_to')->default(18);
+    $table->decimal('amount', 10, 2);
+    $table->string('currency', 3)->default('EUR');
+    $table->year('valid_year');
+    $table->timestamps();
+});
+
+Schema::create('cantons', function (Blueprint $table) {
+    $table->id();
+    $table->string('code', 2); // ZH, BE, LU...
+    $table->string('name'); // Z√ľrich, Bern, Luzern...
+});
+
+Schema::create('canton_tax_rates', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('canton_id')->constrained();
+    $table->string('family_status');
+    $table->decimal('rate_from', 5, 4);
+    $table->decimal('rate_to', 5, 4);
+    $table->year('valid_year');
+    $table->timestamps();
+});</pre></div>
+
+<div class="tbox"><div class="tbox-h">API endpoint</div>
+<pre>// POST /api/salary/calculate
+// Request:
+{
+    "country": "DE",
+    "brutto_hourly": 18.50,
+    "diet_type": "daily", // "hourly" | "daily"
+    "diet_amount": 28.00,
+    "tax_class": "1", // DE only
+    "family_status": "single", // AT/NL/CH/LI
+    "children": [{"age": 5}, {"age": 12}], // array of children
+    "canton": "ZH", // CH only
+    "residence_country": "AT", // LI only
+    "health_insurance_monthly": 350, // CH/LI only (CHF)
+    "health_premium_monthly": 50, // CH/LI only (CHF)
+    "working_hours_monthly": 170 // default 170
+}
+
+// Response:
+{
+    "netto_hourly": 14.22,
+    "netto_monthly": 2417.40,
+    "netto_monthly_with_diet": 3017.40,
+    "diet_monthly": 600.00,
+    "tax_deduction_monthly": 727.60,
+    "child_benefits_monthly": 500.00,
+    "child_benefits_yearly": 6000.00,
+    "health_insurance_deduction": 0, // CH/LI only
+    "real_netto_after_health": null, // CH/LI only
+    "tax_return_estimate": {"from": 1000, "to": 3000}, // DE Pendler
+    "thirteenth_fourteenth": null, // AT only: brutto * 316
+    "breakdown": {
+        "brutto_monthly": 3145.00,
+        "social_insurance": 412.50,
+        "income_tax": 315.10,
+        "netto_before_diet": 2417.40,
+        "diet": 600.00,
+        "final_netto": 3017.40
+    }
+}</pre></div>
+
+<div class="sub-sec purple"><h4>UI specifikace ‚ÄĒ Alpine.js widget</h4>
+<ul class="fl">
+<li><strong>Layout:</strong> Lev√Ĺ panel: formul√°Ňô (vstupy). Prav√Ĺ panel: v√Ĺsledovka (real-time). Mobile: stack vertik√°lnńõ.</li>
+<li><strong>Vstupy:</strong> Brutto/hod (slider + number input), Zemńõ (select s vlajkou), DaŇąov√° tŇô√≠da/stav (radio buttons), Dieta typ + ńć√°stka, Dńõti (+ tlańć√≠tko pŇôidat d√≠tńõ, vńõk per d√≠tńõ).</li>
+<li><strong>V√Ĺsledovka:</strong> Velk√© ńć√≠slo Netto/mńõs√≠c (zelen√°). Pod t√≠m: rozpad: Brutto ‚Üí Odvody ‚Üí Netto ‚Üí Dieta ‚Üí Fin√°ln√≠. PŇô√≠spńõvky na dńõti (modr√° karta). Odhad daŇąov√©ho pŇôizn√°n√≠ (Ňĺlut√° karta).</li>
+<li><strong>Animace:</strong> ńĆ√≠sla se mńõn√≠ plynule (CSS transition) pŇôi zmńõnńõ vstupŇĮ.</li>
+<li><strong>CH specifick√©:</strong> Po v√Ĺbńõru CH/LI ‚Üí zobrazit extra vstupy: kanton select, zdravotn√≠ pojiŇ°tńõn√≠ inputs.</li>
+<li><strong>Debounce:</strong> API call 300ms po posledn√≠m inputu (ne na kaŇĺd√Ĺ keystroke).</li>
+</ul></div>
+
+<div class="note note-warn"><strong>Admin CRUD:</strong> Admin mus√≠ m√≠t rozhran√≠ pro spr√°vu VŇ†ECH sazeb, pŇô√≠spńõvkŇĮ a kanton√°ln√≠ch dat. Data se mńõn√≠ rońćnńõ ‚Üí verze per rok (<code>valid_year</code>). Excel import pro bulk aktualizaci.</div>
+<div class="edge"><p>Rok se zmńõn√≠ (leden 2027) ‚ÄĒ sazby pro 2027 jeŇ°tńõ neexistuj√≠ v DB. Fallback: pouŇĺ√≠t posledn√≠ rok kde data existuj√≠. Zobrazit warning: ‚ÄěPouŇĺ√≠v√°me sazby za rok {rok}. Aktu√°ln√≠ sazby mohou b√Ĺt odliŇ°n√©."</p></div>
+<div class="edge"><p>Brutto/hod = 0. Validace: min 5 ‚ā¨/hod. Pod 5 zobrazit: ‚ÄěMinim√°ln√≠ mzda v {zemi} je {ńć√°stka} ‚ā¨/hod."</p></div>
+<div class="edge"><p>Mńõna: DE/AT/NL = EUR, CH/LI = CHF. Kalkulańćka zobraz√≠ ve spr√°vn√© mńõnńõ. NepŇôepońć√≠t√°vat kurz (to je na uŇĺivateli).</p></div>
+<div class="test">DE tŇô√≠da 1, 18.50‚ā¨/hod, 0 dńõt√≠ ‚Üí netto ~12.70 ‚ā¨/hod.</div>
+<div class="test">AT progresivn√≠, 20‚ā¨/hod ‚Üí korektn√≠ p√°sma (ne pauŇ°√°ln√≠ sazba).</div>
+<div class="test">CH Z√ľrich, Ňĺenat√Ĺ ‚Üí rozmez√≠ od‚Äďdo sazby z DB kantonu.</div>
+<div class="test">LI + bydliŇ°tńõ AT ‚Üí kombinace LI + AT dan√≠.</div>
+<div class="test">2 dńõti (5 a 12 let) v DE ‚Üí 500 ‚ā¨/mńõs√≠c pŇô√≠spńõvky.</div>
+</div></div>
+
+</div><!-- /t-calc -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: LARAVEL ARCHITEKTURA -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-arch" class="tc">
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Doporuńćen√Ĺ Tech Stack</h3><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="grid3">
+<div class="card"><div class="card-lbl">Backend</div><div class="card-val">Laravel 11+ (PHP 8.2+)</div></div>
+<div class="card"><div class="card-lbl">Database</div><div class="card-val">MySQL 8.0+</div></div>
+<div class="card"><div class="card-lbl">Frontend views</div><div class="card-val">Blade + Alpine.js</div></div>
+<div class="card"><div class="card-lbl">CSS</div><div class="card-val">Tailwind CSS 3</div></div>
+<div class="card"><div class="card-lbl">JS (legacy)</div><div class="card-val">jQuery 3.x</div></div>
+<div class="card"><div class="card-lbl">Charts</div><div class="card-val">Chart.js 4</div></div>
+<div class="card"><div class="card-lbl">Maps</div><div class="card-val">Leaflet.js</div></div>
+<div class="card"><div class="card-lbl">QR codes</div><div class="card-val">simplesoftwareio/simple-qrcode</div></div>
+<div class="card"><div class="card-lbl">File uploads</div><div class="card-val">Spatie MediaLibrary</div></div>
+<div class="card"><div class="card-lbl">Activity log</div><div class="card-val">Spatie Activity Log</div></div>
+<div class="card"><div class="card-lbl">PDF</div><div class="card-val">barryvdh/laravel-dompdf</div></div>
+<div class="card"><div class="card-lbl">Excel</div><div class="card-val">Maatwebsite/Laravel-Excel</div></div>
+</div></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Eloquent modely (kompletn√≠ pŇôehled)</h3><span class="num">22 modelŇĮ</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<table>
+<tr><th>Model</th><th>Tabulka</th><th>Kl√≠ńćov√© relace</th><th>PouŇĺit√≠</th></tr>
+<tr><td><code>User</code></td><td>users</td><td>Polymorphic roles</td><td>St√°vaj√≠c√≠ + rozŇ°√≠Ňôen√≠</td></tr>
+<tr><td><code>Conversation</code></td><td>conversations</td><td>hasMany Message, belongsToMany User</td><td>Zpr√°vy</td></tr>
+<tr><td><code>Message</code></td><td>messages</td><td>belongsTo Conversation, morphTo attachable</td><td>Jednotliv√© zpr√°vy</td></tr>
+<tr><td><code>JobPosting</code></td><td>job_postings</td><td>belongsTo User(agent), belongsToMany User(candidates)</td><td>Popt√°vky</td></tr>
+<tr><td><code>TrialWork</code></td><td>trial_works</td><td>belongsTo User, belongsTo JobPosting</td><td>Pracovn√≠ zkouŇ°ky</td></tr>
+<tr><td><code>HourEntry</code></td><td>hour_entries</td><td>belongsTo User, belongsTo User(agent)</td><td>V√Ĺkazy hodin</td></tr>
+<tr><td><code>HunterReward</code></td><td>hunter_rewards</td><td>belongsTo User(hunter)</td><td>Odmńõny hunterŇĮ</td></tr>
+<tr><td><code>EmployeePlan</code></td><td>employee_plans</td><td>belongsTo User, hasMany PlanItem</td><td>Kari√©rn√≠ pl√°n</td></tr>
+<tr><td><code>PlanItem</code></td><td>plan_items</td><td>belongsTo EmployeePlan</td><td>PoloŇĺky pl√°nu</td></tr>
+<tr><td><code>Contract</code></td><td>contracts</td><td>belongsTo User, MediaLibrary</td><td>Smlouvy</td></tr>
+<tr><td><code>KindergeldRequest</code></td><td>kindergeld_requests</td><td>belongsTo User, MediaLibrary</td><td>Kindergeld</td></tr>
+<tr><td><code>TaxReturn</code></td><td>tax_returns</td><td>belongsTo User, hasMany TaxDocument</td><td>DaŇąov√© pŇôizn√°n√≠</td></tr>
+<tr><td><code>TaxDocument</code></td><td>tax_documents</td><td>belongsTo TaxReturn, MediaLibrary</td><td>Dokumenty k dan√≠m</td></tr>
+<tr><td><code>ServiceRequest</code></td><td>service_requests</td><td>belongsTo User</td><td>VŇ°echny sluŇĺby</td></tr>
+<tr><td><code>TaxRate</code></td><td>tax_rates</td><td>‚ÄĒ</td><td>DaŇąov√© sazby</td></tr>
+<tr><td><code>ChildBenefit</code></td><td>child_benefits</td><td>‚ÄĒ</td><td>PŇô√≠spńõvky na dńõti</td></tr>
+<tr><td><code>Canton</code></td><td>cantons</td><td>hasMany CantonTaxRate</td><td>Ň†v√Ĺcarsk√© kantony</td></tr>
+<tr><td><code>CantonTaxRate</code></td><td>canton_tax_rates</td><td>belongsTo Canton</td><td>Kanton√°ln√≠ sazby</td></tr>
+<tr><td><code>CraftPrice</code></td><td>craft_prices</td><td>belongsTo Craft</td><td>Ceny Ňôemesel</td></tr>
+<tr><td><code>Training</code></td><td>trainings</td><td>‚ÄĒ</td><td>Ň†kolen√≠/certifikace</td></tr>
+<tr><td><code>Service</code></td><td>services</td><td>‚ÄĒ</td><td>SluŇĺby katalog</td></tr>
+<tr><td><code>Ebook</code></td><td>ebooks</td><td>‚ÄĒ</td><td>E-booky</td></tr>
+</table></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Implementańćn√≠ f√°ze (roadmap)</h3><span class="num">10 f√°z√≠</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<table>
+<tr><th>F√°ze</th><th>Co</th><th>Priorita</th><th>Odhad</th><th>Z√°vis√≠ na</th></tr>
+<tr><td>1</td><td>Migrace st√°vaj√≠c√≠ho syst√©mu na Laravel (auth, DB, Blade templates)</td><td><span class="prio p-crit">CRITICAL</span></td><td>4‚Äď6 t√ĹdnŇĮ</td><td>‚ÄĒ</td></tr>
+<tr><td>2</td><td>Notifikace + Zpr√°vy (vŇ°echny 3 profily)</td><td><span class="prio p-crit">CRITICAL</span></td><td>2‚Äď3 t√Ĺdny</td><td>F√°ze 1</td></tr>
+<tr><td>3</td><td>Popt√°vky agenta (CRUD + matching + pipeline)</td><td><span class="prio p-crit">CRITICAL</span></td><td>3‚Äď4 t√Ĺdny</td><td>F√°ze 1</td></tr>
+<tr><td>4</td><td>Mzdov√° kalkulańćka (5 zem√≠ + admin CRUD sazeb)</td><td><span class="prio p-high">HIGH</span></td><td>2‚Äď3 t√Ĺdny</td><td>F√°ze 1</td></tr>
+<tr><td>5</td><td>V√Ĺkazy hodin + dvoustrann√° verifikace</td><td><span class="prio p-high">HIGH</span></td><td>1‚Äď2 t√Ĺdny</td><td>F√°ze 3</td></tr>
+<tr><td>6</td><td>SluŇĺby zamńõstnance (Kindergeld, danńõ, smlouvy, bydlen√≠)</td><td><span class="prio p-high">HIGH</span></td><td>3‚Äď4 t√Ĺdny</td><td>F√°ze 1</td></tr>
+<tr><td>7</td><td>MŇĮj pl√°n + Leaflet mapa</td><td><span class="prio p-med">MEDIUM</span></td><td>1 t√Ĺden</td><td>F√°ze 1</td></tr>
+<tr><td>8</td><td>Hunter profil (data, grafy, odmńõny, QR)</td><td><span class="prio p-med">MEDIUM</span></td><td>1‚Äď2 t√Ĺdny</td><td>F√°ze 1</td></tr>
+<tr><td>9</td><td>Statick√© str√°nky sluŇĺeb (texty z PDF)</td><td><span class="prio p-low">LOW</span></td><td>1 t√Ĺden</td><td>F√°ze 1</td></tr>
+<tr><td>10</td><td>Ukonńćen√≠ pr√°ce, pomocn√≠ci, e-booky, slevov√© k√≥dy</td><td><span class="prio p-low">LOW</span></td><td>1 t√Ĺden</td><td>F√°ze 1</td></tr>
+</table>
+<div class="note note-tip"><strong>Celkov√Ĺ odhad:</strong> 18‚Äď28 t√ĹdnŇĮ (4,5‚Äď7 mńõs√≠cŇĮ) pro 1 full-time developera. Designer mŇĮŇĺe zańć√≠t paralelnńõ na UI od f√°ze 1.</div>
+</div></div>
+
+</div><!-- /t-arch -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: AUTOMATIZACE & EVENTS -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-auto" class="tc">
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>CRON joby (Laravel Scheduler)</h3><span class="num">11 jobŇĮ</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="tbox"><div class="tbox-h">app/Console/Kernel.php (Laravel 11: routes/console.php)</div>
+<pre>Schedule::command('hours:create-entries')->monthlyOn(1, '00:00');  // 1. v mńõs√≠ci
+Schedule::command('hours:remind-workers')->monthlyOn(5, '09:00');  // 5. v mńõs√≠ci
+Schedule::command('hours:remind-agents')->monthlyOn(10, '09:00');  // 10. v mńõs√≠ci
+Schedule::command('hours:auto-check')->monthlyOn(15, '06:00');     // 15. v mńõs√≠ci
+Schedule::command('pipeline:check-stale')->dailyAt('09:00');       // dennńõ
+Schedule::command('trial-works:remind-result')->dailyAt('10:00');  // dennńõ
+Schedule::command('messages:check-stale')->dailyAt('11:00');       // dennńõ
+Schedule::command('employees:check-profiles')->dailyAt('09:00');   // dennńõ
+Schedule::command('job-postings:cleanup-expired')->dailyAt('02:00'); // dennńõ
+Schedule::command('hunter-stats:recalculate')->dailyAt('03:00');   // dennńõ
+Schedule::command('kindergeld:remind-drafts')->weeklyOn(1, '09:00'); // pondńõl√≠
+Schedule::command('tax-returns:new-year')->yearlyOn(1, 1, '00:00'); // 1. leden</pre></div>
+<table>
+<tr><th>Command</th><th>Frekvence</th><th>Co dńõl√°</th></tr>
+<tr><td><code>hours:create-entries</code></td><td>1. v mńõs√≠ci</td><td>VytvoŇôit pr√°zdn√© HourEntry pro aktivn√≠ p√°ry pracovn√≠k-agent</td></tr>
+<tr><td><code>hours:remind-workers</code></td><td>5. v mńõs√≠ci</td><td>Notifikace pracovn√≠kŇĮm bez zadan√Ĺch hodin</td></tr>
+<tr><td><code>hours:remind-agents</code></td><td>10. v mńõs√≠ci</td><td>Notifikace agentŇĮm bez zadan√Ĺch hodin</td></tr>
+<tr><td><code>hours:auto-check</code></td><td>15. v mńõs√≠ci</td><td>Porovnat hodiny obou stran ‚Üí matched/disputed</td></tr>
+<tr><td><code>pipeline:check-stale</code></td><td>Dennńõ</td><td>Kandid√°ti v ŇôeŇ°en√≠ >14 dn√≠ ‚Üí notifikace</td></tr>
+<tr><td><code>trial-works:remind-result</code></td><td>Dennńõ</td><td>ZkouŇ°ky bez v√Ĺsledku po datu ‚Üí notifikace agentovi</td></tr>
+<tr><td><code>messages:check-stale</code></td><td>Dennńõ</td><td>Konverzace bez odpovńõdi >7 dn√≠ ‚Üí notifikace admin</td></tr>
+<tr><td><code>employees:check-profiles</code></td><td>Dennńõ</td><td>Nekompletn√≠ profily ‚Üí notifikace zamńõstnancŇĮm</td></tr>
+<tr><td><code>job-postings:cleanup-expired</code></td><td>Dennńõ</td><td>Popt√°vky s datem >30 dn√≠ v minulosti ‚Üí auto-close</td></tr>
+<tr><td><code>hunter-stats:recalculate</code></td><td>Dennńõ</td><td>PŇôepońć√≠tat a cache-ovat statistiky hunterŇĮ</td></tr>
+<tr><td><code>tax-returns:new-year</code></td><td>1. leden</td><td>Auto-create TaxReturn za pŇôedchoz√≠ rok pro aktivn√≠ zamńõstnance</td></tr>
+</table></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Events & Listeners mapa</h3><span class="num">9 eventŇĮ</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<div class="mermaid">
+flowchart TD
+    E1["UserRegistered"] -->|"via QR ref"| L1["SendHunterReferralNotification"]
+    E1 --> L2["CheckYearlyJobPostings"]
+    E2["CandidateStatusChanged"] --> L3["NotifyRelevantParties"]
+    E2 --> L4["LogActivityChange"]
+    E3["TrialWorkPassed"] --> L5["MoveToHired"]
+    E4["TrialWorkFailed"] --> L6["MoveToRejected"]
+    E5["HoursEntryUpdated"] --> L7["CompareHours"]
+    E6["NewMessageSent"] --> L8["NotifyRecipients"]
+    E7["ServiceOrdered"] --> L9["NotifyAdmins"]
+    E8["DocumentUploaded"] --> L10["NotifyAdminNewDoc"]
+    E9["PlanItemToggled"] --> L11["NotifyPlanCreator"]
+</div>
+<table>
+<tr><th>Event</th><th>Dispatch kde</th><th>Listeners</th></tr>
+<tr><td><code>UserRegistered</code></td><td>RegisterController</td><td>SendHunterReferralNotif, CheckYearlyJobPostings, SendWelcomeEmail</td></tr>
+<tr><td><code>CandidateStatusChanged</code></td><td>StatusTransitionService</td><td>NotifyRelevantParties, LogActivity, UpdateHunterStats</td></tr>
+<tr><td><code>TrialWorkResultSet</code></td><td>TrialWorkController</td><td>MoveCandidate (hired/rejected), NotifyAll</td></tr>
+<tr><td><code>HoursEntryUpdated</code></td><td>HourEntryObserver</td><td>CompareAndMatchHours, NotifyOnDispute</td></tr>
+<tr><td><code>NewMessageSent</code></td><td>MessageController</td><td>NotifyRecipients (database + broadcast + optional email)</td></tr>
+<tr><td><code>ServiceOrdered</code></td><td>ServiceRequestController</td><td>NotifyAdmins, SendConfirmationToUser</td></tr>
+<tr><td><code>DocumentUploaded</code></td><td>MediaLibrary hook</td><td>NotifyAdmin, UpdateProgressTracking</td></tr>
+<tr><td><code>PlanItemToggled</code></td><td>PlanItemController</td><td>NotifyPlanCreator, CheckIfAllCompleted</td></tr>
+<tr><td><code>JobPostingCreated</code></td><td>JobPostingController</td><td>NotifyAdmin, RunInitialMatching (if active)</td></tr>
+</table></div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Observers</h3><span class="num">5 observerŇĮ</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<table>
+<tr><th>Observer</th><th>Model</th><th>Hooks</th><th>Co dńõl√°</th></tr>
+<tr><td><code>UserObserver</code></td><td>User</td><td>created, updated</td><td>Referral notif, profile completion check, status change dispatch</td></tr>
+<tr><td><code>HourEntryObserver</code></td><td>HourEntry</td><td>updated</td><td>Auto-compare hours when both sides submitted</td></tr>
+<tr><td><code>JobPostingObserver</code></td><td>JobPosting</td><td>created, updated</td><td>Notify admin, trigger matching on active, auto-close on expired</td></tr>
+<tr><td><code>PlanItemObserver</code></td><td>PlanItem</td><td>updated</td><td>Notify admin on toggle, check 100% completion</td></tr>
+<tr><td><code>TrialWorkObserver</code></td><td>TrialWork</td><td>updated</td><td>On result set: move candidate to hired/rejected</td></tr>
+</table></div></div>
+
+</div><!-- /t-auto -->
+
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<!-- TAB: CHECKLIST -->
+<!-- ‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź‚ēź -->
+<div id="t-todo" class="tc">
+
+<div class="note note-info" style="margin-bottom:24px">
+<strong>Jak pouŇĺ√≠vat:</strong> Klikni na checkbox ‚Üí √ļkol se oznańć√≠ jako hotov√Ĺ. Stav se synchronizuje v re√°ln√©m ńćase mezi vŇ°emi ńćleny t√Ĺmu (Supabase). Funguje i offline (localStorage fallback). Tlańć√≠tko "Reset" vŇ°e vr√°t√≠. Progress bar ukazuje celkov√Ĺ postup.
+</div>
+
+<!-- PROGRESS BAR -->
+<div id="todo-progress-wrap" style="margin-bottom:32px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<span style="color:#58a6ff;font-weight:700;font-size:1.1em">Celkov√Ĺ postup</span>
+<span id="todo-pct" style="color:#3fb950;font-weight:700;font-size:1.3em">0 %</span>
+</div>
+<div style="background:#21262d;border-radius:6px;height:14px;overflow:hidden">
+<div id="todo-bar" style="background:linear-gradient(90deg,#238636,#3fb950);height:100%;width:0%;transition:width .4s ease;border-radius:6px"></div>
+</div>
+<div id="todo-stats" style="color:#8b949e;font-size:.85em;margin-top:8px">0 / 0 √ļkolŇĮ hotovo</div>
+</div>
+
+<!-- F√ĀZE 1: Z√ĀKLAD -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 1 ‚ÄĒ Z√°klad Laravel projektu</h3><span class="num">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="1"> <code>laravel new dilibees</code> ‚ÄĒ inicializace projektu (Laravel 11+, PHP 8.2+)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Konfigurace <code>.env</code> (DB, mail, Pusher/Soketi, queues, Spatie keys)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Migrace st√°vaj√≠c√≠ MySQL ‚Üí ńćist√Ĺ Laravel schema (users, roles, permissions)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Implementace <code>CheckRole</code> middleware (employee, hunter, agent, admin + dual-role)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Auth syst√©m (Breeze/Fortify) ‚ÄĒ login, register, forgot password, email verification</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Route structure: <code>routes/web.php</code>, <code>routes/api.php</code>, route groups per role</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Blade layout (master template, role-specific sidebars, Alpine.js setup)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Tailwind CSS 3 konfigurace + build pipeline (Vite)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Spatie MediaLibrary install + konfigurace (disk, conversions, max upload size)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Spatie Activity Log install + konfigurace (logged models, cleanup)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> <code>CandidateStatus</code> enum se state machine logikou (<code>canTransitionTo()</code>)</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> Seeders: demo users (1 per role), demo data pro testov√°n√≠</label>
+<label class="todo-item"><input type="checkbox" data-phase="1"> CI/CD pipeline (GitHub Actions: PHPStan, Pint, Pest, deploy)</label>
+</div></div>
+
+<!-- F√ĀZE 2: NOTIFIKACE + ZPR√ĀVY -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 2 ‚ÄĒ Notifikace + Messaging syst√©m</h3><span class="num">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="2"> Migration: <code>conversations</code> table (type: chat/email, subject, morphable)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Migration: <code>conversation_user</code> pivot (last_read_at, is_muted)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Migration: <code>messages</code> table (conversation_id, user_id, body, attachments JSON)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> <code>Conversation</code>, <code>Message</code> modely s relationships</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> <code>MessageController</code> ‚ÄĒ index, store, markRead (+ real-time via Pusher/Soketi)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Notification system: <code>NewMessageNotification</code> (database + broadcast + mail)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Notifikańćn√≠ centrum Blade component (bell icon, unread count, dropdown)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Inbox UI pro vŇ°echny 3 role (shared Blade component, role-specific filters)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> File upload v zpr√°v√°ch (Spatie MediaLibrary, HEIC‚ÜíJPG konverze)</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Edge case: conversation s odstranńõn√Ĺm uŇĺivatelem (soft delete, "[smaz√°no]")</label>
+<label class="todo-item"><input type="checkbox" data-phase="2"> Edge case: zpr√°va s pŇô√≠lohou >10 MB (validace + user-friendly error)</label>
+</div></div>
+
+<!-- F√ĀZE 3: POPT√ĀVKY AGENTA -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 3 ‚ÄĒ Popt√°vky agenta (CRUD + Matching + Pipeline)</h3><span class="num">CRITICAL</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="3"> Migration: <code>job_postings</code> (title, trade_category, country, city, lat, lng, salary_from/to, housing, state enum...)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Migration: <code>job_posting_user</code> pivot (status enum, agent_note, matched_at)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> <code>JobPosting</code> model + state machine (draft‚Üíactive‚Üípaused‚Üíclosed‚Üíarchived)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> <code>JobPostingController</code> ‚ÄĒ CRUD, validace 13 pol√≠ (viz validańćn√≠ tabulka v Agent tabu)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Agent dashboard: "M√© popt√°vky ‚ÄĒ AKTU√ĀLN√ć" (active/paused) + celorońćn√≠ archiv</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Auto-matching CRON: <code>MatchCandidatesToJobs</code> (hourly, 50km radius, trade match)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> "Seznam vhodn√Ĺch kandid√°tŇĮ" ‚ÄĒ swipe-like Accept/Reject UI, agent_note modal</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> "V ŇôeŇ°en√≠" pipeline ‚ÄĒ status tracking (kontaktov√°n‚Üípohovor‚Üínab√≠dka‚Üíakceptov√°no)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Geocoding integration (Nominatim/Google Maps API pro lat/lng z mńõsta)</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> <code>JobPostingObserver</code> ‚ÄĒ notify admin on create, trigger matching on active</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Edge case: kandid√°t matchnut√Ĺ na 2+ popt√°vky souńćasnńõ</label>
+<label class="todo-item"><input type="checkbox" data-phase="3"> Edge case: agent zmńõn√≠ poŇĺadavky po matchingu (re-run, notifikace)</label>
+</div></div>
+
+<!-- F√ĀZE 4: MZDOV√Ā KALKULAńĆKA -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 4 ‚ÄĒ Mzdov√° kalkulańćka (5 zem√≠)</h3><span class="num">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="4"> Migration: <code>tax_rates</code> (country, year, class, bracket_from/to, rate, fixed)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Migration: <code>child_benefits</code> (country, year, child_number, amount)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Migration: <code>cantons</code> + <code>canton_tax_rates</code> (pro CH)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Admin CRUD pro spr√°vu sazeb (aby klient mohl aktualizovat bez developera)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> <code>SalaryCalculatorService</code> ‚ÄĒ DE v√Ĺpońćet (6 tŇô√≠d, Soli, KiSt, SV odvody)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> <code>SalaryCalculatorService</code> ‚ÄĒ AT v√Ĺpońćet (progresivn√≠, 13.+14. plat, Pendlerpauschale)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> <code>SalaryCalculatorService</code> ‚ÄĒ NL v√Ĺpońćet (3 boxy, arbeidskorting, 30% ruling)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> <code>SalaryCalculatorService</code> ‚ÄĒ CH v√Ĺpońćet (feder√°ln√≠ + kanton√°ln√≠ + BVG/AHV/ALV)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> <code>SalaryCalculatorService</code> ‚ÄĒ LI v√Ĺpońćet (du√°ln√≠ zdanńõn√≠ AT+LI, FL health)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> API endpoint <code>POST /api/salary/calculate</code> (request/response JSON viz Kalkulańćka tab)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Frontend kalkulańćka UI (Alpine.js formul√°Ňô, real-time v√Ĺsledky)</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Seeders s aktu√°ln√≠mi sazbami 2025/2026 pro vŇ°ech 5 zem√≠</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Edge case: Grenzg√§nger (pŇôeshranińćn√≠ pracovn√≠k) ‚ÄĒ speci√°ln√≠ DBA pravidla</label>
+<label class="todo-item"><input type="checkbox" data-phase="4"> Edge case: Mid-year tax class change (pŇôepońćet pomńõrnńõ)</label>
+</div></div>
+
+<!-- F√ĀZE 5: V√ĚKAZY HODIN -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 5 ‚ÄĒ V√Ĺkazy hodin + Dvoustrann√° verifikace</h3><span class="num">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="5"> Migration: <code>hour_entries</code> (user_id, job_posting_id, date, worker_hours, agent_hours, status, dispute_note)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> <code>HourEntry</code> model s computed attributes (difference, is_matched)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> <code>HourEntryObserver</code> ‚ÄĒ auto-compare when both sides submit (tolerance 2h)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> Zamńõstnanec UI: mńõs√≠ńćn√≠ kalend√°Ňô, denn√≠ zad√°v√°n√≠ hodin, pŇôehled schv√°len√Ĺch</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> Agent UI: hromadn√© zad√°v√°n√≠ hodin za sv√© pracovn√≠ky, schvalov√°n√≠</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> Dispute flow: nesouhlas√≠ hodiny ‚Üí notifikace obou stran ‚Üí admin arbitr√°Ňĺ</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> PDF export v√Ĺkazu (barryvdh/laravel-dompdf, mńõs√≠ńćn√≠ report)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> CRON: <code>RemindHourEntry</code> (weekly, p√°tek 17:00 ‚ÄĒ pŇôipomenut√≠ zad√°n√≠ hodin)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> Edge case: zamńõstnanec zad√° hodiny za minul√Ĺ mńõs√≠c (grace period 5 dn√≠)</label>
+<label class="todo-item"><input type="checkbox" data-phase="5"> Edge case: agent zapomene zadat (3√ó reminder ‚Üí eskalace na admin)</label>
+</div></div>
+
+<!-- F√ĀZE 6: SLUŇĹBY ZAMńöSTNANCE -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 6 ‚ÄĒ SluŇĺby zamńõstnance (Kindergeld, Danńõ, Smlouvy, Bydlen√≠)</h3><span class="num">HIGH</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="6"> Migration: <code>service_requests</code> (unified, type enum, user_id, status, admin_note, paid_at)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Migration: <code>contracts</code> (user_id, type, file media, status, valid_from/to)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Migration: <code>kindergeld_requests</code> (9 document typŇĮ ‚ÄĒ viz checklist v Zamńõstnanec tabu)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Migration: <code>tax_returns</code> + <code>tax_documents</code> (7 kategori√≠, strom viz diagram)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Smlouvy modul: upload (Spatie), HEIC‚ÜíJPG, status tracking, admin verifikace</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Kindergeld modul: 9-dokumentov√Ĺ upload wizard, progress bar, admin review</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> DaŇąov√© pŇôizn√°n√≠ modul: 7-kategoriov√Ĺ strom, upload per kategorie, status flow</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Sd√≠len√© sluŇĺby (bydlen√≠/√ļŇôady/pojiŇ°Ň•ovna/banka): request form + 1.29‚ā¨/min model</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> PojiŇ°tńõn√≠ rizik, Kari√©rn√≠ poradenstv√≠: info str√°nky + request button</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Jazykov√© lekce: ServiceRequest type=language, admin assignment, calendar</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Certifikace (sv√°Ňôeńćsk√© kurzy): ServiceRequest type=welding, PDF result upload</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> E-booky: download list s Spatie MediaLibrary (admin uploaduje, user st√°hne)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Slevov√© k√≥dy: statick√° str√°nka s partnersk√Ĺmi linky</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Ukonńćen√≠ pr√°ce: 5-krokov√Ĺ prŇĮvodce (v√ĹpovńõńŹ‚Üíodhl√°Ň°en√≠‚Üídanńõ‚Üín√°vrat‚Üíhodnocen√≠)</label>
+<label class="todo-item"><input type="checkbox" data-phase="6"> Edge case: Kindergeld zam√≠tnut ‚ÄĒ resubmit flow s pozn√°mkou co doplnit</label>
+</div></div>
+
+<!-- F√ĀZE 7: MŇģJ PL√ĀN -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 7 ‚ÄĒ MŇĮj pl√°n + Leaflet mapa</h3><span class="num">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="7"> Migration: <code>employee_plans</code> + <code>plan_items</code> (viz Zamńõstnanec tab)</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> Seed default plan items (10 krokŇĮ: Smlouva‚ÜíBydlen√≠‚Üí√öŇôady‚Üí...‚ÜíStabilizace)</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> Toggle endpoint <code>PATCH /api/plan-items/{id}/toggle</code> (Alpine.js click)</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> Progress bar UI (Blade component, barva podle %)</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> Leaflet.js mapa s pinami (bydlen√≠, √ļŇôady, pracoviŇ°tńõ) ‚ÄĒ <code>invalidateSize()</code> fix</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> <code>PlanItemObserver</code> ‚ÄĒ notify admin on toggle, check 100% completion</label>
+<label class="todo-item"><input type="checkbox" data-phase="7"> Edge case: admin pŇôid√° custom plan items pro specifick√©ho zamńõstnance</label>
+</div></div>
+
+<!-- F√ĀZE 8: HUNTER PROFIL -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 8 ‚ÄĒ Hunter profil (Odmńõny, QR, Lid√©, Grafy)</h3><span class="num">MEDIUM</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="8"> Migration: <code>hunter_rewards</code> (hunter_id, referred_user_id, amount, milestone, paid_at)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Migration: <code>hunter_stats_cache</code> (hunter_id, period, total_referred, active_count...)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> QR k√≥d gener√°tor (<code>simplesoftwareio/simple-qrcode</code>, unique referral link)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Referral cookie syst√©m (30-day fallback, UTM tracking)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> "Lid√©" dashboard: seznam referovan√Ĺch + status tracking</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> <code>HunterAnalyticsController</code> ‚ÄĒ Chart.js grafy (line: trend, donut: statusy)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Odmńõny pŇôehled: earned/pending/paid, milestone badges</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> "Popt√°van√© pozice" feed z agent job_postings (read-only pro huntery)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Hunter profil page (edit, avatar, bio, bank account for payouts)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Ceny Ňôemesel ‚ÄĒ statick√° str√°nka (data z klientsk√Ĺch PDF)</label>
+<label class="todo-item"><input type="checkbox" data-phase="8"> Ň†kolen√≠ a certifikace ‚ÄĒ info feed pro huntery</label>
+</div></div>
+
+<!-- F√ĀZE 9: STATICK√Č SLUŇĹBY -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 9 ‚ÄĒ Statick√© str√°nky sluŇĺeb (texty z PDF)</h3><span class="num">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="9"> Service descriptions z 8 klientsk√Ĺch PDF ‚Üí Blade views</label>
+<label class="todo-item"><input type="checkbox" data-phase="9"> Jazykov√© lekce info str√°nka (popis, ceny, jak se pŇôihl√°sit)</label>
+<label class="todo-item"><input type="checkbox" data-phase="9"> Sv√°Ňôeńćsk√© kurzy info str√°nka</label>
+<label class="todo-item"><input type="checkbox" data-phase="9"> Bydlen√≠/√öŇôady/PojiŇ°Ň•ovna/Banka ‚ÄĒ service landing pages</label>
+<label class="todo-item"><input type="checkbox" data-phase="9"> SEO meta tagy + strukturovan√° data pro veŇôejn√© str√°nky</label>
+<label class="todo-item"><input type="checkbox" data-phase="9"> Multi-language support pŇô√≠prava (i18n soubory CZ/DE/EN)</label>
+</div></div>
+
+<!-- F√ĀZE 10: DOLADńöN√ć -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>F√°ze 10 ‚ÄĒ Fin√°ln√≠ features + Polish</h3><span class="num">LOW</span><span class="arr">‚Ėĺ</span></div>
+<div class="sc">
+<label class="todo-item"><input type="checkbox" data-phase="10"> Pomocn√≠ci v nov√©m prostŇôed√≠ (popis sluŇĺby + objedn√°vkov√Ĺ formul√°Ňô)</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> E-booky modul (admin upload, user download, tracking staŇĺen√≠)</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Slevov√© k√≥dy str√°nka</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Ukonńćen√≠ pr√°ce prŇĮvodce (5 krokŇĮ s checklistem)</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> VŇ°echny CRON joby registrovan√© v <code>Kernel.php</code> / <code>routes/console.php</code></label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Event/Listener registrace v <code>EventServiceProvider</code></label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> 5 Observers registrovan√© v <code>AppServiceProvider</code></label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Admin panel: pŇôehled vŇ°ech uŇĺivatelŇĮ, sluŇĺeb, popt√°vek, statistik</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Performance audit: N+1 queries, cache strategie, lazy loading</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Security audit: CSRF, XSS, SQL injection, rate limiting, Sanctum tokens</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Smoke testy (Pest PHP): happy path pro kaŇĺd√Ĺ profil</label>
+<label class="todo-item"><input type="checkbox" data-phase="10"> Deployment: staging ‚Üí production (Forge/Ploi/manual, .env per environment)</label>
+</div></div>
+
+<!-- RESET BUTTON -->
+<div style="text-align:center;margin-top:32px;padding-bottom:24px">
+<button onclick="resetTodos()" style="background:#21262d;color:#f85149;border:1px solid rgba(248,81,73,.3);padding:10px 28px;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9em;font-family:inherit;transition:.2s">Reset vŇ°ech checkboxŇĮ</button>
+</div>
+
+</div><!-- /t-todo -->
+
+</div><!-- /wrap -->
+
+<script>
+mermaid.initialize({theme:'dark',themeVariables:{primaryColor:'#58a6ff',primaryTextColor:'#c9d1d9',primaryBorderColor:'#30363d',lineColor:'#8b949e',secondaryColor:'#161b22',tertiaryColor:'#0d1117'},flowchart:{htmlLabels:true,curve:'basis'}});
+function sw(id,btn){document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));document.getElementById(id).classList.add('on');btn.classList.add('on')}
+function tg(h){h.parentElement.classList.toggle('shut')}
+
+/* SUPABASE CONFIG */
+const SUPABASE_URL = 'https://borlrfhxgpjwfuugubxu.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvcmxyZmh4Z3Bqd2Z1dWd1Ynh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NDUyOTgsImV4cCI6MjA4ODEyMTI5OH0.o88vpgSfwVDVYqnO93gnwawlUdUBtpBZX79TbvSgsw0';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const STORAGE_KEY = 'dilibees-todo-v1';
+const ROW_ID = 'main';
+let saving = false;
+
+/* LOCAL FALLBACK */
+function getLocalState() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; } }
+function saveLocalState(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+/* SUPABASE OPS */
+async function getRemoteState() {
+  try {
+    const { data, error } = await sb.from('checklist').select('state').eq('id', ROW_ID).single();
+    if (error && error.code === 'PGRST116') {
+      // Row doesn't exist yet, create it
+      const { data: newData } = await sb.from('checklist').insert({ id: ROW_ID, state: {} }).select('state').single();
+      return newData?.state || {};
+    }
+    if (error) throw error;
+    return data?.state || {};
+  } catch(e) {
+    console.warn('Supabase read failed, using localStorage:', e);
+    return null;
+  }
+}
+
+async function saveRemoteState(s) {
+  if (saving) return;
+  saving = true;
+  try {
+    await sb.from('checklist').upsert({ id: ROW_ID, state: s, updated_at: new Date().toISOString() });
+  } catch(e) {
+    console.warn('Supabase write failed:', e);
+  }
+  saving = false;
+}
+
+/* APPLY STATE TO UI */
+function applyState(state) {
+  const boxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
+  boxes.forEach((cb, i) => {
+    cb.checked = !!state[i];
+    cb.parentElement.classList.toggle('done', !!state[i]);
+  });
+  updateProgress();
+}
+
+/* PROGRESS BAR */
+function updateProgress() {
+  const all = document.querySelectorAll('.todo-item input[type="checkbox"]');
+  const done = [...all].filter(c => c.checked).length;
+  const pct = all.length ? Math.round(done / all.length * 100) : 0;
+  const bar = document.getElementById('todo-bar');
+  const pctEl = document.getElementById('todo-pct');
+  const statsEl = document.getElementById('todo-stats');
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + ' %';
+  if (statsEl) statsEl.textContent = done + ' / ' + all.length + ' √ļkolŇĮ hotovo';
+  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#238636,#3fb950,#56d364)' : 'linear-gradient(90deg,#238636,#3fb950)';
+}
+
+/* REALTIME SUBSCRIPTION */
+function subscribeRealtime() {
+  sb.channel('checklist-changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'checklist', filter: 'id=eq.main' }, (payload) => {
+      if (saving) return; // ignore our own saves
+      const newState = payload.new?.state || {};
+      saveLocalState(newState);
+      applyState(newState);
+    })
+    .subscribe();
+}
+
+/* INIT */
+async function initTodos() {
+  // Try remote first, fall back to local
+  const remoteState = await getRemoteState();
+  const localState = getLocalState();
+  const state = remoteState !== null ? remoteState : localState;
+
+  // Sync: if remote was empty but local has data, push local to remote
+  if (remoteState !== null && Object.keys(remoteState).length === 0 && Object.keys(localState).length > 0) {
+    await saveRemoteState(localState);
+    applyState(localState);
+  } else {
+    applyState(state);
+    saveLocalState(state);
+  }
+
+  // Bind checkbox events
+  const boxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
+  boxes.forEach((cb, i) => {
+    cb.addEventListener('change', function() {
+      const s = getLocalState();
+      s[i] = this.checked;
+      saveLocalState(s);
+      saveRemoteState(s);
+      this.parentElement.classList.toggle('done', this.checked);
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+  subscribeRealtime();
+}
+
+/* RESET */
+async function resetTodos() {
+  if (!confirm('Opravdu resetovat vŇ°echny checkboxy?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  await saveRemoteState({});
+  document.querySelectorAll('.todo-item input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.parentElement.classList.remove('done'); });
+  updateProgress();
+}
+
+document.addEventListener('DOMContentLoaded', initTodos);
+</script>
+</body>
+</html>
