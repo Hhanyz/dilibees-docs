@@ -111,6 +111,37 @@ tr:hover td{background:rgba(88,166,255,.04)}
 .mode-dev-hide{display:none!important}
 .mode-ux-hide{display:none!important}
 
+/* AI ASK ASSISTANT */
+.ai-bar{margin:16px 0 8px;background:#111111;border:1px solid #222222;border-radius:10px;padding:12px 16px}
+.ai-bar-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ai-bar-header span{color:#FFD600;font-weight:700;font-size:.95em}
+.ai-bar-header .ai-model{color:#666;font-size:.78em;font-weight:400}
+.ai-bar-header .ai-settings-btn{margin-left:auto;background:none;border:1px solid #333;border-radius:6px;color:#888;cursor:pointer;padding:4px 10px;font-size:.8em;font-family:inherit;transition:.2s}
+.ai-bar-header .ai-settings-btn:hover{color:#FFD600;border-color:#FFD600}
+.ai-input-row{display:flex;gap:8px}
+.ai-input-row input{flex:1;background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:.92em;font-family:inherit;outline:none;transition:.2s}
+.ai-input-row input:focus{border-color:#FFD600;box-shadow:0 0 0 2px rgba(255,214,0,.15)}
+.ai-input-row input::placeholder{color:#555}
+.ai-input-row button{background:linear-gradient(135deg,#FFD600,#e6c200);color:#000;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:.92em;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+.ai-input-row button:hover{background:linear-gradient(135deg,#ffe033,#FFD600);box-shadow:0 2px 12px rgba(255,214,0,.3)}
+.ai-input-row button:disabled{opacity:.5;cursor:not-allowed}
+.ai-response{margin-top:12px;display:none}
+.ai-response.visible{display:block}
+.ai-response-box{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:16px;color:#e0e0e0;font-size:.92em;line-height:1.7;max-height:400px;overflow-y:auto;white-space:pre-wrap;word-wrap:break-word}
+.ai-response-box code{background:#1a1a1a;padding:1px 6px;border-radius:3px;font-size:.88em;color:#FFD600;font-family:'Fira Code',monospace}
+.ai-response-box .ai-typing{color:#FFD600;animation:aiBlink 1s infinite}
+@keyframes aiBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.ai-key-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center}
+.ai-key-modal-box{background:#111;border:1px solid #333;border-radius:12px;padding:28px;max-width:440px;width:90%}
+.ai-key-modal-box h3{color:#FFD600;margin-bottom:12px;font-size:1.1em}
+.ai-key-modal-box p{color:#888;font-size:.88em;margin-bottom:14px;line-height:1.5}
+.ai-key-modal-box input{width:100%;background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:.92em;font-family:'Fira Code',monospace;margin-bottom:14px;outline:none}
+.ai-key-modal-box input:focus{border-color:#FFD600}
+.ai-key-modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.ai-key-modal-btns button{padding:8px 18px;border-radius:8px;font-weight:600;font-size:.88em;cursor:pointer;font-family:inherit;border:none;transition:.2s}
+.ai-key-modal-btns .ai-save{background:#FFD600;color:#000}
+.ai-key-modal-btns .ai-cancel{background:#333;color:#888}
+
 /* UX SPECIFIC STYLES */
 .ux-wireframe{margin:16px 0;padding:24px 28px;background:#0a0a0a;border:2px dashed #222222;border-radius:8px;font-family:'Fira Code',monospace;font-size:1em;color:#e0e0e0;line-height:1.7;white-space:pre;overflow-x:auto;max-width:100%}
 .ux-before-after{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
@@ -222,6 +253,23 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <button class="mode-btn" id="btn-proto" onclick="switchMode('proto')">🖼️ Prototypy</button>
 <a href="gap-analysis-report.html" class="mode-btn" style="text-decoration:none;display:inline-block">📊 Gap Analysis</a>
 </div>
+
+<!-- AI ASK ASSISTANT -->
+<div class="ai-bar" id="ai-bar">
+<div class="ai-bar-header">
+<span>🤖 AI Asistent</span>
+<span class="ai-model">Claude Sonnet 4.6</span>
+<button class="ai-settings-btn" onclick="aiShowKeyModal()" title="Nastavení API klíče">⚙️ API klíč</button>
+</div>
+<div class="ai-input-row">
+<input type="text" id="ai-question" placeholder="Zeptej se na cokoliv v dokumentaci..." onkeydown="if(event.key==='Enter')aiAsk()">
+<button id="ai-ask-btn" onclick="aiAsk()">Zeptat se</button>
+</div>
+<div class="ai-response" id="ai-response">
+<div class="ai-response-box" id="ai-response-box"></div>
+</div>
+</div>
+
 <div class="meta">
 <span>Březen 2026</span>
 <span>Verze 2.0 EXTENDED</span>
@@ -7835,6 +7883,150 @@ async function resetUxTodos() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { initTodos(); initUxTodos(); });
+
+/* ═══════════════════════════════════════════
+   AI ASK ASSISTANT — Claude Sonnet 4.6
+   ═══════════════════════════════════════════ */
+const AI_KEY_STORAGE = 'dilibees-ai-api-key';
+
+function aiGetKey() { return localStorage.getItem(AI_KEY_STORAGE) || ''; }
+function aiSetKey(k) { localStorage.setItem(AI_KEY_STORAGE, k); }
+
+function aiShowKeyModal() {
+  const existing = document.getElementById('ai-key-modal');
+  if (existing) existing.remove();
+  const m = document.createElement('div');
+  m.className = 'ai-key-modal';
+  m.id = 'ai-key-modal';
+  m.innerHTML = `<div class="ai-key-modal-box">
+    <h3>🔑 Anthropic API klíč</h3>
+    <p>Zadej svůj API klíč pro Claude. Klíč se ukládá pouze lokálně v prohlížeči (localStorage) a nikam se neodesílá kromě Anthropic API.</p>
+    <input type="password" id="ai-key-input" placeholder="sk-ant-api03-..." value="${aiGetKey()}">
+    <div class="ai-key-modal-btns">
+      <button class="ai-cancel" onclick="document.getElementById('ai-key-modal').remove()">Zrušit</button>
+      <button class="ai-save" onclick="aiSaveKey()">Uložit</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+  document.getElementById('ai-key-input').focus();
+}
+
+function aiSaveKey() {
+  const k = document.getElementById('ai-key-input').value.trim();
+  if (k) { aiSetKey(k); document.getElementById('ai-key-modal').remove(); }
+}
+
+function aiExtractContext() {
+  // Extrahuje textový obsah z aktuálně viditelných sekcí
+  const visibleSections = [];
+
+  // Zjisti aktivní mód
+  const devTabs = document.getElementById('tabs-dev');
+  const uxTabs = document.getElementById('tabs-ux');
+  const isDev = devTabs && devTabs.style.display !== 'none';
+  const isUx = uxTabs && uxTabs.style.display !== 'none';
+  const mode = isDev ? 'DEV' : isUx ? 'UI/UX' : 'Prototypy';
+
+  // Najdi aktivní tab content
+  const activeTabs = document.querySelectorAll('.tc.on');
+  activeTabs.forEach(tab => {
+    const text = tab.innerText.substring(0, 15000); // max 15k znaků per tab
+    if (text.trim()) visibleSections.push(text);
+  });
+
+  // Pokud nic není viditelné, extrahuj celý wrap (zkrácený)
+  if (visibleSections.length === 0) {
+    const wrap = document.querySelector('.wrap');
+    if (wrap) visibleSections.push(wrap.innerText.substring(0, 30000));
+  }
+
+  return { mode, content: visibleSections.join('\n\n---\n\n').substring(0, 50000) };
+}
+
+async function aiAsk() {
+  const key = aiGetKey();
+  if (!key) { aiShowKeyModal(); return; }
+
+  const input = document.getElementById('ai-question');
+  const question = input.value.trim();
+  if (!question) return;
+
+  const btn = document.getElementById('ai-ask-btn');
+  const responseDiv = document.getElementById('ai-response');
+  const responseBox = document.getElementById('ai-response-box');
+
+  btn.disabled = true;
+  btn.textContent = 'Přemýšlím...';
+  responseDiv.classList.add('visible');
+  responseBox.innerHTML = '<span class="ai-typing">●●●</span>';
+
+  const ctx = aiExtractContext();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 2048,
+        system: `Jsi AI asistent pro dokumentaci projektu Dilibees 2.0 — agenturní HR systém pro dělnické profese.
+Odpovídej ČESKY, stručně a přesně na základě kontextu dokumentace.
+Pokud odpověď není v dokumentaci, řekni to.
+Aktuální mód dokumentace: ${ctx.mode}.
+Formátuj odpovědi čistě — používej odrážky, tučné písmo kde to dává smysl.`,
+        messages: [{
+          role: 'user',
+          content: `Kontext dokumentace:\n\n${ctx.content}\n\n---\n\nOtázka: ${question}`
+        }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        responseBox.textContent = '❌ Neplatný API klíč. Klikni na ⚙️ API klíč a zadej platný klíč.';
+      } else if (res.status === 429) {
+        responseBox.textContent = '⏳ Rate limit — zkus to za chvíli znovu.';
+      } else {
+        responseBox.textContent = `❌ Chyba API (${res.status}): ${err.error?.message || 'Neznámá chyba'}`;
+      }
+      return;
+    }
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'Žádná odpověď.';
+
+    // Jednoduchý markdown rendering
+    responseBox.innerHTML = aiRenderMarkdown(text);
+
+  } catch (e) {
+    responseBox.textContent = '❌ Chyba připojení: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Zeptat se';
+  }
+}
+
+function aiRenderMarkdown(text) {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^### (.+)$/gm, '<strong style="color:#FFD600;font-size:1em;display:block;margin:10px 0 4px">$1</strong>')
+    .replace(/^## (.+)$/gm, '<strong style="color:#FFD600;font-size:1.05em;display:block;margin:12px 0 6px">$1</strong>')
+    .replace(/^# (.+)$/gm, '<strong style="color:#FFD600;font-size:1.1em;display:block;margin:14px 0 6px">$1</strong>')
+    .replace(/^- (.+)$/gm, '  ▸ $1')
+    .replace(/^\d+\. (.+)$/gm, (m, p1, o, s) => {
+      const num = s.substring(0, o).split('\n').filter(l => /^\d+\. /.test(l)).length + 1;
+      return `  ${num}. ${p1}`;
+    })
+    .replace(/\n/g, '<br>');
+}
 </script>
 </body>
 </html>
