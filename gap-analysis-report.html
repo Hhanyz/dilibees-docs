@@ -434,7 +434,7 @@
         </div>
 
         <div class="alert-design">
-            <h2>KRITICKÁ CHYBA: Design Systém — Špatné barvy v dokumentaci</h2>
+            <h2>✅ OPRAVENO: Design Systém — Barvy nahrazeny v dokumentaci</h2>
 
             <div class="design-columns">
                 <div class="design-col">
@@ -567,8 +567,8 @@
                 </tbody>
             </table>
 
-            <div class="note warning">
-                <strong>Akce:</strong> Všechny 134 výskytů chybných barev v dokumentaci musí být nahrazeny skutečnými barvami z production styl.css.
+            <div class="note" style="border-left-color: #4fb169;">
+                <strong>✅ HOTOVO (4. březen 2026):</strong> Všech 180 výskytů chybných barev nahrazeno skutečnými barvami z production styl.css. Design Token tabulka doplněna do dokumentace. CSS Variables blok přidán.
             </div>
         </div>
 
@@ -599,11 +599,11 @@
                 </ul>
             </div>
 
-            <h3 class="section-title">Kritické poznatky</h3>
+            <h3 class="section-title">Kritické poznatky — stav po opravách</h3>
             <ul style="margin-bottom: 20px;">
-                <li class="critical-gap"><strong>1. Agent "Seznam vhodných kandidátů":</strong> Chybí v dokumentaci a neexistuje v PHP</li>
-                <li class="critical-gap"><strong>2. Zaměstnanec "Kariérní poradenství":</strong> Pouze překlady, chybí interaktivní mapa</li>
-                <li class="critical-gap"><strong>3. Design systém:</strong> 134 chybných barev v dokumentaci</li>
+                <li style="background: rgba(79,177,105,0.1); border-left: 4px solid #4fb169; padding: 8px 12px; margin-bottom: 6px;"><strong>✅ 1. Agent "Seznam vhodných kandidátů":</strong> Doplněno do DEV módu (API endpoint, Blade view) + UI/UX mód (wireframy desktop+mobile)</li>
+                <li style="background: rgba(79,177,105,0.1); border-left: 4px solid #4fb169; padding: 8px 12px; margin-bottom: 6px;"><strong>✅ 2. Zaměstnanec "Kariérní poradenství":</strong> Rozšířeno o interaktivní kariérní mapu, career_milestones DB migraci, 4 sub-sekce</li>
+                <li style="background: rgba(79,177,105,0.1); border-left: 4px solid #4fb169; padding: 8px 12px; margin-bottom: 6px;"><strong>✅ 3. Design systém:</strong> 180 výskytů opraveno, Design Token tabulka + CSS Variables doplněny</li>
             </ul>
 
             <div class="legend-box">
@@ -791,12 +791,12 @@
                         <td><span class="badge badge-ok">POKRYTO</span></td>
                         <td>Nová funkce</td>
                     </tr>
-                    <tr class="critical-gap">
+                    <tr>
                         <td>8</td>
                         <td>Seznam vhodných kandidátů</td>
                         <td><span class="badge badge-new">NOVÉ</span></td>
-                        <td><span class="badge badge-gap">GAP!</span></td>
-                        <td>Doplnit docs + implementovat</td>
+                        <td><span class="badge badge-ok">POKRYTO ✅</span></td>
+                        <td style="color:#4fb169;">Doplněno 4.3.2026</td>
                     </tr>
                     <tr>
                         <td>9</td>
@@ -835,8 +835,8 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="note warning">
-                <strong>Kritická mezera:</strong> Řádek 8 "Seznam vhodných kandidátů" chybí v dokumentaci a v PHP.
+            <div class="note" style="border-left-color: #4fb169;">
+                <strong>✅ Opraveno:</strong> Řádek 8 "Seznam vhodných kandidátů" doplněn do dokumentace (DEV + UI/UX mód s wireframy).
             </div>
         </div>
 
@@ -875,7 +875,7 @@
                     <tr><td>14</td><td>Profesionální kurzy</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat</td></tr>
                     <tr><td>15</td><td>Příspěvek na děti</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
                     <tr><td>16</td><td>Daňové přiznání</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
-                    <tr class="critical-gap"><td>17</td><td>Kariérní poradenství</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-extended">ROZŠÍŘ!</span></td><td>Nová + int. mapa</td></tr>
+                    <tr><td>17</td><td>Kariérní poradenství</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO ✅</span></td><td style="color:#4fb169;">Rozšířeno 4.3.2026</td></tr>
                     <tr><td>18</td><td>Ukončení práce</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
                     <tr><td>19</td><td>Pojištění</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
                     <tr><td>20</td><td>Provize za doporučení</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
@@ -946,84 +946,102 @@
                     <li><strong>Frontend:</strong> jQuery 1.12.4 (zastaralé)</li>
                     <li><strong>Databáze:</strong> MySQL/MariaDB</li>
                     <li><strong>DB abstrakce:</strong> PEAR DB (deprecated)</li>
-                    <li><strong>Lokalizace:</strong> 8 jazyků (CS, EN, DE, AT, SK, PL, RO, HU)</li>
+                    <li><strong>Lokalizace:</strong> 8 jazyků (cs, de, en, pl, ru, hu, ro, it)</li>
                     <li><strong>Font:</strong> Exo 2 — sans-serif</li>
                 </ul>
             </div>
 
-            <button class="collapsible" onclick="tog(this)">📄 Smarty šablony (40+) pro migraci</button>
+            <button class="collapsible" onclick="tog(this)">📄 Smarty → Blade šablony (klíčových 10 + dalších ~30)</button>
             <div class="content">
-                <p><strong>Struktura:</strong> <span class="file-ref">/templates/</span></p>
-                <ul style="column-count: 2;">
-                    <li>detail_zivotopisu.tpl (107KB 🚩)</li>
-                    <li>novy_zivotopis.tpl</li>
-                    <li>nastenka.tpl</li>
-                    <li>zpravy.tpl</li>
-                    <li>moji_lide.tpl</li>
-                    <li>profil_partnera.tpl</li>
-                    <li>muj_ucet.tpl</li>
-                    <li>reporty.tpl</li>
-                    <li>zivotopis_report.tpl</li>
-                    <li>zivotopis_ukazky.tpl</li>
-                    <li>prumerne_ceny.tpl</li>
-                    <li>provize_doporuceni.tpl</li>
-                    <li>a dalších 28 šablon...</li>
-                </ul>
+                <p><strong>Struktura:</strong> <span class="file-ref">/templates/</span> (Smarty .html soubory)</p>
+                <table style="font-size: 0.9em;">
+                    <tr><th>Smarty šablona</th><th>Funkce</th><th>Blade ekvivalent</th></tr>
+                    <tr><td><span class="file-ref">index.html</span></td><td>Layout: header+nav+content+footer</td><td>layouts/app.blade.php</td></tr>
+                    <tr style="background: rgba(248, 113, 113, 0.1);"><td><span class="file-ref">detail_zivotopisu.html</span> <span style="color:#f87171;">(107KB!)</span></td><td>Detail CV</td><td>candidates/show.blade.php</td></tr>
+                    <tr><td><span class="file-ref">moji_lide.html</span></td><td>Moji lidé — karty</td><td>agents/candidates.blade.php</td></tr>
+                    <tr><td><span class="file-ref">hunteri.html</span></td><td>Správa hunterů</td><td>admin/hunters.blade.php</td></tr>
+                    <tr><td><span class="file-ref">partneri.html</span></td><td>Správa agentů</td><td>admin/agents.blade.php</td></tr>
+                    <tr><td><span class="file-ref">evidence.html</span></td><td>Evidence záznamů</td><td>admin/records.blade.php</td></tr>
+                    <tr><td><span class="file-ref">muj_ucet.html</span></td><td>Nastavení účtu</td><td>profile/settings.blade.php</td></tr>
+                    <tr><td><span class="file-ref">mapa_cesta.html</span></td><td>Kariérní mapa</td><td>employees/career-map.blade.php</td></tr>
+                    <tr><td><span class="file-ref">zivotopis_*.html</span> (13×)</td><td>Kroky onboardingu</td><td>onboarding/*.blade.php</td></tr>
+                    <tr><td><span class="file-ref">registrace*.html</span> (2×)</td><td>Registrace</td><td>auth/register*.blade.php</td></tr>
+                </table>
                 <div class="note warning">
-                    <strong>Red flag:</strong> detail_zivotopisu.tpl = 107KB — příliš velký!
+                    <strong>Red flag:</strong> detail_zivotopisu = 107KB — příliš velký, rozdělit na 15+ Blade komponent.
                 </div>
             </div>
 
             <button class="collapsible" onclick="tog(this)">⏱️ CRON Jobs (12) → Laravel Scheduler</button>
             <div class="content">
-                <ol style="font-size: 0.9em;">
-                    <li>*/15 — Synchronizace CV</li>
-                    <li>0 2 — Čištění sessions</li>
-                    <li>0 8 — Výpočet statistik</li>
-                    <li>0 9 MON — Týdenní report</li>
-                    <li>0 0 1 — Měsíční fakturace</li>
-                    <li>0 */4 — Zpracování e-mailů</li>
-                    <li>0 6 — Archivace starých záznamů</li>
-                    <li>*/5 — Zpracování notifikací</li>
-                    <li>0 10 — Generování PDF reportů</li>
-                    <li>0 3 — Zálohování DB</li>
-                    <li>0 12 — Zahřátí cache</li>
-                    <li>0 1 SUN — Reindexace vyhledávání</li>
-                </ol>
+                <table style="font-size: 0.9em;">
+                    <tr><th>PHP soubor</th><th>Funkce</th><th>Laravel Schedule</th></tr>
+                    <tr><td><span class="file-ref">cron_denni.php</span></td><td>Denní údržba</td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_info_zajemci.php</span></td><td>Info notifikace</td><td>->daily()</td></tr>
+                    <tr style="background: rgba(248, 113, 113, 0.1);"><td><span class="file-ref">cron_pripomenuti_zajemci.php</span></td><td>Připomínky zájemcům <span style="color:#f87171;">(34KB!)</span></td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_pripomenuti_dohodli.php</span></td><td>Připomínky dohodnutým</td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_report_partneri.php</span></td><td>Reporty agentům</td><td>->weekly()</td></tr>
+                    <tr><td><span class="file-ref">cron_report_partneri_zpetna_vazba.php</span></td><td>Zpětná vazba</td><td>->weekly()</td></tr>
+                    <tr><td><span class="file-ref">cron_partneri_vysledek_zkousky.php</span></td><td>Výsledky zkoušek</td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_systemove_vraceni.php</span></td><td>Vrácení uchazečů</td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_systemove_vraceni_nepotvrdili.php</span></td><td>Vrácení nepotvrzených</td><td>->daily()</td></tr>
+                    <tr><td><span class="file-ref">cron_sms_narozeniny.php</span></td><td>SMS narozeniny</td><td>->dailyAt('08:00')</td></tr>
+                    <tr><td><span class="file-ref">cron_emaily_vanoce.php</span></td><td>Vánoční emaily</td><td>->yearly()</td></tr>
+                    <tr><td><span class="file-ref">cron_log_akci.php</span></td><td>Logování</td><td>->everyMinute()</td></tr>
+                </table>
             </div>
 
-            <button class="collapsible" onclick="tog(this)">📊 Klíčové PHP soubory (RED FLAGS)</button>
+            <button class="collapsible" onclick="tog(this)">🚩 Red flags pro programátora (6 bodů)</button>
             <div class="content">
                 <table style="font-size: 0.9em;">
                     <tr style="background: rgba(248, 113, 113, 0.1);">
                         <td><span class="file-ref">funkce.php</span></td>
                         <td>128 KB</td>
-                        <td style="color: #f87171;">🚩 RED FLAG</td>
+                        <td style="color: #f87171;">🚩 Monolit → rozdělit na Services/ (UserService, JobService, NotificationService, FileService, MatchingService)</td>
                     </tr>
                     <tr style="background: rgba(248, 113, 113, 0.1);">
                         <td><span class="file-ref">detail_zivotopisu.php</span></td>
                         <td>107 KB</td>
-                        <td style="color: #f87171;">🚩 RED FLAG</td>
+                        <td style="color: #f87171;">🚩 Vše v jednom → CandidateController + 15 metod</td>
+                    </tr>
+                    <tr style="background: rgba(248, 113, 113, 0.1);">
+                        <td>jQuery 1.12.4</td>
+                        <td>—</td>
+                        <td style="color: #f87171;">🚩 Zastaralé → upgrade na jQuery 3.x nebo Alpine.js/Livewire</td>
+                    </tr>
+                    <tr style="background: rgba(248, 113, 113, 0.1);">
+                        <td>PEAR DB</td>
+                        <td>—</td>
+                        <td style="color: #f87171;">🚩 Deprecated → Eloquent ORM (kompletní přepis)</td>
                     </tr>
                     <tr>
-                        <td><span class="file-ref">moji_lide.php</span></td>
-                        <td>23 KB</td>
-                        <td>OK</td>
+                        <td>8 jazyků</td>
+                        <td>cs, de, en, pl, ru, hu, ro, it</td>
+                        <td>→ Laravel Lang s JSON translation files</td>
+                    </tr>
+                    <tr>
+                        <td>Font: Exo 2</td>
+                        <td>sans-serif</td>
+                        <td style="color: #4fb169;">ZACHOVAT — Google Fonts import, --font-primary</td>
                     </tr>
                 </table>
             </div>
 
             <button class="collapsible" onclick="tog(this)">🎨 CSS třídy pro migraci</button>
             <div class="content">
-                <ul>
-                    <li><code>.tlacitko</code> — Primární tlačítko</li>
-                    <li><code>.tlacitko2</code> — Sekundární (zelené)</li>
-                    <li><code>.cerveny</code> — Červené tlačítko</li>
-                    <li><code>.h2c_zluty</code> — Žlutý text</li>
-                    <li><code>.nastenka-item</code> — Prvky na nástěnce</li>
-                    <li><code>.cv-section</code> — Sekce CV</li>
-                </ul>
-                <div class="note">Všechny tyto třídy musí zůstat dostupné v novém designu.</div>
+                <table style="font-size: 0.9em;">
+                    <tr><th>Třída</th><th>Funkce</th><th>Barva/Akce</th></tr>
+                    <tr><td><code>.tlacitko</code></td><td>Primární tlačítko (černé)</td><td>#000000, hover: #846c15</td></tr>
+                    <tr><td><code>.tlacitko2</code></td><td>Sekundární (zelené)</td><td>#4fb169</td></tr>
+                    <tr><td><code>.tlacitko6-zlute</code></td><td>Žlutá varianta</td><td>#ffd434</td></tr>
+                    <tr><td><code>.tlacitko6-cervene</code></td><td>Červená varianta</td><td>#ca1e31</td></tr>
+                    <tr><td><code>.tlacitko6-zelene</code></td><td>Zelená varianta</td><td>#4fb169</td></tr>
+                    <tr><td><code>.cerveny</code></td><td>Červený text/element</td><td>#ca1e31</td></tr>
+                    <tr><td><code>.h2c_zluty</code></td><td>Žlutý zvýrazněný text</td><td>#ffd434</td></tr>
+                    <tr><td><code>.nastenka-item</code></td><td>Prvky na nástěnce</td><td>—</td></tr>
+                    <tr><td><code>.cv-section</code></td><td>Sekce životopisu</td><td>—</td></tr>
+                </table>
+                <div class="note">Všechny tyto třídy musí zůstat dostupné v novém designu. Naming convention: <code>.tlacitko</code> = primary, <code>.tlacitko2</code> = secondary, <code>.tlacitko6-*</code> = barevné varianty.</div>
             </div>
         </div>
 
@@ -1033,34 +1051,34 @@
             <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🔴 OKAMŽITĚ (Critical Blockers)</h3>
 
             <div class="priority-section">
-                <div class="priority-item priority-p1">
-                    <strong>1. Opravit design systém v dokumentaci</strong><br>
-                    Všech 134 výskytů chybných barev. Deadline: Dnes
+                <div class="priority-item priority-p4">
+                    <strong>✅ 1. Opravit design systém v dokumentaci</strong><br>
+                    <span style="color:#4fb169;">HOTOVO 4.3.2026 — 180 výskytů opraveno + Design Tokens doplněny</span>
                 </div>
-                <div class="priority-item priority-p1">
-                    <strong>2. Doplnit "Seznam vhodných kandidátů" do Agent sekce</strong><br>
-                    Chybí v dokumentaci a v PHP. Deadline: Dnes
+                <div class="priority-item priority-p4">
+                    <strong>✅ 2. Doplnit "Seznam vhodných kandidátů" do Agent sekce</strong><br>
+                    <span style="color:#4fb169;">HOTOVO 4.3.2026 — DEV mód (API endpoint, Blade) + UI/UX (wireframy)</span>
                 </div>
-                <div class="priority-item priority-p1">
-                    <strong>3. Přidat interaktivní mapu do "Kariérní poradenství"</strong><br>
-                    Employee role. Deadline: 48 hodin
+                <div class="priority-item priority-p4">
+                    <strong>✅ 3. Přidat interaktivní mapu do "Kariérní poradenství"</strong><br>
+                    <span style="color:#4fb169;">HOTOVO 4.3.2026 — career_milestones DB, 4 sub-sekce, timeline/roadmap</span>
                 </div>
             </div>
 
             <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🟠 TENTO TÝDEN (High Priority)</h3>
 
             <div class="priority-section">
-                <div class="priority-item priority-p2">
-                    <strong>1. Doplnit Design Token tabulku do dokumentace</strong><br>
-                    Format: Token | Value | CSS Class | Variable
+                <div class="priority-item priority-p4">
+                    <strong>✅ 1. Doplnit Design Token tabulku do dokumentace</strong><br>
+                    <span style="color:#4fb169;">HOTOVO 4.3.2026 — 14 tokenů + :root CSS Variables blok</span>
                 </div>
-                <div class="priority-item priority-p2">
-                    <strong>2. Přidat sekci "Stávající systém" do dokumentace</strong><br>
-                    Tech stack, template mapa, CRON jobs, CSS třídy
+                <div class="priority-item priority-p4">
+                    <strong>✅ 2. Přidat sekci "Stávající systém" do dokumentace</strong><br>
+                    <span style="color:#4fb169;">HOTOVO 4.3.2026 — Smarty→Blade mapa, CRON→Scheduler, Red flags</span>
                 </div>
                 <div class="priority-item priority-p2">
                     <strong>3. Aktualizovat Figma prototypy se správnými barvami</strong><br>
-                    Všechny prvky s #ffd434 místo #58a6ff
+                    Všechny prvky s #ffd434 místo #58a6ff — čeká na Figma update
                 </div>
             </div>
 

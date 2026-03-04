@@ -2572,6 +2572,38 @@ Tato sekce dokumentuje současný PHP systém a mapuje jej na novou Laravel arch
 8. Závěr: E2E testy celé aplikace, load testing</pre></div>
 </div></div>
 
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Technologie a závislosti stávajícího systému</h3><span class="num">6 technologií</span><span class="arr">▾</span></div>
+<div class="sc">
+<table>
+<tr><th>Technologie</th><th>Stávající</th><th>Cílový stav (Laravel)</th></tr>
+<tr><td>Template engine</td><td>Smarty 4</td><td>Blade</td></tr>
+<tr><td>Frontend</td><td>jQuery 1.12.4 (zastaralé!)</td><td>Alpine.js / Livewire</td></tr>
+<tr><td>Databáze</td><td>MySQL / MariaDB</td><td>MySQL + Eloquent ORM</td></tr>
+<tr><td>DB abstrakce</td><td>PEAR DB (deprecated!)</td><td>Eloquent ORM</td></tr>
+<tr><td>Lokalizace</td><td>8 jazyků (cs, de, en, pl, ru, hu, ro, it)</td><td>Laravel Lang + JSON</td></tr>
+<tr><td>Font</td><td>Exo 2, sans-serif</td><td>ZACHOVAT — Google Fonts import</td></tr>
+</table>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>CSS třídy pro migraci</h3><span class="num">9 tříd</span><span class="arr">▾</span></div>
+<div class="sc">
+<table>
+<tr><th>CSS třída</th><th>Funkce</th><th>Barva</th><th>Nová proměnná</th></tr>
+<tr><td><code>.tlacitko</code></td><td>Primární tlačítko (černé)</td><td>#000000, hover: #846c15</td><td><code>--btn-primary-bg</code></td></tr>
+<tr><td><code>.tlacitko2</code></td><td>Sekundární (zelené)</td><td>#4fb169</td><td><code>--color-success</code></td></tr>
+<tr><td><code>.tlacitko6-zlute</code></td><td>Žlutá varianta</td><td>#ffd434</td><td><code>--accent-yellow</code></td></tr>
+<tr><td><code>.tlacitko6-cervene</code></td><td>Červená varianta</td><td>#ca1e31</td><td><code>--color-error</code></td></tr>
+<tr><td><code>.tlacitko6-zelene</code></td><td>Zelená varianta</td><td>#4fb169</td><td><code>--color-success</code></td></tr>
+<tr><td><code>.cerveny</code></td><td>Červený text/element</td><td>#ca1e31</td><td><code>--color-error</code></td></tr>
+<tr><td><code>.h2c_zluty</code></td><td>Žlutý zvýrazněný text</td><td>#ffd434</td><td><code>--accent-yellow</code></td></tr>
+<tr><td><code>.nastenka-item</code></td><td>Prvky na nástěnce</td><td>—</td><td>—</td></tr>
+<tr><td><code>.cv-section</code></td><td>Sekce životopisu</td><td>—</td><td>—</td></tr>
+</table>
+<div class="edge"><p>Všechny tyto třídy musí zůstat dostupné v novém designu. Naming convention: <code>.tlacitko</code> = primary, <code>.tlacitko2</code> = secondary green, <code>.tlacitko6-*</code> = barevné varianty.</p></div>
+</div></div>
+
 </div><!-- /t-legacy -->
 
 <!-- ══════════════════════════════════════════════════════════ -->
