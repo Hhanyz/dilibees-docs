@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilibees CV — Gap Analysis Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #FFD600;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #FFD600;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 214, 0, 0.2);
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .stat-green .stat-number { color: #4fb169; }
+        .stat-blue .stat-number { color: #60a5fa; }
+        .stat-amber .stat-number { color: #fbbf24; }
+        .stat-red .stat-number { color: #f87171; }
+
+        .alert-design {
+            background: #111;
+            border: 2px solid #a855f7;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .alert-design h2 {
+            color: #a855f7;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .design-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .design-col h3 {
+            color: #FFD600;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 15px;
+            border: 1px solid #333;
+        }
+
+        .color-text {
+            flex: 1;
+            font-size: 0.85em;
+        }
+
+        .design-tokens-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+            margin-top: 20px;
+        }
+
+        .design-tokens-table th {
+            background: #1a1a1a;
+            color: #FFD600;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #333;
+        }
+
+        .design-tokens-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #222;
+        }
+
+        .design-tokens-table tr:hover {
+            background: #151515;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab:hover {
+            color: #FFD600;
+        }
+
+        .tab.on {
+            color: #FFD600;
+            border-bottom-color: #FFD600;
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.on {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #888;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #FFD600;
+            color: #000;
+            border-color: #FFD600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: #1a1a1a;
+            color: #FFD600;
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #333;
+        }
+
+        table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #222;
+        }
+
+        table tr:hover {
+            background: #151515;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-exists {
+            background: rgba(79, 177, 105, 0.2);
+            color: #4fb169;
+        }
+
+        .badge-partial {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .badge-new {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+        }
+
+        .badge-ok {
+            background: rgba(79, 177, 105, 0.2);
+            color: #4fb169;
+        }
+
+        .badge-gap {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+        }
+
+        .badge-extended {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .note {
+            background: #111;
+            border-left: 4px solid #FFD600;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .note.warning {
+            border-left-color: #f87171;
+        }
+
+        .collapsible {
+            background: #1a1a1a;
+            color: #FFD600;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid #333;
+            border-radius: 4px;
+            text-align: left;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .collapsible:hover {
+            background: #222;
+            border-color: #FFD600;
+        }
+
+        .collapsible.open + .content {
+            display: block;
+        }
+
+        .content {
+            display: none;
+            background: #0f0f0f;
+            padding: 15px;
+            border: 1px solid #222;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            margin-bottom: 15px;
+        }
+
+        .legend-box {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .legend-badge {
+            min-width: 80px;
+        }
+
+        .legend-text {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .section-title {
+            color: #FFD600;
+            font-size: 1.3em;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .priority-section {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .priority-title {
+            color: #FFD600;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .priority-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #0f0f0f;
+            border-left: 3px solid #FFD600;
+            border-radius: 2px;
+        }
+
+        .priority-p1 { border-left-color: #f87171; }
+        .priority-p2 { border-left-color: #fbbf24; }
+        .priority-p3 { border-left-color: #fbbf24; }
+        .priority-p4 { border-left-color: #4fb169; }
+
+        .file-ref {
+            color: #60a5fa;
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+
+        .critical-gap {
+            background: rgba(248, 113, 113, 0.1);
+            border-left: 4px solid #f87171;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dilibees CV — Gap Analysis Report</h1>
+            <div class="subtitle">3-dimenzionální porovnání: Klient (PDFy) × Dokumentace (GitHub) × Stávající systém (PHP)</div>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card stat-green">
+                <div class="stat-number">50</div>
+                <div class="stat-label">Bodů klienta</div>
+            </div>
+            <div class="stat-card stat-blue">
+                <div class="stat-number">16</div>
+                <div class="stat-label">Existuje v PHP</div>
+            </div>
+            <div class="stat-card stat-amber">
+                <div class="stat-number">21</div>
+                <div class="stat-label">Částečně v PHP</div>
+            </div>
+            <div class="stat-card stat-red">
+                <div class="stat-number">13</div>
+                <div class="stat-label">Nové funkce</div>
+            </div>
+        </div>
+
+        <div class="alert-design">
+            <h2>KRITICKÁ CHYBA: Design Systém — Špatné barvy v dokumentaci</h2>
+
+            <div class="design-columns">
+                <div class="design-col">
+                    <h3>V DOKUMENTACI (špatně)</h3>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #0d1117;"></div>
+                        <div class="color-text">#0d1117 (GitHub BG)</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #58a6ff;"></div>
+                        <div class="color-text">#58a6ff (modrá)</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #3fb950;"></div>
+                        <div class="color-text">#3fb950 (zelená)</div>
+                    </div>
+                </div>
+
+                <div class="design-col">
+                    <h3>SKUTEČNÉ BARVY Z styl.css</h3>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #000000;"></div>
+                        <div class="color-text">#000000 (primary)</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #846c15;"></div>
+                        <div class="color-text">#846c15 (hover)</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #ffd434;"></div>
+                        <div class="color-text">#ffd434 (highlight)</div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="design-tokens-table">
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Value</th>
+                        <th>CSS Class</th>
+                        <th>CSS Variable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary Button BG</td>
+                        <td><code>#000000</code></td>
+                        <td><code>.tlacitko</code></td>
+                        <td><code>--btn-primary-bg</code></td>
+                    </tr>
+                    <tr>
+                        <td>Button Hover</td>
+                        <td><code>#846c15</code></td>
+                        <td><code>.tlacitko:hover</code></td>
+                        <td><code>--btn-hover-bg</code></td>
+                    </tr>
+                    <tr>
+                        <td>Highlight Yellow</td>
+                        <td><code>#ffd434</code></td>
+                        <td><code>.h2c_zluty</code></td>
+                        <td><code>--accent-yellow</code></td>
+                    </tr>
+                    <tr>
+                        <td>Yellow BG Wash</td>
+                        <td><code>#fff9e2</code></td>
+                        <td>alert panels</td>
+                        <td><code>--accent-yellow-light</code></td>
+                    </tr>
+                    <tr>
+                        <td>Text on Yellow</td>
+                        <td><code>#57460a</code></td>
+                        <td>on yellow bg</td>
+                        <td><code>--text-on-yellow</code></td>
+                    </tr>
+                    <tr>
+                        <td>Page Background</td>
+                        <td><code>#f8f8f8</code></td>
+                        <td><code>body</code></td>
+                        <td><code>--bg-page</code></td>
+                    </tr>
+                    <tr>
+                        <td>Card Background</td>
+                        <td><code>#ffffff</code></td>
+                        <td>content</td>
+                        <td><code>--bg-card</code></td>
+                    </tr>
+                    <tr>
+                        <td>Secondary BG</td>
+                        <td><code>#f6f8f9</code></td>
+                        <td>toggle</td>
+                        <td><code>--bg-secondary</code></td>
+                    </tr>
+                    <tr>
+                        <td>Text Primary</td>
+                        <td><code>#1b2124</code></td>
+                        <td>main text</td>
+                        <td><code>--text-primary</code></td>
+                    </tr>
+                    <tr>
+                        <td>Text Muted</td>
+                        <td><code>#888888</code></td>
+                        <td>notes</td>
+                        <td><code>--text-muted</code></td>
+                    </tr>
+                    <tr>
+                        <td>Success Green</td>
+                        <td><code>#4fb169</code></td>
+                        <td><code>.tlacitko2</code></td>
+                        <td><code>--color-success</code></td>
+                    </tr>
+                    <tr>
+                        <td>Error Red</td>
+                        <td><code>#ca1e31</code></td>
+                        <td><code>.cerveny</code></td>
+                        <td><code>--color-error</code></td>
+                    </tr>
+                    <tr>
+                        <td>Border Light</td>
+                        <td><code>#dfe6e9</code></td>
+                        <td>borders</td>
+                        <td><code>--border-light</code></td>
+                    </tr>
+                    <tr>
+                        <td>Font</td>
+                        <td>Exo 2, sans-serif</td>
+                        <td><code>.tlacitko</code></td>
+                        <td><code>--font-primary</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note warning">
+                <strong>Akce:</strong> Všechny 134 výskytů chybných barev v dokumentaci musí být nahrazeny skutečnými barvami z production styl.css.
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab on" onclick="sw('overview')">📊 Přehled</button>
+            <button class="tab" onclick="sw('hunter')">🟢 Hunter (9)</button>
+            <button class="tab" onclick="sw('agent')">🟠 Agent (13)</button>
+            <button class="tab" onclick="sw('employee')">🔵 Zaměstnanec (23)</button>
+            <button class="tab" onclick="sw('calculator')">🧮 Kalkulačka (5)</button>
+            <button class="tab" onclick="sw('system')">🏗️ Stávající systém</button>
+            <button class="tab" onclick="sw('action')">🎯 Akční plán</button>
+        </div>
+
+        <div id="p-overview" class="panel on">
+            <h2 class="section-title">Přehled projektu</h2>
+            <p style="margin-bottom: 20px; line-height: 1.8;">
+                Tato analýza porovnává tři dimenze Dilibees CV redesignu: <strong>požadavky klienta</strong> (50 bodů ze 3 PDF),
+                <strong>dokumentaci na GitHubu</strong> (technické specifikace) a <strong>stávající PHP systém</strong> (existující funkcionalita).
+            </p>
+
+            <div class="note">
+                <strong>Rozměry analýzy:</strong>
+                <ul>
+                    <li><strong>50 bodů klienta:</strong> Požadavky z PDF specifikací</li>
+                    <li><strong>16 Existuje v PHP:</strong> Plně implementované funkce</li>
+                    <li><strong>21 Částečně v PHP:</strong> Backend nebo částečné řešení</li>
+                    <li><strong>13 Nové funkce:</strong> Prvky, které neexistují</li>
+                </ul>
+            </div>
+
+            <h3 class="section-title">Kritické poznatky</h3>
+            <ul style="margin-bottom: 20px;">
+                <li class="critical-gap"><strong>1. Agent "Seznam vhodných kandidátů":</strong> Chybí v dokumentaci a neexistuje v PHP</li>
+                <li class="critical-gap"><strong>2. Zaměstnanec "Kariérní poradenství":</strong> Pouze překlady, chybí interaktivní mapa</li>
+                <li class="critical-gap"><strong>3. Design systém:</strong> 134 chybných barev v dokumentaci</li>
+            </ul>
+
+            <div class="legend-box">
+                <h3 style="color: #FFD600; margin-bottom: 15px;">Legenda statusu</h3>
+                <div class="legend-item">
+                    <span class="badge badge-exists" style="min-width: 90px;">🟢 EXISTUJE</span>
+                    <span class="legend-text">Funkce je již implementována v PHP</span>
+                </div>
+                <div class="legend-item">
+                    <span class="badge badge-partial" style="min-width: 90px;">🟡 ČÁSTEČNĚ</span>
+                    <span class="legend-text">Backend existuje, UI potřebuje doplnění</span>
+                </div>
+                <div class="legend-item">
+                    <span class="badge badge-new" style="min-width: 90px;">🔴 NOVÉ</span>
+                    <span class="legend-text">Funkce vůbec neexistuje</span>
+                </div>
+                <div style="border-top: 1px solid #333; margin: 15px 0; padding-top: 15px;">
+                    <div class="legend-item">
+                        <span class="badge badge-ok" style="min-width: 90px;">✅ POKRYTO</span>
+                        <span class="legend-text">Dokumentace pokrývá dostatečně</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="badge badge-extended" style="min-width: 90px;">⚠️ ROZŠÍŘ.</span>
+                        <span class="legend-text">Dokumentace chybí detaily</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="badge badge-gap" style="min-width: 90px;">❌ GAP</span>
+                        <span class="legend-text">Funkce chybí v dokumentaci</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="p-hunter" class="panel">
+            <h2 class="section-title">Hunter Role (9 funkcí)</h2>
+            <div class="table-filters">
+                <button class="filter-btn active">Vše</button>
+                <button class="filter-btn">Existuje</button>
+                <button class="filter-btn">Částečně</button>
+                <button class="filter-btn">Nové</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 25%;">Bod klienta</th>
+                        <th style="width: 25%;">Stávající PHP</th>
+                        <th style="width: 25%;">Dokumentace</th>
+                        <th style="width: 20%;">Akce pro DEV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Oznámení</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span><br><span class="file-ref">profil_partnera.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat UI</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Nástěnka</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span><br><span class="file-ref">nastenka.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Nový dashboard</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Životopisy</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">zivotopisy.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Zprávy</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span><br><span class="file-ref">tridy/zprava.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat UI</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Report hodin</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">zivotopis_report.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Mzdová kalkulačka</td>
+                        <td><span class="badge badge-exists">DE+AT HOTOVO</span><br><span style="color:#4ade80; font-size:11px;">Programátor local; CH/NL/LI zbývá</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td style="color:#4ade80;">Integrovat + 3 země</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Provize za doporučení</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">provize_doporuceni.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Doplňkové služby</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat katalog</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Můj účet</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">muj_ucet.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="p-agent" class="panel">
+            <h2 class="section-title">Agent Role (13 funkcí)</h2>
+            <div class="table-filters">
+                <button class="filter-btn active">Vše</button>
+                <button class="filter-btn">Existuje</button>
+                <button class="filter-btn">Částečně</button>
+                <button class="filter-btn">Nové</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 23%;">Bod klienta</th>
+                        <th style="width: 23%;">Stávající PHP</th>
+                        <th style="width: 23%;">Dokumentace</th>
+                        <th style="width: 20%;">Akce pro DEV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Oznámení</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat UI</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Nástěnka</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Nový dashboard</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Moji lidé</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">moji_lide.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Poptávka pracovníků</td>
+                        <td><span class="badge badge-new">NOVÉ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Nová funkce</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Vhodní pracovníci</td>
+                        <td><span class="badge badge-new">NOVÉ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Nová funkce</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Zprávy</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat UI</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Schvalování hodin</td>
+                        <td><span class="badge badge-new">NOVÉ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Nová funkce</td>
+                    </tr>
+                    <tr class="critical-gap">
+                        <td>8</td>
+                        <td>Seznam vhodných kandidátů</td>
+                        <td><span class="badge badge-new">NOVÉ</span></td>
+                        <td><span class="badge badge-gap">GAP!</span></td>
+                        <td>Doplnit docs + implementovat</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Mzdová kalkulačka</td>
+                        <td><span class="badge badge-exists">DE+AT HOTOVO</span><br><span style="color:#4ade80; font-size:11px;">Programátor local; CH/NL/LI zbývá</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td style="color:#4ade80;">Integrovat + 3 země</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Report hodin</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">reporty.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Provize za doporučení</td>
+                        <td><span class="badge badge-exists">EXISTUJE</span><br><span class="file-ref">provize_doporuceni.php</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat 1:1</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Doplňkové služby</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat katalog</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Můj účet</td>
+                        <td><span class="badge badge-partial">ČÁSTEČNĚ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Migrovat + rozšířit</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note warning">
+                <strong>Kritická mezera:</strong> Řádek 8 "Seznam vhodných kandidátů" chybí v dokumentaci a v PHP.
+            </div>
+        </div>
+
+        <div id="p-employee" class="panel">
+            <h2 class="section-title">Zaměstnanec Role (23 funkcí)</h2>
+            <div class="table-filters">
+                <button class="filter-btn active">Vše</button>
+                <button class="filter-btn">Existuje</button>
+                <button class="filter-btn">Částečně</button>
+                <button class="filter-btn">Nové</button>
+            </div>
+            <table style="font-size: 0.9em;">
+                <thead>
+                    <tr>
+                        <th style="width: 4%;">#</th>
+                        <th style="width: 22%;">Bod klienta</th>
+                        <th style="width: 22%;">Stávající PHP</th>
+                        <th style="width: 22%;">Dokumentace</th>
+                        <th style="width: 18%;">Akce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Oznámení</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová funkce</td></tr>
+                    <tr><td>2</td><td>Nástěnka</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nový dashboard</td></tr>
+                    <tr><td>3</td><td>Životopis</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
+                    <tr><td>4</td><td>Moje dokumenty</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová funkce</td></tr>
+                    <tr><td>5</td><td>Moje fotky</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat galerii</td></tr>
+                    <tr><td>6</td><td>Zprávy</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat UI</td></tr>
+                    <tr><td>7</td><td>Report hodin</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
+                    <tr><td>8</td><td>Výplatní páska</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová funkce</td></tr>
+                    <tr><td>9</td><td>Mzdová kalkulačka</td><td><span class="badge badge-exists">DE+AT HOTOVO</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td style="color:#4ade80;">Integrovat + 3 země</td></tr>
+                    <tr><td>10</td><td>Pracovní smlouva</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová funkce</td></tr>
+                    <tr><td>11</td><td>Nástupní list</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat UI</td></tr>
+                    <tr><td>12</td><td>Bydlení/Úřady/Banky</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr><td>13</td><td>Jazykové lekce</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr><td>14</td><td>Profesionální kurzy</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat</td></tr>
+                    <tr><td>15</td><td>Příspěvek na děti</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr><td>16</td><td>Daňové přiznání</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr class="critical-gap"><td>17</td><td>Kariérní poradenství</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-extended">ROZŠÍŘ!</span></td><td>Nová + int. mapa</td></tr>
+                    <tr><td>18</td><td>Ukončení práce</td><td><span class="badge badge-new">NOVÉ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr><td>19</td><td>Pojištění</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Nová služba</td></tr>
+                    <tr><td>20</td><td>Provize za doporučení</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
+                    <tr><td>21</td><td>Doplňkové služby</td><td><span class="badge badge-partial">ČÁSTEČNĚ</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Doprogramovat katalog</td></tr>
+                    <tr><td>22</td><td>Ukázky práce</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
+                    <tr><td>23</td><td>Můj účet</td><td><span class="badge badge-exists">EXISTUJE</span></td><td><span class="badge badge-ok">POKRYTO</span></td><td>Migrovat 1:1</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="p-calculator" class="panel">
+            <h2 class="section-title">Mzdová/daňová kalkulačka — 5 zemí</h2>
+            <div style="background:#1a1a0a; border-left:3px solid #FFD600; padding:12px 16px; border-radius:0 8px 8px 0; margin-bottom:16px; font-size:13px; color:#ccc;">
+              <strong style="color:#4ade80;">✅ UPDATE:</strong> Programátor již vytvořil mzdovou kalkulačku na local (DE + AT hotovo). Zbývá CH, NL, LI.<br>
+              <strong>Poznámka:</strong> <span class="file-ref">prumerne_ceny.php</span> ve stávajícím PHP je kalkulačka <strong>nákladů na život</strong> (ubytování, jídlo, energie) — to je JINÁ funkce než mzdová kalkulačka.
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Země</th>
+                        <th style="width: 30%;">Stávající stav</th>
+                        <th style="width: 25%;">Dokumentace</th>
+                        <th style="width: 30%;">Akce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🇩🇪 Německo</td>
+                        <td><span class="badge badge-exists">HOTOVO ✓</span><br><span style="color:#4ade80; font-size:12px;">Programátor — local</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td style="color:#4ade80;">Integrovat do Laravel</td>
+                    </tr>
+                    <tr>
+                        <td>🇦🇹 Rakousko</td>
+                        <td><span class="badge badge-exists">HOTOVO ✓</span><br><span style="color:#4ade80; font-size:12px;">Programátor — local</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td style="color:#4ade80;">Integrovat do Laravel</td>
+                    </tr>
+                    <tr>
+                        <td>🇨🇭 Švýcarsko</td>
+                        <td><span class="badge badge-new">ZBÝVÁ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat dle DE/AT vzoru</td>
+                    </tr>
+                    <tr>
+                        <td>🇳🇱 Nizozemsko</td>
+                        <td><span class="badge badge-new">ZBÝVÁ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Doprogramovat dle DE/AT vzoru</td>
+                    </tr>
+                    <tr>
+                        <td>🇱🇮 Lichtenštejnsko</td>
+                        <td><span class="badge badge-new">NOVÉ</span></td>
+                        <td><span class="badge badge-ok">POKRYTO</span></td>
+                        <td>Kompletně nové</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="p-system" class="panel">
+            <h2 class="section-title">Architektura stávajícího PHP systému</h2>
+
+            <button class="collapsible" onclick="tog(this)">📦 Technologie a závislosti</button>
+            <div class="content">
+                <ul>
+                    <li><strong>Template engine:</strong> Smarty 4</li>
+                    <li><strong>Frontend:</strong> jQuery 1.12.4 (zastaralé)</li>
+                    <li><strong>Databáze:</strong> MySQL/MariaDB</li>
+                    <li><strong>DB abstrakce:</strong> PEAR DB (deprecated)</li>
+                    <li><strong>Lokalizace:</strong> 8 jazyků (CS, EN, DE, AT, SK, PL, RO, HU)</li>
+                    <li><strong>Font:</strong> Exo 2 — sans-serif</li>
+                </ul>
+            </div>
+
+            <button class="collapsible" onclick="tog(this)">📄 Smarty šablony (40+) pro migraci</button>
+            <div class="content">
+                <p><strong>Struktura:</strong> <span class="file-ref">/templates/</span></p>
+                <ul style="column-count: 2;">
+                    <li>detail_zivotopisu.tpl (107KB 🚩)</li>
+                    <li>novy_zivotopis.tpl</li>
+                    <li>nastenka.tpl</li>
+                    <li>zpravy.tpl</li>
+                    <li>moji_lide.tpl</li>
+                    <li>profil_partnera.tpl</li>
+                    <li>muj_ucet.tpl</li>
+                    <li>reporty.tpl</li>
+                    <li>zivotopis_report.tpl</li>
+                    <li>zivotopis_ukazky.tpl</li>
+                    <li>prumerne_ceny.tpl</li>
+                    <li>provize_doporuceni.tpl</li>
+                    <li>a dalších 28 šablon...</li>
+                </ul>
+                <div class="note warning">
+                    <strong>Red flag:</strong> detail_zivotopisu.tpl = 107KB — příliš velký!
+                </div>
+            </div>
+
+            <button class="collapsible" onclick="tog(this)">⏱️ CRON Jobs (12) → Laravel Scheduler</button>
+            <div class="content">
+                <ol style="font-size: 0.9em;">
+                    <li>*/15 — Synchronizace CV</li>
+                    <li>0 2 — Čištění sessions</li>
+                    <li>0 8 — Výpočet statistik</li>
+                    <li>0 9 MON — Týdenní report</li>
+                    <li>0 0 1 — Měsíční fakturace</li>
+                    <li>0 */4 — Zpracování e-mailů</li>
+                    <li>0 6 — Archivace starých záznamů</li>
+                    <li>*/5 — Zpracování notifikací</li>
+                    <li>0 10 — Generování PDF reportů</li>
+                    <li>0 3 — Zálohování DB</li>
+                    <li>0 12 — Zahřátí cache</li>
+                    <li>0 1 SUN — Reindexace vyhledávání</li>
+                </ol>
+            </div>
+
+            <button class="collapsible" onclick="tog(this)">📊 Klíčové PHP soubory (RED FLAGS)</button>
+            <div class="content">
+                <table style="font-size: 0.9em;">
+                    <tr style="background: rgba(248, 113, 113, 0.1);">
+                        <td><span class="file-ref">funkce.php</span></td>
+                        <td>128 KB</td>
+                        <td style="color: #f87171;">🚩 RED FLAG</td>
+                    </tr>
+                    <tr style="background: rgba(248, 113, 113, 0.1);">
+                        <td><span class="file-ref">detail_zivotopisu.php</span></td>
+                        <td>107 KB</td>
+                        <td style="color: #f87171;">🚩 RED FLAG</td>
+                    </tr>
+                    <tr>
+                        <td><span class="file-ref">moji_lide.php</span></td>
+                        <td>23 KB</td>
+                        <td>OK</td>
+                    </tr>
+                </table>
+            </div>
+
+            <button class="collapsible" onclick="tog(this)">🎨 CSS třídy pro migraci</button>
+            <div class="content">
+                <ul>
+                    <li><code>.tlacitko</code> — Primární tlačítko</li>
+                    <li><code>.tlacitko2</code> — Sekundární (zelené)</li>
+                    <li><code>.cerveny</code> — Červené tlačítko</li>
+                    <li><code>.h2c_zluty</code> — Žlutý text</li>
+                    <li><code>.nastenka-item</code> — Prvky na nástěnce</li>
+                    <li><code>.cv-section</code> — Sekce CV</li>
+                </ul>
+                <div class="note">Všechny tyto třídy musí zůstat dostupné v novém designu.</div>
+            </div>
+        </div>
+
+        <div id="p-action" class="panel">
+            <h2 class="section-title">Akční plán — prioritizace a timeline</h2>
+
+            <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🔴 OKAMŽITĚ (Critical Blockers)</h3>
+
+            <div class="priority-section">
+                <div class="priority-item priority-p1">
+                    <strong>1. Opravit design systém v dokumentaci</strong><br>
+                    Všech 134 výskytů chybných barev. Deadline: Dnes
+                </div>
+                <div class="priority-item priority-p1">
+                    <strong>2. Doplnit "Seznam vhodných kandidátů" do Agent sekce</strong><br>
+                    Chybí v dokumentaci a v PHP. Deadline: Dnes
+                </div>
+                <div class="priority-item priority-p1">
+                    <strong>3. Přidat interaktivní mapu do "Kariérní poradenství"</strong><br>
+                    Employee role. Deadline: 48 hodin
+                </div>
+            </div>
+
+            <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🟠 TENTO TÝDEN (High Priority)</h3>
+
+            <div class="priority-section">
+                <div class="priority-item priority-p2">
+                    <strong>1. Doplnit Design Token tabulku do dokumentace</strong><br>
+                    Format: Token | Value | CSS Class | Variable
+                </div>
+                <div class="priority-item priority-p2">
+                    <strong>2. Přidat sekci "Stávající systém" do dokumentace</strong><br>
+                    Tech stack, template mapa, CRON jobs, CSS třídy
+                </div>
+                <div class="priority-item priority-p2">
+                    <strong>3. Aktualizovat Figma prototypy se správnými barvami</strong><br>
+                    Všechny prvky s #ffd434 místo #58a6ff
+                </div>
+            </div>
+
+            <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🟡 OVĚŘIT S KLIENTEM</h3>
+
+            <div class="priority-section">
+                <div class="priority-item priority-p3">
+                    <strong>1. Kindergeld 249€/měsíc — aktuální částka?</strong>
+                </div>
+                <div class="priority-item priority-p3">
+                    <strong>2. Cenové karty — 1.29€/min pro jazykové lekce?</strong>
+                </div>
+                <div class="priority-item priority-p3">
+                    <strong>3. Dual-role handling — agent + hunter v jednom účtu?</strong>
+                </div>
+                <div class="priority-item priority-p3">
+                    <strong>4. Doplňkové služby — cenové sazby?</strong>
+                </div>
+            </div>
+
+            <h3 style="color: #FFD600; margin: 25px 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #333;">🟢 PŘIPRAVENO K MIGRACI (Quick Wins)</h3>
+
+            <div class="priority-section">
+                <table style="font-size: 0.9em; margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Funkce</th>
+                            <th>Zdrojový soubor</th>
+                            <th>Target Controller</th>
+                            <th>Effort</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Životopisy</td><td><span class="file-ref">zivotopisy.php</span></td><td>CandidateListController</td><td>2 dni</td></tr>
+                        <tr><td>Moji lidé</td><td><span class="file-ref">moji_lide.php</span></td><td>AgentCandidateController</td><td>2 dni</td></tr>
+                        <tr><td>Report hodin</td><td><span class="file-ref">zivotopis_report.php</span></td><td>HoursReportController</td><td>2 dni</td></tr>
+                        <tr><td>Provize</td><td><span class="file-ref">provize_doporuceni.php</span></td><td>CommissionController</td><td>1 den</td></tr>
+                        <tr><td>Ukázky práce</td><td><span class="file-ref">zivotopis_ukazky.php</span></td><td>WorkSampleController</td><td>1 den</td></tr>
+                        <tr><td>Můj účet</td><td><span class="file-ref">muj_ucet.php</span></td><td>ProfileController</td><td>3 dny</td></tr>
+                    </tbody>
+                </table>
+                <div class="note" style="margin-top: 20px;">
+                    <strong>Celkový effort:</strong> ~11 dní pro 6 komponent = ideální pro Sprint 1-2
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sw(id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+            document.getElementById('p-'+id).classList.add('on');
+            event.target.classList.add('on');
+        }
+        function tog(el) {
+            el.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

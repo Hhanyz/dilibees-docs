@@ -10,162 +10,162 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;font-size:14px}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.7;font-size:14px}
 .wrap{max-width:1400px;margin:0 auto;padding:40px 24px 80px}
-a{color:#58a6ff;text-decoration:none}
+a{color:#FFD600;text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* HEADER */
-.hdr{border-bottom:1px solid #30363d;padding-bottom:30px;margin-bottom:30px}
-.hdr h1{font-size:2.4em;color:#58a6ff;font-weight:800;letter-spacing:-0.5px}
-.hdr .sub{font-size:1.15em;color:#8b949e;margin:8px 0}
-.hdr .meta{font-size:.88em;color:#6e7681;display:flex;gap:20px;flex-wrap:wrap;margin-top:12px}
-.hdr .meta span{background:#161b22;padding:4px 12px;border-radius:4px;border:1px solid #30363d}
+.hdr{border-bottom:1px solid #222222;padding-bottom:30px;margin-bottom:30px}
+.hdr h1{font-size:2.4em;color:#FFD600;font-weight:800;letter-spacing:-0.5px}
+.hdr .sub{font-size:1.15em;color:#888888;margin:8px 0}
+.hdr .meta{font-size:.88em;color:#666666;display:flex;gap:20px;flex-wrap:wrap;margin-top:12px}
+.hdr .meta span{background:#111111;padding:4px 12px;border-radius:4px;border:1px solid #222222}
 
 /* LEGEND */
 .legend{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:.82em;font-weight:600}
-.b-done{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3)}
-.b-upd{background:rgba(210,153,34,.15);color:#d29922;border:1px solid rgba(210,153,34,.3)}
-.b-new{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.3)}
-.b-info{background:rgba(88,166,255,.12);color:#58a6ff;border:1px solid rgba(88,166,255,.3)}
-.b-auto{background:rgba(163,113,247,.15);color:#a371f7;border:1px solid rgba(163,113,247,.3)}
+.b-done{background:rgba(63,185,80,.15);color:#4fb169;border:1px solid rgba(63,185,80,.3)}
+.b-upd{background:rgba(210,153,34,.15);color:#ca8a04;border:1px solid rgba(210,153,34,.3)}
+.b-new{background:rgba(248,81,73,.15);color:#ca1e31;border:1px solid rgba(248,81,73,.3)}
+.b-info{background:rgba(88,166,255,.12);color:#FFD600;border:1px solid rgba(88,166,255,.3)}
+.b-auto{background:rgba(163,113,247,.15);color:#a855f7;border:1px solid rgba(163,113,247,.3)}
 
 /* TABS */
-.tabs{display:flex;gap:4px;border-bottom:2px solid #30363d;margin-bottom:30px;flex-wrap:wrap;position:sticky;top:0;background:#0d1117;z-index:100;padding-top:8px}
-.tbtn{padding:12px 22px;background:none;border:none;color:#8b949e;cursor:pointer;font-size:.95em;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;font-family:inherit}
-.tbtn:hover{color:#c9d1d9;background:rgba(88,166,255,.06)}
-.tbtn.on{color:#58a6ff;border-bottom-color:#58a6ff}
+.tabs{display:flex;gap:4px;border-bottom:2px solid #222222;margin-bottom:30px;flex-wrap:wrap;position:sticky;top:0;background:#0a0a0a;z-index:100;padding-top:8px}
+.tbtn{padding:12px 22px;background:none;border:none;color:#888888;cursor:pointer;font-size:.95em;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;font-family:inherit}
+.tbtn:hover{color:#e0e0e0;background:rgba(88,166,255,.06)}
+.tbtn.on{color:#FFD600;border-bottom-color:#FFD600}
 .tc{display:none}.tc.on{display:block}
 
 /* SECTIONS */
-.sec{margin:0 0 16px;border:1px solid #30363d;border-radius:8px;overflow:hidden;background:#161b22}
-.sh{padding:16px 20px;background:#0d1117;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none;transition:.15s}
+.sec{margin:0 0 16px;border:1px solid #222222;border-radius:8px;overflow:hidden;background:#111111}
+.sh{padding:16px 20px;background:#0a0a0a;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none;transition:.15s}
 .sh:hover{background:#1c2128}
-.sh h3{font-size:1.08em;color:#58a6ff;font-weight:600;flex:1}
-.sh .num{background:#30363d;color:#8b949e;padding:2px 10px;border-radius:12px;font-size:.8em;font-weight:600}
-.sh .arr{color:#6e7681;font-size:.9em;transition:.2s}
+.sh h3{font-size:1.08em;color:#FFD600;font-weight:600;flex:1}
+.sh .num{background:#222222;color:#888888;padding:2px 10px;border-radius:12px;font-size:.8em;font-weight:600}
+.sh .arr{color:#666666;font-size:.9em;transition:.2s}
 .sec.shut .arr{transform:rotate(-90deg)}
-.sc{padding:20px;border-top:1px solid #30363d}
+.sc{padding:20px;border-top:1px solid #222222}
 .sec.shut .sc{display:none}
 
 /* SUB SECTIONS */
-.sub-sec{margin:16px 0;padding:16px;background:#0d1117;border-radius:6px;border-left:3px solid #58a6ff}
-.sub-sec.green{border-left-color:#3fb950}
-.sub-sec.yellow{border-left-color:#d29922}
-.sub-sec.red{border-left-color:#f85149}
-.sub-sec.purple{border-left-color:#a371f7}
-.sub-sec h4{color:#c9d1d9;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.sub-sec p,.sub-sec li{color:#8b949e;font-size:.94em}
+.sub-sec{margin:16px 0;padding:16px;background:#0a0a0a;border-radius:6px;border-left:3px solid #FFD600}
+.sub-sec.green{border-left-color:#4fb169}
+.sub-sec.yellow{border-left-color:#ca8a04}
+.sub-sec.red{border-left-color:#ca1e31}
+.sub-sec.purple{border-left-color:#a855f7}
+.sub-sec h4{color:#e0e0e0;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sub-sec p,.sub-sec li{color:#888888;font-size:.94em}
 
 /* FEATURE ITEMS */
-.feat{margin:12px 0;padding:14px 16px;background:#0d1117;border:1px solid #21262d;border-radius:6px;transition:.15s}
-.feat:hover{border-color:#30363d;background:#161b22}
+.feat{margin:12px 0;padding:14px 16px;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:6px;transition:.15s}
+.feat:hover{border-color:#222222;background:#111111}
 .feat-h{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
-.feat-h strong{color:#c9d1d9;font-size:1em}
-.feat p{color:#8b949e;font-size:.92em;margin:4px 0}
+.feat-h strong{color:#e0e0e0;font-size:1em}
+.feat p{color:#888888;font-size:.92em;margin:4px 0}
 
 /* LISTS */
 ul.fl{list-style:none;padding:0;margin:10px 0}
-ul.fl li{padding:7px 0 7px 18px;position:relative;color:#8b949e;font-size:.93em}
-ul.fl li::before{content:"▸";position:absolute;left:0;color:#58a6ff;font-weight:700}
-ul.fl li strong{color:#c9d1d9}
-ol.nl{margin:10px 0 10px 20px;color:#8b949e}
+ul.fl li{padding:7px 0 7px 18px;position:relative;color:#888888;font-size:.93em}
+ul.fl li::before{content:"▸";position:absolute;left:0;color:#FFD600;font-weight:700}
+ul.fl li strong{color:#e0e0e0}
+ol.nl{margin:10px 0 10px 20px;color:#888888}
 ol.nl li{padding:4px 0}
 
 /* TABLES */
 table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.92em}
-th{background:#0d1117;padding:12px;text-align:left;color:#58a6ff;font-weight:600;border-bottom:2px solid #30363d}
-td{padding:10px 12px;border-bottom:1px solid #21262d;color:#c9d1d9}
+th{background:#0a0a0a;padding:12px;text-align:left;color:#FFD600;font-weight:600;border-bottom:2px solid #222222}
+td{padding:10px 12px;border-bottom:1px solid #1a1a1a;color:#e0e0e0}
 tr:hover td{background:rgba(88,166,255,.04)}
 
 /* TECH BOXES */
-.tbox{margin:16px 0;padding:14px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
-.tbox-h{color:#79c0ff;font-weight:600;font-size:.9em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.tbox code{background:#21262d;padding:2px 8px;border-radius:3px;font-size:.88em;color:#79c0ff;font-family:'Fira Code',monospace}
-.tbox p{color:#8b949e;font-size:.9em;margin:4px 0}
-.tbox pre{background:#21262d;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85em;color:#c9d1d9;margin:8px 0;line-height:1.5}
+.tbox{margin:16px 0;padding:14px;background:#0a0a0a;border:1px solid #222222;border-radius:6px}
+.tbox-h{color:#ffd434;font-weight:600;font-size:.9em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.tbox code{background:#1a1a1a;padding:2px 8px;border-radius:3px;font-size:.88em;color:#ffd434;font-family:'Fira Code',monospace}
+.tbox p{color:#888888;font-size:.9em;margin:4px 0}
+.tbox pre{background:#1a1a1a;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85em;color:#e0e0e0;margin:8px 0;line-height:1.5}
 
 /* NOTE BOXES */
 .note{margin:16px 0;padding:14px 16px;border-radius:6px;font-size:.92em}
-.note-warn{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.3);color:#d29922}
-.note-info{background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.2);color:#79c0ff}
-.note-tip{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);color:#3fb950}
-.note-danger{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);color:#f85149}
-.note-purple{background:rgba(163,113,247,.08);border:1px solid rgba(163,113,247,.2);color:#a371f7}
+.note-warn{background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.3);color:#ca8a04}
+.note-info{background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.2);color:#ffd434}
+.note-tip{background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);color:#4fb169}
+.note-danger{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.2);color:#ca1e31}
+.note-purple{background:rgba(163,113,247,.08);border:1px solid rgba(163,113,247,.2);color:#a855f7}
 
 /* TODO CHECKLIST */
-.todo-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;margin:4px 0;background:#0d1117;border:1px solid #21262d;border-radius:6px;cursor:pointer;transition:.2s;color:#c9d1d9;font-size:.92em;line-height:1.5}
-.todo-item:hover{border-color:#30363d;background:#161b22}
-.todo-item input[type="checkbox"]{margin-top:3px;accent-color:#3fb950;width:16px;height:16px;cursor:pointer;flex-shrink:0}
-.todo-item.done{opacity:.5;text-decoration:line-through;border-color:#21262d;background:#0d1117}
+.todo-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;margin:4px 0;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:6px;cursor:pointer;transition:.2s;color:#e0e0e0;font-size:.92em;line-height:1.5}
+.todo-item:hover{border-color:#222222;background:#111111}
+.todo-item input[type="checkbox"]{margin-top:3px;accent-color:#4fb169;width:16px;height:16px;cursor:pointer;flex-shrink:0}
+.todo-item.done{opacity:.5;text-decoration:line-through;border-color:#1a1a1a;background:#0a0a0a}
 .todo-item.done:hover{opacity:.7}
-.todo-item code{background:#21262d;padding:1px 6px;border-radius:3px;font-size:.88em;color:#79c0ff;font-family:'Fira Code',monospace}
+.todo-item code{background:#1a1a1a;padding:1px 6px;border-radius:3px;font-size:.88em;color:#ffd434;font-family:'Fira Code',monospace}
 
 /* MODE SWITCH */
-.mode-switch{display:flex;gap:4px;margin:16px 0 8px;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:4px;width:fit-content}
-.mode-btn{padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.95em;font-family:inherit;transition:.25s;background:transparent;color:#8b949e}
-.mode-btn:hover{color:#c9d1d9;background:rgba(88,166,255,.06)}
-.mode-btn.mode-on#btn-dev{background:linear-gradient(135deg,#238636,#2ea043);color:#fff;box-shadow:0 2px 12px rgba(35,134,54,.3)}
-.mode-btn.mode-on#btn-ux{background:linear-gradient(135deg,#8957e5,#a371f7);color:#fff;box-shadow:0 2px 12px rgba(137,87,229,.3)}
+.mode-switch{display:flex;gap:4px;margin:16px 0 8px;background:#111111;border:1px solid #222222;border-radius:10px;padding:4px;width:fit-content}
+.mode-btn{padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.95em;font-family:inherit;transition:.25s;background:transparent;color:#888888}
+.mode-btn:hover{color:#e0e0e0;background:rgba(88,166,255,.06)}
+.mode-btn.mode-on#btn-dev{background:linear-gradient(135deg,#268d61,#2ea043);color:#fff;box-shadow:0 2px 12px rgba(35,134,54,.3)}
+.mode-btn.mode-on#btn-ux{background:linear-gradient(135deg,#8957e5,#a855f7);color:#fff;box-shadow:0 2px 12px rgba(137,87,229,.3)}
 .mode-dev-hide{display:none!important}
 .mode-ux-hide{display:none!important}
 
 /* UX SPECIFIC STYLES */
-.ux-wireframe{margin:16px 0;padding:24px 28px;background:#0d1117;border:2px dashed #30363d;border-radius:8px;font-family:'Fira Code',monospace;font-size:1em;color:#c9d1d9;line-height:1.7;white-space:pre;overflow-x:auto;max-width:100%}
+.ux-wireframe{margin:16px 0;padding:24px 28px;background:#0a0a0a;border:2px dashed #222222;border-radius:8px;font-family:'Fira Code',monospace;font-size:1em;color:#e0e0e0;line-height:1.7;white-space:pre;overflow-x:auto;max-width:100%}
 .ux-before-after{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
-.ux-before,.ux-after{padding:16px;border-radius:8px;border:1px solid #30363d}
+.ux-before,.ux-after{padding:16px;border-radius:8px;border:1px solid #222222}
 .ux-before{background:rgba(248,81,73,.04);border-color:rgba(248,81,73,.25)}
-.ux-before::before{content:"❌ PŘED (Aktuálně)";display:block;font-weight:700;color:#f85149;margin-bottom:10px;font-size:.85em}
+.ux-before::before{content:"❌ PŘED (Aktuálně)";display:block;font-weight:700;color:#ca1e31;margin-bottom:10px;font-size:.85em}
 .ux-after{background:rgba(63,185,80,.04);border-color:rgba(63,185,80,.25)}
-.ux-after::before{content:"✅ PO (Návrh)";display:block;font-weight:700;color:#3fb950;margin-bottom:10px;font-size:.85em}
-.ux-before p,.ux-after p{color:#8b949e;font-size:.9em;margin:4px 0}
+.ux-after::before{content:"✅ PO (Návrh)";display:block;font-weight:700;color:#4fb169;margin-bottom:10px;font-size:.85em}
+.ux-before p,.ux-after p{color:#888888;font-size:.9em;margin:4px 0}
 .ux-before ul,.ux-after ul{list-style:none;padding:0;margin:6px 0}
-.ux-before li,.ux-after li{padding:4px 0 4px 16px;position:relative;color:#8b949e;font-size:.9em}
-.ux-before li::before{content:"•";position:absolute;left:0;color:#f85149}
-.ux-after li::before{content:"•";position:absolute;left:0;color:#3fb950}
+.ux-before li,.ux-after li{padding:4px 0 4px 16px;position:relative;color:#888888;font-size:.9em}
+.ux-before li::before{content:"•";position:absolute;left:0;color:#ca1e31}
+.ux-after li::before{content:"•";position:absolute;left:0;color:#4fb169}
 .ux-figma{margin:12px 0;padding:14px 16px;background:rgba(137,87,229,.06);border:1px solid rgba(137,87,229,.25);border-radius:6px}
-.ux-figma::before{content:"🎨 FIGMA TIP: ";font-weight:700;color:#a371f7;font-size:.85em}
-.ux-figma p{color:#8b949e;display:inline;font-size:.9em}
-.ux-step{margin:12px 0;padding:16px;background:#0d1117;border:1px solid #21262d;border-radius:6px;border-left:4px solid #a371f7;counter-increment:ux-step}
-.ux-step::before{content:"Krok " counter(ux-step);font-weight:700;color:#a371f7;font-size:.85em;display:block;margin-bottom:6px}
-.ux-step p{color:#8b949e;font-size:.92em;margin:4px 0}
-.ux-step strong{color:#c9d1d9}
-.ux-screen{margin:16px 0;padding:16px;background:#161b22;border:1px solid #30363d;border-radius:8px}
-.ux-screen-name{color:#a371f7;font-weight:700;font-size:.95em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.ux-figma::before{content:"🎨 FIGMA TIP: ";font-weight:700;color:#a855f7;font-size:.85em}
+.ux-figma p{color:#888888;display:inline;font-size:.9em}
+.ux-step{margin:12px 0;padding:16px;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:6px;border-left:4px solid #a855f7;counter-increment:ux-step}
+.ux-step::before{content:"Krok " counter(ux-step);font-weight:700;color:#a855f7;font-size:.85em;display:block;margin-bottom:6px}
+.ux-step p{color:#888888;font-size:.92em;margin:4px 0}
+.ux-step strong{color:#e0e0e0}
+.ux-screen{margin:16px 0;padding:16px;background:#111111;border:1px solid #222222;border-radius:8px}
+.ux-screen-name{color:#a855f7;font-weight:700;font-size:.95em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .ux-screen-name::before{content:"📱";font-size:1.1em}
-.ux-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0;padding:12px;background:#0d1117;border-radius:6px}
-.ux-flow-step{padding:6px 14px;background:#21262d;border-radius:16px;font-size:.85em;color:#c9d1d9;font-weight:500}
-.ux-flow-arrow{color:#a371f7;font-weight:700}
-.ux-metric{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(137,87,229,.1);border:1px solid rgba(137,87,229,.2);border-radius:16px;font-size:.82em;color:#a371f7;font-weight:600;margin:4px 4px 4px 0}
+.ux-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0;padding:12px;background:#0a0a0a;border-radius:6px}
+.ux-flow-step{padding:6px 14px;background:#1a1a1a;border-radius:16px;font-size:.85em;color:#e0e0e0;font-weight:500}
+.ux-flow-arrow{color:#a855f7;font-weight:700}
+.ux-metric{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(137,87,229,.1);border:1px solid rgba(137,87,229,.2);border-radius:16px;font-size:.82em;color:#a855f7;font-weight:600;margin:4px 4px 4px 0}
 .ux-sections-counter{counter-reset:ux-step}
 
 /* EDGE CASE */
 .edge{margin:12px 0;padding:12px 16px;background:rgba(210,153,34,.06);border:1px solid rgba(210,153,34,.2);border-radius:6px}
-.edge::before{content:"⚠ EDGE CASE: ";font-weight:700;color:#d29922;font-size:.85em}
-.edge p{color:#8b949e;display:inline;font-size:.9em}
+.edge::before{content:"⚠ EDGE CASE: ";font-weight:700;color:#ca8a04;font-size:.85em}
+.edge p{color:#888888;display:inline;font-size:.9em}
 
 /* TEST SCENARIO */
-.test{margin:8px 0;padding:10px 14px;background:rgba(63,185,80,.06);border-left:3px solid #3fb950;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
-.test::before{content:"✓ TEST: ";font-weight:700;color:#3fb950}
+.test{margin:8px 0;padding:10px 14px;background:rgba(63,185,80,.06);border-left:3px solid #4fb169;border-radius:0 6px 6px 0;font-size:.88em;color:#888888}
+.test::before{content:"✓ TEST: ";font-weight:700;color:#4fb169}
 
 /* AUTOMATION */
 .auto{margin:12px 0;padding:12px 16px;background:rgba(163,113,247,.06);border:1px solid rgba(163,113,247,.2);border-radius:6px}
-.auto::before{content:"⚡ AUTOMATIZACE: ";font-weight:700;color:#a371f7;font-size:.85em}
-.auto p{color:#8b949e;display:inline;font-size:.9em}
+.auto::before{content:"⚡ AUTOMATIZACE: ";font-weight:700;color:#a855f7;font-size:.85em}
+.auto p{color:#888888;display:inline;font-size:.9em}
 
 /* ERROR STATE */
-.errst{margin:8px 0;padding:10px 14px;background:rgba(248,81,73,.06);border-left:3px solid #f85149;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
-.errst::before{content:"✕ ERROR STATE: ";font-weight:700;color:#f85149}
+.errst{margin:8px 0;padding:10px 14px;background:rgba(248,81,73,.06);border-left:3px solid #ca1e31;border-radius:0 6px 6px 0;font-size:.88em;color:#888888}
+.errst::before{content:"✕ ERROR STATE: ";font-weight:700;color:#ca1e31}
 
 /* EMPTY STATE */
-.empty{margin:8px 0;padding:10px 14px;background:rgba(88,166,255,.06);border-left:3px solid #58a6ff;border-radius:0 6px 6px 0;font-size:.88em;color:#8b949e}
-.empty::before{content:"○ EMPTY STATE: ";font-weight:700;color:#58a6ff}
+.empty{margin:8px 0;padding:10px 14px;background:rgba(88,166,255,.06);border-left:3px solid #FFD600;border-radius:0 6px 6px 0;font-size:.88em;color:#888888}
+.empty::before{content:"○ EMPTY STATE: ";font-weight:700;color:#FFD600}
 
 /* TIP */
 .tip{margin:12px 0;padding:12px 16px;background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.2);border-radius:6px}
-.tip::before{content:"💡 TIP: ";font-weight:700;color:#3fb950;font-size:.85em}
-.tip p{color:#8b949e;display:inline;font-size:.9em}
+.tip::before{content:"💡 TIP: ";font-weight:700;color:#4fb169;font-size:.85em}
+.tip p{color:#888888;display:inline;font-size:.9em}
 
 /* GRID */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
@@ -174,37 +174,37 @@ tr:hover td{background:rgba(88,166,255,.04)}
 @media(max-width:768px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.hdr h1{font-size:1.7em}.tabs{gap:0}.tbtn{padding:10px 14px;font-size:.85em}}
 
 /* CARD */
-.card{padding:16px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
-.card-lbl{font-size:.8em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.card-val{color:#c9d1d9;font-weight:600;font-size:1.1em}
-.card-val.big{font-size:1.4em;color:#58a6ff}
+.card{padding:16px;background:#0a0a0a;border:1px solid #222222;border-radius:6px}
+.card-lbl{font-size:.8em;color:#666666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-val{color:#e0e0e0;font-weight:600;font-size:1.1em}
+.card-val.big{font-size:1.4em;color:#FFD600}
 
 /* PRICE TAG */
-.price{display:inline-block;background:rgba(63,185,80,.15);color:#3fb950;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.95em}
+.price{display:inline-block;background:rgba(63,185,80,.15);color:#4fb169;padding:4px 12px;border-radius:4px;font-weight:700;font-size:.95em}
 
 /* PRIORITY */
 .prio{display:inline-block;padding:3px 10px;border-radius:3px;font-size:.78em;font-weight:700;text-transform:uppercase}
-.p-crit{background:#f8514933;color:#f85149}.p-high{background:#d2992233;color:#d29922}.p-med{background:#58a6ff22;color:#58a6ff}.p-low{background:#3fb95022;color:#3fb950}
+.p-crit{background:#ca1e3133;color:#ca1e31}.p-high{background:#ca8a0433;color:#ca8a04}.p-med{background:#FFD60022;color:#FFD600}.p-low{background:#4fb16922;color:#4fb169}
 
-.divider{border:none;border-top:1px solid #21262d;margin:24px 0}
+.divider{border:none;border-top:1px solid #1a1a1a;margin:24px 0}
 
 /* MERMAID */
-.mermaid{background:#161b22;padding:20px;border-radius:8px;margin:16px 0;text-align:center;overflow-x:auto}
+.mermaid{background:#111111;padding:20px;border-radius:8px;margin:16px 0;text-align:center;overflow-x:auto}
 .mermaid svg{max-width:100%}
 
 /* MIGRATION SNIPPET */
-.migr{margin:12px 0;padding:14px;background:#0d1117;border:1px solid #30363d;border-radius:6px}
-.migr-h{color:#a371f7;font-weight:600;font-size:.85em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.migr pre{background:#21262d;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.82em;color:#c9d1d9;line-height:1.5;margin:0}
+.migr{margin:12px 0;padding:14px;background:#0a0a0a;border:1px solid #222222;border-radius:6px}
+.migr-h{color:#a855f7;font-weight:600;font-size:.85em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.migr pre{background:#1a1a1a;padding:12px;border-radius:4px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.82em;color:#e0e0e0;line-height:1.5;margin:0}
 
 /* VALIDATION TABLE */
-.val-table td:nth-child(3){color:#f85149;font-weight:500}
-.val-table td:nth-child(4){color:#3fb950;font-size:.85em}
+.val-table td:nth-child(3){color:#ca1e31;font-weight:500}
+.val-table td:nth-child(4){color:#4fb169;font-size:.85em}
 
 /* PERMISSION MATRIX */
 .perm{font-size:.85em}
-.perm td:first-child{font-weight:600;color:#c9d1d9}
-.perm .yes{color:#3fb950;font-weight:700}.perm .no{color:#f85149;font-weight:700}.perm .partial{color:#d29922;font-weight:700}
+.perm td:first-child{font-weight:600;color:#e0e0e0}
+.perm .yes{color:#4fb169;font-weight:700}.perm .no{color:#ca1e31;font-weight:700}.perm .partial{color:#ca8a04;font-weight:700}
 </style>
 </head>
 <body>
@@ -220,6 +220,7 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <button class="mode-btn mode-on" id="btn-dev" onclick="switchMode('dev')">⚙️ DEV mód</button>
 <button class="mode-btn" id="btn-ux" onclick="switchMode('ux')">🎨 UI/UX mód</button>
 <button class="mode-btn" id="btn-proto" onclick="switchMode('proto')">🖼️ Prototypy</button>
+<a href="gap-analysis-report.html" class="mode-btn" style="text-decoration:none;display:inline-block">📊 Gap Analysis</a>
 </div>
 <div class="meta">
 <span>Březen 2026</span>
@@ -248,6 +249,7 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <button class="tbtn" onclick="sw('t-calc',this)">Mzdová Kalkulačka</button>
 <button class="tbtn" onclick="sw('t-arch',this)">Laravel Architektura</button>
 <button class="tbtn" onclick="sw('t-auto',this)">Automatizace &amp; Events</button>
+<button class="tbtn" onclick="sw('t-legacy',this)">🔄 Stávající systém</button>
 <button class="tbtn" onclick="sw('t-todo',this)">✅ Dev Checklist</button>
 </div>
 
@@ -273,9 +275,9 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <p>Tento dokument obsahuje <strong>kompletní zadání od klienta</strong> pro upgrade systému Dilibees na verzi 2.0 s migrací na Laravel. Zadání pokrývá 3 uživatelské role a 1 cross-cutting feature (Mzdová kalkulačka). Každá sekce obsahuje specifikaci pro developera i designera včetně <strong>edge cases, validačních pravidel, stavových diagramů, automatizací, test scénářů, error states a empty states</strong>.</p>
 
 <div class="grid3">
-<div class="card"><div class="card-lbl">Profil Náborář/Hunter</div><div class="card-val big">9</div><p style="color:#8b949e;font-size:.85em">menu položek</p></div>
-<div class="card"><div class="card-lbl">Profil Agent</div><div class="card-val big">14</div><p style="color:#8b949e;font-size:.85em">sekcí</p></div>
-<div class="card"><div class="card-lbl">Profil Zaměstnanec</div><div class="card-val big">23</div><p style="color:#8b949e;font-size:.85em">sekcí (největší)</p></div>
+<div class="card"><div class="card-lbl">Profil Náborář/Hunter</div><div class="card-val big">9</div><p style="color:#888888;font-size:.85em">menu položek</p></div>
+<div class="card"><div class="card-lbl">Profil Agent</div><div class="card-val big">14</div><p style="color:#888888;font-size:.85em">sekcí</p></div>
+<div class="card"><div class="card-lbl">Profil Zaměstnanec</div><div class="card-val big">23</div><p style="color:#888888;font-size:.85em">sekcí (největší)</p></div>
 </div>
 
 <div class="grid4">
@@ -1178,7 +1180,19 @@ $candidates = $agent->jobPostings()
     ->unique('id')
     ->groupBy('craft.name')
     ->sortByDesc(fn($group) => $group->count());</pre></div>
+<div class="tbox"><div class="tbox-h">API & Routing</div>
+<pre>// routes/api.php
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/agent/suitable-candidates', [AgentCandidateController::class, 'index'])
+        ->name('agent.suitable-candidates');
+});
+
+// Blade view: agents/suitable-candidates-overview.blade.php
+// Menu: Samostatný bod menu „Seznam vhodných kandidátů" v agent navigaci
+// Pohled: Globální cross-posting view — přehled VŠECH vhodných kandidátů seřazených dle profese
+// Tabulka: Profese → Počet vhodných → Odkaz na detail</pre></div>
 <div class="edge"><p>Kandidát vhodný pro více poptávek stejného agenta → zobrazit pouze jednou (unique). Ale při detailu ukázat ke kterým poptávkám je vhodný.</p></div>
+<div class="edge"><p><strong>Samostatný menu bod:</strong> Tato sekce je přístupná jako SAMOSTATNÝ pohled v agent navigaci (ne jen pod poptávkami). Agent vidí globální přehled všech vhodných kandidátů cross-posting přes všechna řemesla.</p></div>
 <div class="empty">Žádní vhodní kandidáti → „Zatím nemáme pro vaše poptávky vhodné kandidáty. Systém automaticky hledá shody — budete informováni."</div>
 </div></div>
 
@@ -1993,9 +2007,63 @@ Schema::create('tax_documents', function (Blueprint $table) {
 <tr><td>Následná konzultace do 30 minut</td><td><span class="price">ZDARMA</span></td><td>Krátké upřesnění/doplnění</td></tr>
 <tr><td>Další kariérní poradenství</td><td><span class="price">199 €/hodina</span></td><td>Intenzivní vedení, mentoring, konkrétní doporučení</td></tr>
 </table></div>
-<p style="margin-top:12px;color:#8b949e">Dilibees má dlouholeté zkušenosti s pracovními trhy v zahraničí. Díky dosahu a datům mají perfektní přehled o fungování trhu práce v Evropě.</p>
+<p style="margin-top:12px;color:#888888">Dilibees má dlouholeté zkušenosti s pracovními trhy v zahraničí. Díky dosahu a datům mají perfektní přehled o fungování trhu práce v Evropě.</p>
+
+<div class="sub-sec purple"><h4>📍 Interaktivní kariérní mapa (požadavek klienta — PDF v3, bod 17)</h4>
+<p>Kariérní poradenství zahrnuje 4 sub-sekce:</p>
+<ol class="nl">
+<li><strong>Moje Mapa</strong> — vizuální interaktivní mapa kariérní cesty. Timeline/roadmap zobrazující milníky od prvního dne po dlouhodobé cíle. Komponenta: <code>career-map.blade.php</code> (z existujícího <code>mapa_cesta.html</code>).</li>
+<li><strong>Naplánovaná cesta</strong> — kroky naplánované s poradcem. Admin/poradce definuje milníky, zaměstnanec je vidí jako vizuální cestu.</li>
+<li><strong>Rozepsané Body</strong> — detail jednotlivých milníků. Každý milník má: název, popis, plánované datum, status.</li>
+<li><strong>Zaškrtávání</strong> — checkbox styl splněných kroků (styl poznámky). Zaměstnanec zaškrtává dokončené milníky, progress bar se aktualizuje.</li>
+</ol>
+</div>
+
+<div class="migr"><div class="migr-h">Database migrace — career_milestones</div>
+<pre>Schema::create('career_milestones', function (Blueprint $table) {
+    $table->id('milestone_id');
+    $table->foreignId('employee_id')->constrained('users')->cascadeOnDelete();
+    $table->foreignId('created_by')->nullable()->constrained('users'); // poradce
+    $table->string('title');
+    $table->text('description')->nullable();
+    $table->date('planned_date')->nullable();
+    $table->timestamp('completed_at')->nullable();
+    $table->integer('order')->default(0);
+    $table->enum('status', ['pending', 'in_progress', 'completed', 'skipped'])->default('pending');
+    $table->timestamps();
+});</pre></div>
+
 <div class="tbox"><div class="tbox-h">Implementace</div>
-<p><code>ServiceRequest</code> model, <code>type = 'career'</code>. Stránka s popisem + 3 cenové karty + CTA „Sjednat konzultaci".</p></div>
+<pre>// CareerMilestoneController
+// Blade view: employees/career-map.blade.php
+
+// GET /employee/career-map — zobrazí vizuální timeline
+public function index() {
+    $milestones = auth()->user()->careerMilestones()
+        ->orderBy('order')->get();
+    return view('employees.career-map', compact('milestones'));
+}
+
+// PATCH /employee/career-milestones/{milestone}/toggle
+public function toggle(CareerMilestone $milestone) {
+    $this->authorize('toggle', $milestone);
+    $milestone->update([
+        'completed_at' => $milestone->completed_at ? null : now(),
+        'status' => $milestone->completed_at ? 'in_progress' : 'completed',
+    ]);
+    return back();
+}
+
+// ServiceRequest model, type = 'career'
+// Stránka s popisem + 3 cenové karty + CTA „Sjednat konzultaci"</pre></div>
+
+<div class="edge"><p>Zaměstnanec nemá žádné milníky → empty state: „Váš kariérní poradce zatím nenaplánoval vaši cestu. Sjednejte si konzultaci." + CTA.</p></div>
+<div class="edge"><p>Milník s prošlým datem a nesplněný → zvýrazněn oranžově „Tento krok měl být splněn do {datum}".</p></div>
+<div class="edge"><p>Všechny milníky splněny → celebrační stav „🎉 Gratulujeme! Vaše kariérní cesta je kompletní." + CTA pro novou konzultaci.</p></div>
+<div class="auto"><p>Observer <code>CareerMilestoneObserver::updated()</code>: při změně statusu → notifikace poradci. Při 100% dokončení → speciální notifikace + email.</p></div>
+<div class="test">Poradce vytvoří 5 milníků → zaměstnanec vidí timeline s 5 body.</div>
+<div class="test">Zaměstnanec zaškrtne milník → progress se aktualizuje, poradce dostane notifikaci.</div>
+<div class="test">Mobile: timeline vertikální, touch-friendly checkboxy, scroll smooth.</div>
 </div></div>
 
 <!-- E20-23 -->
@@ -2070,7 +2138,7 @@ flowchart LR
 <tr><td>5</td><td>37–38 %</td><td>Partner třídy 3</td><td><code>netto = brutto × (1 - 0.375)</code></td></tr>
 <tr><td>6</td><td>39–40 %</td><td>Vedlejší úvazek</td><td><code>netto = brutto × (1 - 0.395)</code></td></tr>
 </table>
-<p style="margin-top:8px;color:#8b949e">Vzorec: <code>netto_hourly = brutto_hourly × (1 - rate) + diet</code>. Měsíční: <code>netto_monthly = netto_hourly × working_hours</code> (default 170h/měsíc).</p></div>
+<p style="margin-top:8px;color:#888888">Vzorec: <code>netto_hourly = brutto_hourly × (1 - rate) + diet</code>. Měsíční: <code>netto_monthly = netto_hourly × working_hours</code> (default 170h/měsíc).</p></div>
 
 <div class="sub-sec green"><h4>Příspěvky na děti (Kindergeld)</h4>
 <p><span class="price">250 €</span> × dítě/měsíc (sjednoceno od 2023). Roční: <code>250 × počet_dětí × 12</code>. Zobrazit ve výsledovce jako bonus k netto mzdě.</p></div>
@@ -2099,7 +2167,7 @@ flowchart LR
 <tr><td>93 121 – 1 000 000 €</td><td>50 %</td></tr>
 <tr><td>Nad 1 000 000 €</td><td>55 %</td></tr>
 </table>
-<p style="margin-top:8px;color:#8b949e"><strong>POZOR:</strong> Progresivní sazba = každé pásmo se počítá zvlášť. Příjem 25 000 €: prvních 11 693 × 0% + dalších 7 441 × 20% + zbylých 5 866 × 30%.</p></div>
+<p style="margin-top:8px;color:#888888"><strong>POZOR:</strong> Progresivní sazba = každé pásmo se počítá zvlášť. Příjem 25 000 €: prvních 11 693 × 0% + dalších 7 441 × 20% + zbylých 5 866 × 30%.</p></div>
 <div class="sub-sec green"><h4>Příspěvky na děti</h4>
 <p><span class="price">245 – 290 €</span> × dítě/měsíc (závisí na věku dítěte). V kalkulačce: input věk dítěte → přesná částka.</p></div>
 <div class="edge"><p>Progresivní daň — implementovat přesný výpočet po pásmech, ne paušální sazbu. Jinak výpočet bude nepřesný pro příjmy na hranici pásem.</p></div>
@@ -2144,7 +2212,7 @@ flowchart LR
 <li>Součet (1+2) ÷ 12 = měsíční zdravotní pojištění</li>
 <li><strong>Netto mzda − výsledek = skutečné Netto</strong></li>
 </ol>
-<p style="margin-top:8px;color:#8b949e">Vstupy: měsíční pojistné (CHF) + prémie (CHF). Kalkulačka odečte od netto → zobrazit „Skutečné netto po zdravotním pojištění".</p></div>
+<p style="margin-top:8px;color:#888888">Vstupy: měsíční pojistné (CHF) + prémie (CHF). Kalkulačka odečte od netto → zobrazit „Skutečné netto po zdravotním pojištění".</p></div>
 
 <div class="sub-sec green"><h4>Příspěvky na děti</h4>
 <table>
@@ -2434,6 +2502,79 @@ flowchart TD
 </div><!-- /t-auto -->
 
 <!-- ══════════════════════════════════════════════════════════ -->
+<!-- TAB: STÁVAJÍCÍ SYSTÉM — REFERENCE PRO MIGRACI -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="t-legacy" class="tc">
+
+<div class="note note-yellow" style="margin-bottom:24px">
+<strong>⚠️ Stávající systém — reference pro migraci</strong><br>
+Tato sekce dokumentuje současný PHP systém a mapuje jej na novou Laravel architekturu. Slouží jako vodítko pro programátora při migraci.
+</div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>Mapa Smarty → Blade šablon</h3><span class="num">10 šablon</span><span class="arr">▾</span></div>
+<div class="sc">
+<table>
+<tr><th>Smarty šablona</th><th>Funkce</th><th>Blade ekvivalent</th></tr>
+<tr><td><code>index.html</code></td><td>Layout: header+nav+content+footer</td><td><code>layouts/app.blade.php</code></td></tr>
+<tr><td><code>detail_zivotopisu.html</code></td><td>Detail CV (107KB!)</td><td><code>candidates/show.blade.php</code></td></tr>
+<tr><td><code>moji_lide.html</code></td><td>Moji lidé — karty uchazečů</td><td><code>agents/candidates.blade.php</code></td></tr>
+<tr><td><code>hunteri.html</code></td><td>Správa hunterů</td><td><code>admin/hunters.blade.php</code></td></tr>
+<tr><td><code>partneri.html</code></td><td>Správa agentů</td><td><code>admin/agents.blade.php</code></td></tr>
+<tr><td><code>evidence.html</code></td><td>Evidence záznamů</td><td><code>admin/records.blade.php</code></td></tr>
+<tr><td><code>muj_ucet.html</code></td><td>Nastavení účtu</td><td><code>profile/settings.blade.php</code></td></tr>
+<tr><td><code>mapa_cesta.html</code></td><td>Kariérní mapa</td><td><code>employees/career-map.blade.php</code></td></tr>
+<tr><td><code>zivotopis_*.html</code> (13×)</td><td>Kroky onboardingu</td><td><code>onboarding/*.blade.php</code></td></tr>
+<tr><td><code>registrace*.html</code> (2×)</td><td>Registrace</td><td><code>auth/register*.blade.php</code></td></tr>
+</table>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>CRON Jobs → Laravel Scheduler</h3><span class="num">12 cron jobů</span><span class="arr">▾</span></div>
+<div class="sc">
+<table>
+<tr><th>Soubor</th><th>Funkce</th><th>Laravel Schedule</th></tr>
+<tr><td><code>cron_denni.php</code></td><td>Denní údržba</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_info_zajemci.php</code></td><td>Info notifikace</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_pripomenuti_zajemci.php</code> (34KB!)</td><td>Připomínky zájemcům</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_pripomenuti_dohodli.php</code></td><td>Připomínky dohodnutým</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_report_partneri.php</code></td><td>Reporty agentům</td><td><code>->weekly()</code></td></tr>
+<tr><td><code>cron_report_partneri_zpetna_vazba.php</code></td><td>Zpětná vazba</td><td><code>->weekly()</code></td></tr>
+<tr><td><code>cron_partneri_vysledek_zkousky.php</code></td><td>Výsledky zkoušek</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_systemove_vraceni.php</code></td><td>Vrácení uchazečů</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_systemove_vraceni_nepotvrdili.php</code></td><td>Vrácení nepotvrzených</td><td><code>->daily()</code></td></tr>
+<tr><td><code>cron_sms_narozeniny.php</code></td><td>SMS narozeniny</td><td><code>->dailyAt('08:00')</code></td></tr>
+<tr><td><code>cron_emaily_vanoce.php</code></td><td>Vánoční emaily</td><td><code>->yearly()</code></td></tr>
+<tr><td><code>cron_log_akci.php</code></td><td>Logování</td><td><code>->everyMinute()</code></td></tr>
+</table>
+</div></div>
+
+<div class="sec">
+<div class="sh" onclick="tg(this)"><h3>🚩 Red flags pro programátora</h3><span class="num">6 kritických bodů</span><span class="arr">▾</span></div>
+<div class="sc">
+<ul class="fl">
+<li><strong><code>funkce.php</code> (128KB)</strong> = obří monolit → rozdělit na <code>Services/</code> (UserService, JobService, NotificationService, FileService, MatchingService)</li>
+<li><strong><code>detail_zivotopisu.php</code> (107KB)</strong> = vše v jednom → <code>CandidateController</code> + 15 metod (show, edit, documents, timeline, notes, status...)</li>
+<li><strong>jQuery 1.12.4</strong> → upgrade na jQuery 3.x nebo lépe Alpine.js/Livewire</li>
+<li><strong>PEAR DB</strong> → Eloquent ORM (kompletní přepis DB vrstvy)</li>
+<li><strong>8 jazyků</strong> (cs, de, en, pl, ru, hu, ro, it) → Laravel Lang s JSON translation files</li>
+<li><strong>Font: <code>'Exo 2', sans-serif</code></strong> → ZACHOVAT! Importovat z Google Fonts, nastavit jako <code>--font-primary</code></li>
+</ul>
+
+<div class="tbox"><div class="tbox-h">Doporučený postup migrace</div>
+<pre>1. Začít od DB schématu → Eloquent modely + migrace
+2. Nastavit Laravel routy odpovídající stávajícím URL (301 redirecty)
+3. Přepsat funkce.php → Services/ (jeden po druhém, s testy)
+4. Blade šablony: 1:1 kopie designu, nový CSS (Tailwind/vlastní)
+5. CRON jobs → Schedule commands (testovat na staging)
+6. Jazykové soubory: export stávajících → Laravel JSON format
+7. jQuery → Alpine.js (postupně, page-by-page)
+8. Závěr: E2E testy celé aplikace, load testing</pre></div>
+</div></div>
+
+</div><!-- /t-legacy -->
+
+<!-- ══════════════════════════════════════════════════════════ -->
 <!-- TAB: CHECKLIST -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <div id="t-todo" class="tc">
@@ -2443,15 +2584,15 @@ flowchart TD
 </div>
 
 <!-- PROGRESS BAR -->
-<div id="todo-progress-wrap" style="margin-bottom:32px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px">
+<div id="todo-progress-wrap" style="margin-bottom:32px;background:#111111;border:1px solid #222222;border-radius:8px;padding:20px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<span style="color:#58a6ff;font-weight:700;font-size:1.1em">Celkový postup</span>
-<span id="todo-pct" style="color:#3fb950;font-weight:700;font-size:1.3em">0 %</span>
+<span style="color:#FFD600;font-weight:700;font-size:1.1em">Celkový postup</span>
+<span id="todo-pct" style="color:#4fb169;font-weight:700;font-size:1.3em">0 %</span>
 </div>
-<div style="background:#21262d;border-radius:6px;height:14px;overflow:hidden">
-<div id="todo-bar" style="background:linear-gradient(90deg,#238636,#3fb950);height:100%;width:0%;transition:width .4s ease;border-radius:6px"></div>
+<div style="background:#1a1a1a;border-radius:6px;height:14px;overflow:hidden">
+<div id="todo-bar" style="background:linear-gradient(90deg,#268d61,#4fb169);height:100%;width:0%;transition:width .4s ease;border-radius:6px"></div>
 </div>
-<div id="todo-stats" style="color:#8b949e;font-size:.85em;margin-top:8px">0 / 0 úkolů hotovo</div>
+<div id="todo-stats" style="color:#888888;font-size:.85em;margin-top:8px">0 / 0 úkolů hotovo</div>
 </div>
 
 <!-- FÁZE 1: ZÁKLAD -->
@@ -2617,7 +2758,7 @@ flowchart TD
 
 <!-- RESET BUTTON -->
 <div style="text-align:center;margin-top:32px;padding-bottom:24px">
-<button onclick="resetTodos()" style="background:#21262d;color:#f85149;border:1px solid rgba(248,81,73,.3);padding:10px 28px;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9em;font-family:inherit;transition:.2s">Reset všech checkboxů</button>
+<button onclick="resetTodos()" style="background:#1a1a1a;color:#ca1e31;border:1px solid rgba(248,81,73,.3);padding:10px 28px;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9em;font-family:inherit;transition:.2s">Reset všech checkboxů</button>
 </div>
 
 </div><!-- /t-todo -->
@@ -2636,24 +2777,58 @@ flowchart TD
 <div class="sc">
 
 <div class="sub-sec purple">
-<h4>Primární barvy (Brand)</h4>
-<p>Stávající systém nemá konzistentní paletu — různé stránky mají různé odstíny modré/zelené. Sjednotit:</p>
+<h4>Skutečné Dilibees Design Tokeny (z produkčního styl.css)</h4>
+<p>Ověřeno z <code>styl.css</code> (9 464 řádků). Font: <strong>'Exo 2', sans-serif</strong>. Barvy: černá, žlutá, světle šedá.</p>
 </div>
 
 <table>
-<tr><th>Token</th><th>Hodnota</th><th>Použití</th><th>Figma Variable</th></tr>
-<tr><td><code>--primary-500</code></td><td>#2563EB (Blue 600)</td><td>CTA tlačítka, aktivní stavy, linky</td><td><code>color/primary/default</code></td></tr>
-<tr><td><code>--primary-600</code></td><td>#1D4ED8</td><td>Hover stav primárních tlačítek</td><td><code>color/primary/hover</code></td></tr>
-<tr><td><code>--primary-100</code></td><td>#DBEAFE</td><td>Pozadí vybraných řádků, tag backgrounds</td><td><code>color/primary/subtle</code></td></tr>
-<tr><td><code>--success-500</code></td><td>#16A34A</td><td>Potvrzení, status "aktivní", progress done</td><td><code>color/success/default</code></td></tr>
-<tr><td><code>--warning-500</code></td><td>#CA8A04</td><td>Čeká na akci, expirace, upozornění</td><td><code>color/warning/default</code></td></tr>
-<tr><td><code>--danger-500</code></td><td>#DC2626</td><td>Chyby, smazání, kritické stavy</td><td><code>color/danger/default</code></td></tr>
-<tr><td><code>--neutral-50</code></td><td>#F8FAFC</td><td>Pozadí stránky</td><td><code>color/bg/page</code></td></tr>
-<tr><td><code>--neutral-100</code></td><td>#F1F5F9</td><td>Pozadí karet</td><td><code>color/bg/card</code></td></tr>
-<tr><td><code>--neutral-200</code></td><td>#E2E8F0</td><td>Bordery, oddělovače</td><td><code>color/border/default</code></td></tr>
-<tr><td><code>--neutral-700</code></td><td>#334155</td><td>Sekundární text</td><td><code>color/text/secondary</code></td></tr>
-<tr><td><code>--neutral-900</code></td><td>#0F172A</td><td>Primární text, nadpisy</td><td><code>color/text/primary</code></td></tr>
+<tr><th>Token</th><th>Hodnota</th><th>Použití</th><th>CSS Variable</th></tr>
+<tr><td><code>Primary Button BG</code></td><td>#000000</td><td>.tlacitko { background }</td><td><code>--btn-primary-bg</code></td></tr>
+<tr><td><code>Button Hover</code></td><td>#846c15</td><td>.tlacitko:hover</td><td><code>--btn-hover-bg</code></td></tr>
+<tr><td><code>Highlight Yellow</code></td><td>#ffd434</td><td>alerty, zvýraznění, .h2c_zluty</td><td><code>--accent-yellow</code></td></tr>
+<tr><td><code>Yellow BG Wash</code></td><td>#fff9e2</td><td>pozadí upozornění</td><td><code>--accent-yellow-light</code></td></tr>
+<tr><td><code>Text on Yellow</code></td><td>#57460a</td><td>text na žlutém pozadí</td><td><code>--text-on-yellow</code></td></tr>
+<tr><td><code>Page Background</code></td><td>#f8f8f8</td><td>html, body { background }</td><td><code>--bg-page</code></td></tr>
+<tr><td><code>Card Background</code></td><td>#ffffff</td><td>obsah, karty, formuláře</td><td><code>--bg-card</code></td></tr>
+<tr><td><code>Secondary BG</code></td><td>#f6f8f9</td><td>toggle neaktivní</td><td><code>--bg-secondary</code></td></tr>
+<tr><td><code>Text Primary</code></td><td>#1b2124</td><td>hlavní barva textu</td><td><code>--text-primary</code></td></tr>
+<tr><td><code>Text Muted</code></td><td>#888888</td><td>poznámky, popisky</td><td><code>--text-muted</code></td></tr>
+<tr><td><code>Success Green</code></td><td>#4fb169</td><td>.tlacitko2, úspěch</td><td><code>--color-success</code></td></tr>
+<tr><td><code>Error Red</code></td><td>#ca1e31</td><td>.cerveny, chyby</td><td><code>--color-error</code></td></tr>
+<tr><td><code>Border Light</code></td><td>#dfe6e9</td><td>toggle borders</td><td><code>--border-light</code></td></tr>
+<tr><td><code>Font Family</code></td><td>'Exo 2', sans-serif</td><td>primární font</td><td><code>--font-primary</code></td></tr>
 </table>
+
+<div class="sub-sec purple">
+<h4>CSS Variables blok pro programátora</h4>
+</div>
+<div class="ux-wireframe">:root {
+  --btn-primary-bg: #000000;
+  --btn-hover-bg: #846c15;
+  --accent-yellow: #ffd434;
+  --accent-yellow-light: #fff9e2;
+  --text-on-yellow: #57460a;
+  --bg-page: #f8f8f8;
+  --bg-card: #ffffff;
+  --bg-secondary: #f6f8f9;
+  --text-primary: #1b2124;
+  --text-muted: #888888;
+  --color-success: #4fb169;
+  --color-error: #ca1e31;
+  --border-light: #dfe6e9;
+  --font-primary: 'Exo 2', sans-serif;
+}</div>
+
+<div class="sub-sec purple">
+<h4>Naming convention tlačítek (zachovat ze stávajícího systému!)</h4>
+</div>
+<ul>
+<li><code>.tlacitko</code> = primary (černá, hover: #846c15)</li>
+<li><code>.tlacitko2</code> = sekundární (zelená #4fb169)</li>
+<li><code>.tlacitko6-zlute</code> = žlutý</li>
+<li><code>.tlacitko6-cervene</code> = červený</li>
+<li><code>.tlacitko6-zelene</code> = zelený</li>
+</ul>
 
 <div class="ux-figma"><p>Vytvořit ve Figmě <strong>Color Styles</strong> + <strong>Variables</strong> s těmito tokeny. Každá barva = 1 Variable ve collection "Primitives". Pak vytvořit "Semantic" collection: <code>bg/page</code>, <code>bg/card</code>, <code>text/primary</code> atd. — aliasy na Primitives. To umožní budoucí dark mode pouhým přepnutím.</p></div>
 
@@ -6206,6 +6381,101 @@ Krok 5/5 — Preview & odeslání:
 
 </div></div>
 
+<!-- AGENT 3.5: SEZNAM VHODNÝCH KANDIDÁTŮ (STANDALONE VIEW) -->
+<div class="sec"><div class="sh" onclick="tg(this)"><h3>3b. Seznam vhodných kandidátů — Globální přehled</h3><span class="num">ZCELA NOVÉ</span><span class="arr">▾</span></div>
+<div class="sc">
+
+<div class="note note-yellow" style="margin-bottom:16px">
+<strong>📋 Požadavek klienta (bod 8):</strong> Samostatný bod menu „Seznam vhodných kandidátů" — globální cross-posting view přes všechna řemesla. Řazení dle řemesla/profese, od nejvíce lidí po nejméně, počet kandidátů u každého řemesla, kliknutím na řemeslo → zobrazí se seznam.
+</div>
+
+<div class="ux-wireframe">Seznam vhodných kandidátů — Desktop:
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ 👥 Seznam vhodných kandidátů          [🔍 Hledat] [Filtr: Řemeslo ▾] [↕]  │
+│ ════════════════════════════════════════════════════════════════════════════ │
+│                                                                              │
+│ Celkem: 47 vhodných kandidátů · 12 řemesel · 8 aktivních poptávek           │
+│                                                                              │
+│ ┌─ Profese ─────────────────────────────────────────────────────────────────┐│
+│ │                                                                           ││
+│ │ ▼ Svářeč (15 kandidátů)                                    [Zobrazit →] ││
+│ │ ┌─────────────────────────────────────────────────────────────────────┐   ││
+│ │ │ 📷 Jan Novák · ★4.2 · Mnichov · Volný od 15.3.  [Detail] [Zájem] │   ││
+│ │ │ 📷 Igor Sokolov · ★3.8 · Vídeň · Volný ihned   [Detail] [Zájem] │   ││
+│ │ │ 📷 Petr Horák · ★4.5 · Stuttgart · Volný 1.4.   [Detail] [Zájem] │   ││
+│ │ │ ... +12 dalších                              [Zobrazit všechny →] │   ││
+│ │ └─────────────────────────────────────────────────────────────────────┘   ││
+│ │                                                                           ││
+│ │ ▶ Elektrikář (12 kandidátů)                                 [Zobrazit →] ││
+│ │ ▶ Instalatér (8 kandidátů)                                  [Zobrazit →] ││
+│ │ ▶ Truhlář (4 kandidátů)                                     [Zobrazit →] ││
+│ │ ▶ Zedník (3 kandidátů)                                      [Zobrazit →] ││
+│ │ ▶ Malíř (2 kandidátů)                                       [Zobrazit →] ││
+│ │ ▶ Tesař (1 kandidát)                                        [Zobrazit →] ││
+│ │ ▶ Pokrývač (1 kandidát)                                     [Zobrazit →] ││
+│ │ ▶ Klempíř (1 kandidát)                                      [Zobrazit →] ││
+│ │                                                                           ││
+│ └───────────────────────────────────────────────────────────────────────────┘│
+│                                                                              │
+│ ┌─ Filtry ──────────────────────────────────────────────────────────────────┐│
+│ │ Řemeslo: [Všechna ▾]  Status: [Vhodný ○ Přiřazený ○ V řešení ○]        ││
+│ │ Lokalita: [________]  Dostupnost: [Všichni ▾]  [🔄 Reset filtrů]       ││
+│ └───────────────────────────────────────────────────────────────────────────┘│
+└──────────────────────────────────────────────────────────────────────────────┘</div>
+
+<div class="ux-wireframe">Seznam vhodných kandidátů — Mobile (375px):
+┌─────────────────────────────┐
+│ 👥 Vhodní kandidáti    [🔍] │
+│ ═══════════════════════════ │
+│                             │
+│ 47 kandidátů · 12 řemesel  │
+│                             │
+│ ▼ Svářeč (15)              │
+│ ┌─────────────────────────┐ │
+│ │ 📷 Jan Novák            │ │
+│ │ ★4.2 · Mnichov          │ │
+│ │ Volný: 15.3.            │ │
+│ │ [Detail] [Zájem]        │ │
+│ ├─────────────────────────┤ │
+│ │ 📷 Igor Sokolov         │ │
+│ │ ★3.8 · Vídeň            │ │
+│ │ Volný: ihned             │ │
+│ │ [Detail] [Zájem]        │ │
+│ └─────────────────────────┘ │
+│ [+13 dalších →]             │
+│                             │
+│ ▶ Elektrikář (12)           │
+│ ▶ Instalatér (8)            │
+│ ▶ Truhlář (4)               │
+│ ▶ Zedník (3)                │
+│ [Zobrazit vše →]            │
+│                             │
+│ [Filtr ▾]                   │
+└─────────────────────────────┘</div>
+
+<div class="ux-figma"><p><strong>Figma implementace:</strong> Page layout = <code>SuitableCandidatesOverview</code>. Accordion per řemeslo = <code>ProfessionAccordion</code> (header: název + count badge, expandable body). Kandidát karta = <code>CandidateCard</code> (compact variant: foto kruh 50px, jméno, rating stars, lokalita, dostupnost, 2 CTA buttony). Řazení = <code>SortableList</code> (defaultně dle počtu kandidátů desc). Filter bar = <code>FilterBar</code> component (selects + text input + reset). Summary stats = <code>StatsBar</code> (celkem kandidátů, řemesel, poptávek). Desktop: single column s wide cards. Mobile: stacked cards, sticky filter button bottom. "Projevit zájem" akce = AJAX → přesune kandidáta do "V řešení" pipeline.</p></div>
+
+<div class="note note-yellow">
+<strong>Edge Cases:</strong>
+<ul>
+<li><strong>0 vhodných kandidátů:</strong> Empty state „Zatím nemáme pro vaše poptávky vhodné kandidáty. Systém automaticky hledá shody — budete informováni." + CTA "Upravit požadavky v poptávce".</li>
+<li><strong>Kandidát vhodný pro více poptávek:</strong> Zobrazit jednou (unique), ale v detailu ukázat ke kterým poptávkám je vhodný.</li>
+<li><strong>Agent bez aktivních poptávek:</strong> Informace „Nemáte aktivní poptávky. Vytvořte poptávku pro zobrazení vhodných kandidátů." + CTA "Nová poptávka".</li>
+<li><strong>&gt;100 kandidátů v jednom řemesle:</strong> Paginated list (20 per page), lazy-load při scrollu.</li>
+<li><strong>Kandidát právě přiřazen jiným agentem:</strong> Realtime update — karta zmizí s toast notifikací „Jan Novák byl přiřazen jinému agentovi".</li>
+</ul>
+</div>
+
+<table>
+<tr><th>Component</th><th>Varianty</th><th>Key Props</th></tr>
+<tr><td>ProfessionAccordion</td><td>expanded, collapsed, empty</td><td>professionName, candidateCount, children: CandidateCard[]</td></tr>
+<tr><td>CandidateCard</td><td>compact (list), expanded (detail), selected</td><td>candidate, rating, location, availability, onInterest, onDetail</td></tr>
+<tr><td>StatsBar</td><td>default, loading</td><td>totalCandidates, totalProfessions, totalPostings</td></tr>
+<tr><td>FilterBar</td><td>inline (desktop), modal (mobile)</td><td>filters: {profession, status, location, availability}, onFilter, onReset</td></tr>
+</table>
+
+</div></div>
+
 <!-- AGENT 4: VÝKAZY HODIN -->
 <div class="sec"><div class="sh" onclick="tg(this)"><h3>4. Výkazy hodin — Dvoustranná verifikace</h3><span class="num">REDESIGN</span><span class="arr">▾</span></div>
 <div class="sc">
@@ -7025,15 +7295,15 @@ flowchart LR
 <strong>Krokový plán pro designéra.</strong> Checkboxy se ukládají do localStorage. Progress bar sleduje postup. Řazeno dle doporučeného pořadí práce ve Figmě.
 </div>
 
-<div id="ux-todo-progress-wrap" style="margin-bottom:32px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px">
+<div id="ux-todo-progress-wrap" style="margin-bottom:32px;background:#111111;border:1px solid #222222;border-radius:8px;padding:20px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<span style="color:#a371f7;font-weight:700;font-size:1.1em">UX Postup</span>
-<span id="ux-todo-pct" style="color:#a371f7;font-weight:700;font-size:1.3em">0 %</span>
+<span style="color:#a855f7;font-weight:700;font-size:1.1em">UX Postup</span>
+<span id="ux-todo-pct" style="color:#a855f7;font-weight:700;font-size:1.3em">0 %</span>
 </div>
-<div style="background:#21262d;border-radius:6px;height:14px;overflow:hidden">
-<div id="ux-todo-bar" style="background:linear-gradient(90deg,#8957e5,#a371f7);height:100%;width:0%;transition:width .4s ease;border-radius:6px"></div>
+<div style="background:#1a1a1a;border-radius:6px;height:14px;overflow:hidden">
+<div id="ux-todo-bar" style="background:linear-gradient(90deg,#8957e5,#a855f7);height:100%;width:0%;transition:width .4s ease;border-radius:6px"></div>
 </div>
-<div id="ux-todo-stats" style="color:#8b949e;font-size:.85em;margin-top:8px">0 / 0 úkolů hotovo</div>
+<div id="ux-todo-stats" style="color:#888888;font-size:.85em;margin-top:8px">0 / 0 úkolů hotovo</div>
 </div>
 
 <!-- UX F1 -->
@@ -7142,7 +7412,7 @@ flowchart LR
 </div></div>
 
 <div style="text-align:center;margin-top:32px;padding-bottom:24px">
-<button onclick="resetUxTodos()" style="background:#21262d;color:#a371f7;border:1px solid rgba(163,113,247,.3);padding:10px 28px;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9em;font-family:inherit;transition:.2s">Reset UX checkboxů</button>
+<button onclick="resetUxTodos()" style="background:#1a1a1a;color:#a855f7;border:1px solid rgba(163,113,247,.3);padding:10px 28px;border-radius:6px;cursor:pointer;font-weight:600;font-size:.9em;font-family:inherit;transition:.2s">Reset UX checkboxů</button>
 </div>
 
 </div><!-- /t-ux-todo -->
@@ -7157,94 +7427,94 @@ flowchart LR
 <div id="t-proto-hub" class="tc">
 
 <div style="text-align:center;padding:40px 20px 20px">
-<h2 style="font-size:1.8em;color:#58a6ff;font-weight:800;margin-bottom:8px">High-Fidelity Prototypy</h2>
-<p style="color:#8b949e;font-size:1.05em;margin-bottom:32px">Interaktivní HTML prototypy všech 4 rolí — klikací, Tailwind CSS, 26 obrazovek</p>
+<h2 style="font-size:1.8em;color:#FFD600;font-weight:800;margin-bottom:8px">High-Fidelity Prototypy</h2>
+<p style="color:#888888;font-size:1.05em;margin-bottom:32px">Interaktivní HTML prototypy všech 4 rolí — klikací, Tailwind CSS, 26 obrazovek</p>
 </div>
 
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-bottom:40px">
 
 <!-- Admin card -->
-<div style="background:linear-gradient(135deg,rgba(124,58,237,.15),#161b22);border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(124,58,237,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(124,58,237,.3)';this.style.transform='none'">
+<div style="background:linear-gradient(135deg,rgba(124,58,237,.15),#111111);border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(124,58,237,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(124,58,237,.3)';this.style.transform='none'">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
 <div style="width:44px;height:44px;background:#7C3AED;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4em">⚙️</div>
 <div>
-<div style="font-size:1.15em;font-weight:700;color:#c9d1d9">Admin</div>
-<span style="font-size:.78em;color:#a371f7;background:rgba(163,113,247,.15);padding:2px 8px;border-radius:10px;border:1px solid rgba(163,113,247,.25)">Desktop</span>
+<div style="font-size:1.15em;font-weight:700;color:#e0e0e0">Admin</div>
+<span style="font-size:.78em;color:#a855f7;background:rgba(163,113,247,.15);padding:2px 8px;border-radius:10px;border:1px solid rgba(163,113,247,.25)">Desktop</span>
 </div>
 </div>
-<p style="color:#8b949e;font-size:.88em;margin-bottom:16px">Správa systému — uchazeči, agenti, hunteri, služby, statistiky</p>
+<p style="color:#888888;font-size:.88em;margin-bottom:16px">Správa systému — uchazeči, agenti, hunteri, služby, statistiky</p>
 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Dashboard</span>
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Uchazeči</span>
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Detail</span>
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Agenti</span>
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Služby</span>
-<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a371f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Statistiky</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Dashboard</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Uchazeči</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Detail</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Agenti</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Služby</span>
+<span style="font-size:.72em;background:rgba(124,58,237,.12);color:#a855f7;padding:3px 10px;border-radius:12px;border:1px solid rgba(124,58,237,.2)">Statistiky</span>
 </div>
 <a href="prototypes/admin.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#7C3AED;color:white;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.88em;text-decoration:none;transition:.2s" onmouseover="this.style.background='#6D28D9'" onmouseout="this.style.background='#7C3AED'">Otevřít prototyp ↗</a>
 </div>
 
 <!-- Employee card -->
-<div style="background:linear-gradient(135deg,rgba(37,99,235,.15),#161b22);border:1px solid rgba(37,99,235,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(37,99,235,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(37,99,235,.3)';this.style.transform='none'">
+<div style="background:linear-gradient(135deg,rgba(37,99,235,.15),#111111);border:1px solid rgba(37,99,235,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(37,99,235,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(37,99,235,.3)';this.style.transform='none'">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
 <div style="width:44px;height:44px;background:#2563EB;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4em">👤</div>
 <div>
-<div style="font-size:1.15em;font-weight:700;color:#c9d1d9">Zaměstnanec</div>
-<span style="font-size:.78em;color:#58a6ff;background:rgba(88,166,255,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(88,166,255,.25)">Mobile-first</span>
+<div style="font-size:1.15em;font-weight:700;color:#e0e0e0">Zaměstnanec</div>
+<span style="font-size:.78em;color:#FFD600;background:rgba(88,166,255,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(88,166,255,.25)">Mobile-first</span>
 </div>
 </div>
-<p style="color:#8b949e;font-size:.88em;margin-bottom:16px">Mobilní app — onboarding, docházka, dokumenty, kalkulačka, chat</p>
+<p style="color:#888888;font-size:.88em;margin-bottom:16px">Mobilní app — onboarding, docházka, dokumenty, kalkulačka, chat</p>
 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Onboarding</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Dashboard</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Plán</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Docházka</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Služby</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Dokumenty</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Kalkulačka</span>
-<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#58a6ff;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Chat</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Onboarding</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Dashboard</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Plán</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Docházka</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Služby</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Dokumenty</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Kalkulačka</span>
+<span style="font-size:.72em;background:rgba(37,99,235,.12);color:#FFD600;padding:3px 10px;border-radius:12px;border:1px solid rgba(37,99,235,.2)">Chat</span>
 </div>
 <a href="prototypes/employee.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#2563EB;color:white;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.88em;text-decoration:none;transition:.2s" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#2563EB'">Otevřít prototyp ↗</a>
 </div>
 
 <!-- Hunter card -->
-<div style="background:linear-gradient(135deg,rgba(22,163,74,.15),#161b22);border:1px solid rgba(22,163,74,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(22,163,74,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,163,74,.3)';this.style.transform='none'">
+<div style="background:linear-gradient(135deg,rgba(22,163,74,.15),#111111);border:1px solid rgba(22,163,74,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(22,163,74,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,163,74,.3)';this.style.transform='none'">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
 <div style="width:44px;height:44px;background:#16A34A;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4em">🎯</div>
 <div>
-<div style="font-size:1.15em;font-weight:700;color:#c9d1d9">Hunter / Náborář</div>
-<span style="font-size:.78em;color:#3fb950;background:rgba(63,185,80,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(63,185,80,.25)">Mobile-first</span>
+<div style="font-size:1.15em;font-weight:700;color:#e0e0e0">Hunter / Náborář</div>
+<span style="font-size:.78em;color:#4fb169;background:rgba(63,185,80,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(63,185,80,.25)">Mobile-first</span>
 </div>
 </div>
-<p style="color:#8b949e;font-size:.88em;margin-bottom:16px">Referral platforma s gamifikací — QR sdílení, odměny, analytika</p>
+<p style="color:#888888;font-size:.88em;margin-bottom:16px">Referral platforma s gamifikací — QR sdílení, odměny, analytika</p>
 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Dashboard</span>
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Moji lidé</span>
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">QR & Sharing</span>
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Odměny</span>
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Analytika</span>
-<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#3fb950;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Profil</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Dashboard</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Moji lidé</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">QR & Sharing</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Odměny</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Analytika</span>
+<span style="font-size:.72em;background:rgba(22,163,74,.12);color:#4fb169;padding:3px 10px;border-radius:12px;border:1px solid rgba(22,163,74,.2)">Profil</span>
 </div>
 <a href="prototypes/hunter.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#16A34A;color:white;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.88em;text-decoration:none;transition:.2s" onmouseover="this.style.background='#15803D'" onmouseout="this.style.background='#16A34A'">Otevřít prototyp ↗</a>
 </div>
 
 <!-- Agent card -->
-<div style="background:linear-gradient(135deg,rgba(202,138,4,.15),#161b22);border:1px solid rgba(202,138,4,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(202,138,4,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(202,138,4,.3)';this.style.transform='none'">
+<div style="background:linear-gradient(135deg,rgba(202,138,4,.15),#111111);border:1px solid rgba(202,138,4,.3);border-radius:12px;padding:28px;transition:all .2s" onmouseover="this.style.borderColor='rgba(202,138,4,.6)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(202,138,4,.3)';this.style.transform='none'">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
 <div style="width:44px;height:44px;background:#CA8A04;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4em">🏢</div>
 <div>
-<div style="font-size:1.15em;font-weight:700;color:#c9d1d9">Agent / Agentura</div>
-<span style="font-size:.78em;color:#d29922;background:rgba(210,153,34,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(210,153,34,.25)">Desktop</span>
+<div style="font-size:1.15em;font-weight:700;color:#e0e0e0">Agent / Agentura</div>
+<span style="font-size:.78em;color:#ca8a04;background:rgba(210,153,34,.12);padding:2px 8px;border-radius:10px;border:1px solid rgba(210,153,34,.25)">Desktop</span>
 </div>
 </div>
-<p style="color:#8b949e;font-size:.88em;margin-bottom:16px">Recruitment CRM — poptávky, pipeline kanban, výkazy, trial management</p>
+<p style="color:#888888;font-size:.88em;margin-bottom:16px">Recruitment CRM — poptávky, pipeline kanban, výkazy, trial management</p>
 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Dashboard</span>
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Poptávky</span>
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Pipeline</span>
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Výkazy</span>
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Trial</span>
-<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#d29922;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Nastavení</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Dashboard</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Poptávky</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Pipeline</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Výkazy</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Trial</span>
+<span style="font-size:.72em;background:rgba(202,138,4,.12);color:#ca8a04;padding:3px 10px;border-radius:12px;border:1px solid rgba(202,138,4,.2)">Nastavení</span>
 </div>
 <a href="prototypes/agent.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#CA8A04;color:white;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.88em;text-decoration:none;transition:.2s" onmouseover="this.style.background='#A16207'" onmouseout="this.style.background='#CA8A04'">Otevřít prototyp ↗</a>
 </div>
@@ -7252,21 +7522,21 @@ flowchart LR
 </div>
 
 <!-- Stats bar -->
-<div style="display:flex;justify-content:center;gap:40px;padding:32px 20px;margin-top:20px;background:#161b22;border:1px solid #30363d;border-radius:12px">
-<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#58a6ff">4</span><br><span style="font-size:.78em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px">Role</span></div>
-<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#58a6ff">26</span><br><span style="font-size:.78em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px">Obrazovek</span></div>
-<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#58a6ff">100%</span><br><span style="font-size:.78em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px">Interaktivní</span></div>
-<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#3fb950">Tailwind</span><br><span style="font-size:.78em;color:#6e7681;text-transform:uppercase;letter-spacing:.5px">CSS Framework</span></div>
+<div style="display:flex;justify-content:center;gap:40px;padding:32px 20px;margin-top:20px;background:#111111;border:1px solid #222222;border-radius:12px">
+<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#FFD600">4</span><br><span style="font-size:.78em;color:#666666;text-transform:uppercase;letter-spacing:.5px">Role</span></div>
+<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#FFD600">26</span><br><span style="font-size:.78em;color:#666666;text-transform:uppercase;letter-spacing:.5px">Obrazovek</span></div>
+<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#FFD600">100%</span><br><span style="font-size:.78em;color:#666666;text-transform:uppercase;letter-spacing:.5px">Interaktivní</span></div>
+<div style="text-align:center"><span style="font-size:1.6em;font-weight:800;color:#4fb169">Tailwind</span><br><span style="font-size:.78em;color:#666666;text-transform:uppercase;letter-spacing:.5px">CSS Framework</span></div>
 </div>
 
-<p style="text-align:center;color:#6e7681;font-size:.82em;margin-top:20px">💡 Prototypy se otevřou v novém okně. Slouží jako vizuální reference pro implementaci ve Figmě. Soubory jsou v <code>prototypes/</code> složce.</p>
+<p style="text-align:center;color:#666666;font-size:.82em;margin-top:20px">💡 Prototypy se otevřou v novém okně. Slouží jako vizuální reference pro implementaci ve Figmě. Soubory jsou v <code>prototypes/</code> složce.</p>
 
 </div><!-- /t-proto-hub -->
 
 </div><!-- /wrap -->
 
 <script>
-mermaid.initialize({theme:'dark',themeVariables:{primaryColor:'#58a6ff',primaryTextColor:'#c9d1d9',primaryBorderColor:'#30363d',lineColor:'#8b949e',secondaryColor:'#161b22',tertiaryColor:'#0d1117'},flowchart:{htmlLabels:true,curve:'basis'}});
+mermaid.initialize({theme:'dark',themeVariables:{primaryColor:'#FFD600',primaryTextColor:'#e0e0e0',primaryBorderColor:'#222222',lineColor:'#888888',secondaryColor:'#111111',tertiaryColor:'#0a0a0a'},flowchart:{htmlLabels:true,curve:'basis'}});
 /* MODE SWITCH */
 let currentMode = 'dev';
 function switchMode(mode) {
@@ -7378,7 +7648,7 @@ function updateProgress() {
   if (bar) bar.style.width = pct + '%';
   if (pctEl) pctEl.textContent = pct + ' %';
   if (statsEl) statsEl.textContent = done + ' / ' + all.length + ' úkolů hotovo';
-  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#238636,#3fb950,#56d364)' : 'linear-gradient(90deg,#238636,#3fb950)';
+  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#268d61,#4fb169,#56d364)' : 'linear-gradient(90deg,#268d61,#4fb169)';
 }
 
 /* REALTIME SUBSCRIPTION */
@@ -7484,7 +7754,7 @@ function updateUxProgress() {
   if (bar) bar.style.width = pct + '%';
   if (pctEl) pctEl.textContent = pct + ' %';
   if (statsEl) statsEl.textContent = done + ' / ' + all.length + ' úkolů hotovo';
-  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#8957e5,#a371f7,#bc8cff)' : 'linear-gradient(90deg,#8957e5,#a371f7)';
+  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#8957e5,#a855f7,#bc8cff)' : 'linear-gradient(90deg,#8957e5,#a855f7)';
 }
 
 async function initUxTodos() {
