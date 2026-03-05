@@ -108,6 +108,27 @@ tr:hover td{background:rgba(88,166,255,.04)}
 .mode-btn:hover{color:#e0e0e0;background:rgba(88,166,255,.06)}
 .mode-btn.mode-on#btn-dev{background:linear-gradient(135deg,#268d61,#2ea043);color:#fff;box-shadow:0 2px 12px rgba(35,134,54,.3)}
 .mode-btn.mode-on#btn-ux{background:linear-gradient(135deg,#8957e5,#a855f7);color:#fff;box-shadow:0 2px 12px rgba(137,87,229,.3)}
+.mode-btn.mode-on#btn-update{background:linear-gradient(135deg,#FFD600,#e6c200);color:#000;box-shadow:0 2px 12px rgba(255,214,0,.3)}
+/* UPDATE PLAN STYLES */
+.up-intro{padding:20px 0 10px;color:#888;font-size:.92em;line-height:1.6}
+.up-section{margin:20px 0;background:#111;border:1px solid #222;border-radius:10px;overflow:hidden}
+.up-section-title{padding:14px 18px;background:#0d0d0d;border-bottom:1px solid #222;color:#FFD600;font-weight:700;font-size:1.05em;cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none}
+.up-section-title:hover{background:#151515}
+.up-section-body{padding:16px 18px}
+.up-item{padding:14px 0;border-bottom:1px solid #1a1a1a}
+.up-item:last-child{border-bottom:none}
+.up-item-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.up-item-head label{display:flex;align-items:center;gap:8px;cursor:pointer;flex:1}
+.up-item-head input[type=checkbox]{width:18px;height:18px;accent-color:#FFD600;cursor:pointer;flex-shrink:0;margin-top:2px}
+.up-item-title{font-weight:700;color:#e0e0e0;font-size:.95em}
+.up-item-desc{color:#aaa;font-size:.88em;line-height:1.65;margin:4px 0 0 26px}
+.up-item-example{color:#777;font-size:.84em;font-style:italic;margin:6px 0 0 26px;padding:8px 12px;border-left:2px solid #333;background:#0a0a0a;border-radius:0 6px 6px 0}
+.up-counter{display:flex;gap:16px;padding:12px 18px;background:#0d0d0d;border-top:1px solid #222;font-size:.82em;color:#666}
+.up-counter .done{color:#4fb169}
+.up-stats{display:flex;gap:24px;margin:16px 0;padding:16px 20px;background:#111;border:1px solid #222;border-radius:10px}
+.up-stats div{text-align:center;flex:1}
+.up-stats .num{font-size:1.5em;font-weight:800;color:#FFD600}
+.up-stats .lbl{font-size:.75em;color:#666;text-transform:uppercase;letter-spacing:.5px}
 .mode-dev-hide{display:none!important}
 .mode-ux-hide{display:none!important}
 
@@ -267,6 +288,7 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <button class="mode-btn mode-on" id="btn-dev" onclick="switchMode('dev')">⚙️ DEV mód</button>
 <button class="mode-btn" id="btn-ux" onclick="switchMode('ux')">🎨 UI/UX mód</button>
 <button class="mode-btn" id="btn-proto" onclick="switchMode('proto')">🖼️ Prototypy</button>
+<button class="mode-btn" id="btn-update" onclick="switchMode('update')">📋 Update Plan</button>
 <a href="gap-analysis-report.html" class="mode-btn" style="text-decoration:none;display:inline-block">📊 Gap Analysis</a>
 </div>
 
@@ -7632,6 +7654,653 @@ flowchart LR
 
 </div><!-- /t-proto-hub -->
 
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- UPDATE PLAN -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="tabs update-tabs" id="tabs-update" style="display:none">
+<button class="tbtn on" onclick="sw('t-up-agent',this)">🏢 Agent</button>
+<button class="tbtn" onclick="sw('t-up-emp',this)">👷 Zaměstnanec</button>
+<button class="tbtn" onclick="sw('t-up-hunt',this)">🎯 Hunter / Náborář</button>
+<button class="tbtn" onclick="sw('t-up-calc',this)">💰 Mzdová Kalkulačka</button>
+</div>
+
+<!-- ═══════ AGENT ═══════ -->
+<div id="t-up-agent" class="tc">
+
+<div style="text-align:center;padding:30px 20px 10px">
+<h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">🏢 Profil Agenta — Update Plan</h2>
+<p style="color:#888;font-size:.95em;margin-bottom:6px">Kompletní přehled funkcí, které budou dostupné pro agentury (zaměstnavatele).</p>
+<p style="color:#666;font-size:.85em">Prosím zkontrolujte každý bod a zaškrtněte, zda souhlasíte s navrženým řešením.</p>
+</div>
+
+<!-- Update Plan Progress Bar (shared across all UP tabs) -->
+<div style="margin:0 20px 20px;padding:16px 20px;background:#111;border:1px solid #222;border-radius:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<span style="color:#FFD600;font-weight:700;font-size:.9em">📋 Celkový progres odsouhlasení</span>
+<span id="up-pct" style="color:#FFD600;font-weight:800;font-size:1.1em">0 %</span>
+</div>
+<div style="height:8px;background:#222;border-radius:4px;overflow:hidden">
+<div id="up-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#e6c200,#FFD600);border-radius:4px;transition:width .4s ease"></div>
+</div>
+<div id="up-stats-text" style="text-align:center;color:#666;font-size:.8em;margin-top:8px">0 / 0 bodů odsouhlaseno</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">1. 🔔 Oznámení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-oznameni" onchange="upSave()"><span class="up-item-title">Oznámení o všech akcích (styl Facebook)</span></label></div>
+<div class="up-item-desc">Budete dostávat upozornění na všechny důležité události — nové zprávy, změny u kandidátů, potvrzení zkoušek, aktualizace poptávek. Fungovat to bude jako zvoneček na Facebooku — číslo u ikony ukáže počet nepřečtených oznámení.</div>
+<div class="up-item-example">Příklad: Kandidát Jan Novák potvrdil zájem o Vaši poptávku na svářeče → okamžitě Vám přijde oznámení „Nový zájemce o pozici Svářeč MIG/MAG v Mnichově".</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">2. 📨 Zprávy</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-zpravy-email" onchange="upSave()"><span class="up-item-title">E-mailová komunikace s adminem</span></label></div>
+<div class="up-item-desc">Komunikace bude fungovat jako klasický e-mail. Můžete psát zprávy, odpovídat na ně a vracet se k historii konverzací. Vše přehledně na jednom místě.</div>
+<div class="up-item-example">Příklad: Napíšete adminovi „Potřebuji 3 elektrikáře na příští týden do Berlína" — admin odpoví přímo ve zprávě s dostupnými kandidáty.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-zpravy-profil" onchange="upSave()"><span class="up-item-title">Připojení profilu kandidáta ke zprávě</span></label></div>
+<div class="up-item-desc">Ke každé zprávě budete moci přiložit profil konkrétního kandidáta, o kterém se bavíte. Admin rovnou uvidí jeho údaje, zkušenosti a dostupnost bez dalšího hledání. Zprávy budou přehledně tříděné a filtrované, abyste se v nich snadno orientovali.</div>
+<div class="up-item-example">Příklad: Píšete „Tento kandidát by se hodil na pozici v Drážďanech" a přiložíte profil Petra K. — admin vidí vše na jednom místě.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-zpravy-dotaz" onchange="upSave()"><span class="up-item-title">Dotaz přímo u profilu kandidáta</span></label></div>
+<div class="up-item-desc">Přímo z profilu kandidáta budete moci odeslat dotaz adminovi — nemusíte nic hledat ve zprávách, jednoduše kliknete na tlačítko u profilu a zpráva se vytvoří automaticky s odkazem na daného kandidáta.</div>
+<div class="up-item-example">Příklad: Prohlížíte profil Jana N. → kliknete „Dotázat se" → otevře se nová zpráva s připojeným profilem, stačí dopsat dotaz.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-zpravy-notif" onchange="upSave()"><span class="up-item-title">Oznámení o nových zprávách (obousměrně)</span></label></div>
+<div class="up-item-desc">Každá nová zpráva se automaticky zobrazí v oznámeních (styl Facebook) — a to jak u Vás (agenta), tak u admina. Obousměrné oznámení zajistí, že žádná zpráva nezůstane nepřečtená na žádné straně.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">3. 📝 Mé poptávky (aktuální)</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-remeslo" onchange="upSave()"><span class="up-item-title">Výběr řemesla a specifikace</span></label></div>
+<div class="up-item-desc">Při vytváření poptávky vyberete řemeslo z přehledného menu (povinné) a můžete doplnit detaily — jaký typ práce, jaké zkušenosti potřebujete.</div>
+<div class="up-item-example">Příklad: Vyberete „Svářeč" → specifikujete „MIG/MAG, zkušenost min. 2 roky, certifikát EN 287-1".</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-pomer" onchange="upSave()"><span class="up-item-title">Typ pracovního poměru (HPP / OSVČ)</span></label></div>
+<div class="up-item-desc">U každé poptávky zadáte, zda hledáte pracovníka na HPP (zaměstnanecký poměr) nebo OSVČ (živnostník).</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-pocet" onchange="upSave()"><span class="up-item-title">Počet osob + datum zkoušky/startu</span></label></div>
+<div class="up-item-desc">Zadáte kolik lidí potřebujete a kdy mají nastoupit. Datum lze zadat jako přesný den nebo rozmezí „od–do" (povinné).</div>
+<div class="up-item-example">Příklad: „Potřebuji 5 zedníků, pracovní zkouška 15.–20. března 2026 v Mnichově."</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-lokalita" onchange="upSave()"><span class="up-item-title">Lokalita pracoviště (PSČ)</span></label></div>
+<div class="up-item-desc">Zadáte PSČ pracoviště (povinné). Systém podle PSČ automaticky přiřadí vhodné kandidáty z okolí.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-firma" onchange="upSave()"><span class="up-item-title">Název firmy (nepovinné)</span></label></div>
+<div class="up-item-desc">Volitelné pole — můžete uvést název firmy, pro kterou pracovníky hledáte. Není povinné, ale pomáhá to při organizaci poptávek.</div>
+<div class="up-item-example">Příklad: Zadáte „Bauer GmbH" → přehledně vidíte, která poptávka je pro kterého klienta.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-specifikace" onchange="upSave()"><span class="up-item-title">Specifikace pozice (volný text)</span></label></div>
+<div class="up-item-desc">Textové pole, kde můžete popsat detaily poptávky vlastními slovy — co přesně hledáte, jaké zkušenosti vyžadujete, zvláštní požadavky na pozici.</div>
+<div class="up-item-example">Příklad: „Hledáme svářeče s certifikátem EN 287-1, zkušenosti s nerezem, schopnost číst výrobní výkresy, práce na 2 směny."</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-finance" onchange="upSave()"><span class="up-item-title">Finanční podmínky + Mzdová kalkulačka</span></label></div>
+<div class="up-item-desc">U každé poptávky vyplníte finanční podmínky — netto částku, hodinovku (brutto/hod.), dietu (na hodinu nebo na den). Přímo v poptávce bude k dispozici orientační mzdová kalkulačka, abyste viděli, kolik pracovník reálně dostane na ruku.</div>
+<div class="up-item-example">Příklad: Brutto 18 €/hod. + dieta 5 €/den → kalkulačka ukáže netto ~12,60 €/hod. při daňové třídě 1 v Německu.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-vhodni" onchange="upSave()"><span class="up-item-title">Vhodní pracovníci (Přiřazení + Vhodní)</span></label></div>
+<div class="up-item-desc">U každé poptávky uvidíte dvě skupiny kandidátů:<br>• <strong>Přiřazení</strong> — ti, kteří odsouhlasili Vaši nabídku a mají zájem.<br>• <strong>Vhodní</strong> — ti, kteří by se na pozici mohli hodit (dle řemesla, lokality, dostupnosti).</div>
+<div class="up-item-example">Příklad: Na poptávku „5 svářečů, Mnichov" systém přiřadí 3 potvrzené zájemce a navíc navrhne 7 dalších vhodných kandidátů.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">4. 📅 Mé poptávky celoroční</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-celorocni" onchange="upSave()"><span class="up-item-title">Automatický převod aktuální poptávky na celoroční</span></label></div>
+<div class="up-item-desc">Pokud potřebujete pracovníky dlouhodobě (ne jednorázově), jednoduše zaškrtnete „Celoroční" u jakékoliv aktuální poptávky. Ta se automaticky uloží jako celoroční a systém Vám bude průběžně nabízet vhodné kandidáty.</div>
+<div class="up-item-example">Příklad: Máte stavební firmu a svářeče potřebujete pořád → zaškrtnete „Celoroční" a systém Vám automaticky ukazuje nové vhodné kandidáty.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-popt-seznam" onchange="upSave()"><span class="up-item-title">Seznam vhodných kandidátů (automatický)</span></label></div>
+<div class="up-item-desc">Na základě PSČ a řemesla v celoroční poptávce systém automaticky zobrazí seznam vhodných kandidátů. Kandidáti jsou řazeni podle řemesla (od nejvíce dostupných po nejméně) s počtem u každého řemesla.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-celorocni-vhodni" onchange="upSave()"><span class="up-item-title">Vhodní pracovníci (Přiřazení + Vhodní) — stejné jako u aktuální</span></label></div>
+<div class="up-item-desc">I u celoročních poptávek uvidíte dvě skupiny kandidátů:<br>• <strong>Přiřazení</strong> — ti, kteří odsouhlasili nabídku a potvrdili zájem.<br>• <strong>Vhodní</strong> — ti, které systém navrhuje na základě řemesla a lokality.<br>Funguje identicky jako u aktuálních poptávek.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">5. ⏳ V řešení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-vreseni" onchange="upSave()"><span class="up-item-title">Kandidáti „v procesu"</span></label></div>
+<div class="up-item-desc">Sekce pro kandidáty, se kterými se právě jedná. Zůstanou zde dokud si je nezamluvíte Vy nebo jiný agent. Můžete profil z „V řešení" kdykoliv odstranit.</div>
+<div class="up-item-example">Příklad: Oslovili jste kandidáta Marka P. na pozici instalatéra — jeho profil se přesune do „V řešení" a ostatní agenti vidí, že je v jednání.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">6. 🧪 Pracovníci na zkoušku</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-zkouska" onchange="upSave()"><span class="up-item-title">Přehled pracovníků na pracovní zkoušce</span></label></div>
+<div class="up-item-desc">Seznam pracovníků, kteří mají naplánovanou pracovní zkoušku. U každého uvidíte profil, datum zkoušky, propojení s pracovní nabídkou, adresu zkoušky, čas začátku a kontaktní osobu. Pokud bydlí v hotelu, zobrazí se i adresa hotelu a čas příjezdu.</div>
+<div class="up-item-example">Příklad: Jan Novák — zkouška 18. 3. 2026, 7:00, Firma Baumeister GmbH, Hlavní 15, Mnichov. Hotel: Pension Alm, příjezd do 22:00, kontakt: p. Müller +49 151 xxx.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">7. ✅ Pracovníci k nástupu</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-nastup" onchange="upSave()"><span class="up-item-title">Seznam potvrzených nástupů</span></label></div>
+<div class="up-item-desc">Přehledný seznam pracovníků, kteří prošli zkouškou a mají potvrzený nástup. U každého vidíte profil, firmu k nástupu a datum.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">8. 👥 Vaši pracovníci</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-pracovnici" onchange="upSave()"><span class="up-item-title">Evidence Vašich aktuálních pracovníků + dokumenty</span></label></div>
+<div class="up-item-desc">Přehled všech pracovníků, kteří u Vás aktuálně pracují. Nově bude možnost nahrávat soubory — zejména pracovní smlouvy (foto/scan).</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">9. 🕐 Výkazy hodin</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-vykazy" onchange="upSave()"><span class="up-item-title">Evidence hodin s kontrolou shody</span></label></div>
+<div class="up-item-desc">Seznam z „Vaši pracovníci" s kolonkou pro počet hodin u každého. Součet všech hodin = výsledek pro fakturaci. Klíčová funkce: <strong>kontrola shody hodin</strong> — systém porovná hodiny, které zapsal pracovník, s hodinami, které zapsal agent. Pokud se neshodují, systém to označí k řešení.</div>
+<div class="up-item-example">Příklad: Pracovník Jan zapsal 168 hodin, Vy jste zapsali 160 hodin → systém zobrazí nesoulad „-8 hodin" a oba musíte odsouhlasit správný počet.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">10. ❌ Nedohodli jsme se</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-nedohodli" onchange="upSave()"><span class="up-item-title">Archiv neúspěšných jednání</span></label></div>
+<div class="up-item-desc">Seznam kandidátů, se kterými jednání nedopadlo (odmítnutí, nesplněné požadavky, jiné důvody). Funguje stejně jako nyní.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">11. 📋 VŠE</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-vse" onchange="upSave()"><span class="up-item-title">Kompletní přehled všech kandidátů</span></label></div>
+<div class="up-item-desc">Celková historie všech kandidátů, se kterými jste kdy jednali — s filtrováním a možností exportu do Excelu. Funguje stejně jako nyní.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">12. 📊 Historie</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-historie" onchange="upSave()"><span class="up-item-title">Log aktivit (pouze Vaše)</span></label></div>
+<div class="up-item-desc">Chronologický přehled všech Vašich akcí v systému — stejný styl jako má admin, ale vidíte pouze své vlastní aktivity.</div>
+<div class="up-item-example">Příklad: „14:30 — Zobrazení profilu Jana N.", „14:35 — Odeslání zprávy adminovi", „15:00 — Vytvoření poptávky Svářeč MIG".</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">13. ➕ Doplňkové služby</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="agent-doplnkove" onchange="upSave()"><span class="up-item-title">Prozatím prázdné — obsah bude doplněn</span></label></div>
+<div class="up-item-desc">Tato sekce bude připravena v systému, ale obsah bude dodán později od klienta.</div>
+</div>
+</div>
+</div>
+
+</div><!-- /t-up-agent -->
+
+<!-- ═══════ ZAMĚSTNANEC ═══════ -->
+<div id="t-up-emp" class="tc">
+
+<div style="text-align:center;padding:30px 20px 10px">
+<h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">👷 Profil Zaměstnance — Update Plan</h2>
+<p style="color:#888;font-size:.95em;margin-bottom:6px">Kompletní přehled funkcí pro zaměstnance a uchazeče o práci.</p>
+<p style="color:#666;font-size:.85em">Největší profil v systému — 20 sekcí pokrývajících celou cestu pracovníka od registrace po ukončení práce.</p>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">1. 🔔 Oznámení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-oznameni" onchange="upSave()"><span class="up-item-title">Chytrá oznámení — nic nezmeškáte</span></label></div>
+<div class="up-item-desc">Pracovník dostane upozornění když: nezadal potvrzení nástupu, chybí mu údaj v profilu, nezapsal odpracované hodiny, přišla mu nová zpráva, nebo se změnil stav jeho žádosti.</div>
+<div class="up-item-example">Příklad: „⚠️ Nezapsal jsi hodiny za minulý týden. Prosím doplň do pátku." nebo „✅ Tvá žádost o Kindergeld byla odeslána."</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">2. 👤 Můj Účet</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-ucet" onchange="upSave()"><span class="up-item-title">Osobní nastavení — beze změn</span></label></div>
+<div class="up-item-desc">Správa osobních údajů, hesla, jazyka a notifikací. Tato sekce zůstane stejná jako dosud — je hotová a funguje.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">3. 📄 Můj životopis</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-zivotopis" onchange="upSave()"><span class="up-item-title">Životopis — beze změn, pouze přesun pod tlačítko</span></label></div>
+<div class="up-item-desc">Strukturovaný životopis (14 kroků) zůstane stejný jako dosud. Jediná změna: bude přístupný přes tlačítko místo přímého zobrazení v menu.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">4. 🕐 Evidence docházky a Mzda</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-dochazka" onchange="upSave()"><span class="up-item-title">Zápis hodin + mzdová kalkulačka</span></label></div>
+<div class="up-item-desc">Pracovník zapisuje odpracované hodiny (soupis hodin funguje jako dosud). Nově bude přímo propojená mzdová kalkulačka — pracovník zadá hodiny a okamžitě vidí, kolik dostane na ruku.</div>
+<div class="up-item-example">Příklad: Pracovník zapíše 168 hodin za březen → kalkulačka mu ukáže: brutto 3 024 €, netto ~2 117 €, dieta +840 €, celkem na ruku ~2 957 €.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">5. 🗣️ Jazykové lekce</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-jazyky" onchange="upSave()"><span class="up-item-title">Popis služby + cena</span></label></div>
+<div class="up-item-desc">Informační stránka o jazykových lekcích, které Dilibees nabízí. Pracovník uvidí popis služby a cenu (299 €).</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">6. 🔧 Certifikace</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-certifikace" onchange="upSave()"><span class="up-item-title">Přehled dostupných certifikací</span></label></div>
+<div class="up-item-desc">Informace o tom, proč jsou certifikace důležité a jaké aktuálně zajišťujeme — zejména svářečské certifikáty všech druhů. U každého typu certifikace: popis služby a cena (od 599 €).</div>
+<div class="up-item-example">Příklad: „Svářečský certifikát EN ISO 9606-1 (MIG/MAG) — platnost 2 roky, cena 599 €. Zajistíme přihlášení, přípravu i dopravu na zkoušku."</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">7. 📑 Smlouvy</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-smlouvy" onchange="upSave()"><span class="up-item-title">Pracovní smlouva (foto + překlad) a výpověď</span></label></div>
+<div class="up-item-desc">Pracovník vloží foto/scan pracovní smlouvy a systém mu ji přeloží (zatím manuálně, později pomocí AI). Bude zde i sekce pro výpovědi — informace a vzory.</div>
+<div class="up-item-example">Příklad: Pracovník vyfotí německou smlouvu telefonem → nahraje do systému → admin mu pošle český překlad klíčových bodů.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">8. 👶 Příspěvky na děti (Kindergeld)</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-deti" onchange="upSave()"><span class="up-item-title">Kompletní průvodce + potřebné dokumenty</span></label></div>
+<div class="up-item-desc">Vysvětlení co je Kindergeld, jak ho získat, kolik dostanete a jaké dokumenty potřebujete. Cena služby za vyřízení: uvedena u služby. Potřebné dokumenty: formulář KG1, rodné listy dětí, ID, potvrzení o zaměstnání, výplatní pásky, potvrzení o bydlišti, bankovní spojení. Pro děti žijící v jiné zemi: formuláře E401 a E411 (CZ) + potvrzení, že druhý rodič nepobírá příspěvky.</div>
+<div class="up-item-example">Příklad: Pracovník se 2 dětmi v Německu → Kindergeld 250 € × 2 = 500 €/měsíc = 6 000 €/rok navíc. Dilibees pomůže s vyplněním formuláře a podáním žádosti.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">9. 📊 Daňové přiznání</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-dane" onchange="upSave()"><span class="up-item-title">Služba + složky na soubory</span></label></div>
+<div class="up-item-desc">Popis služby daňového přiznání + cena. Hlavní funkce: strukturované složky pro nahrání všech potřebných dokumentů:<br>
+<strong>1. Osobní údaje</strong> — doklady (ID, pas), zdravotní karta, bankovní spojení, rodinný stav.<br>
+<strong>2. Pracovní dokumenty</strong> — výplatní pásky, roční výpis mzdy (Lohnsteuerbescheinigung), pracovní smlouvy. Pokud měl pracovník vedlejší úvazek (ANO/NE), nahraje podklady i k tomu.<br>
+<strong>3. Náklady k uplatnění</strong> — cestovní náklady, úroky z úvěrů, pojištění, penzijní spoření, školení/kurzy, děti (péče, školné), pracovní vybavení a pomůcky.<br>
+<strong>4. Ubytování a domácnost</strong> — nájemní smlouva, vyúčtování energií.<br>
+<strong>5. Rodinné záležitosti</strong> — rodné listy dětí, potvrzení o přídavcích (Kindergeld), náklady na školku, příjmy partnera (pokud společné přiznání).<br>
+<strong>6. Zdraví, pojištění a daně</strong> — potvrzení o zdravotním pojištění, lékařské výdaje a léky.<br>
+<strong>7. Další důležité věci</strong> — vedlejší příjmy (brigády, pronájem), potvrzení o nezaměstnanecké podpoře/nemocenské, výpis z účtu (pokud si dělá přiznání sám).</div>
+<div class="up-item-example">Příklad: Pracovník dojíždí denně 50 km do práce → nahraje měsíční jízdenky do složky „Cestovní náklady" → vrácení daní odhadem 1 000–3 000 €/rok.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">10. 🧭 Pomocníci v novém prostředí</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-pomocnici" onchange="upSave()"><span class="up-item-title">Chat GPT rádce + Mapy</span></label></div>
+<div class="up-item-desc">Dva praktické návody: jak používat Chat GPT jako univerzálního rádce (překlad, orientace, doprava) a jak se zorientovat v nové lokalitě pomocí map.</div>
+<div class="up-item-example">Příklad: Pracovník přijede do nového města → otevře návod „Mapy" → zjistí kde je nejbližší obchod, lékař, úřad.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">11. 🎁 Odměny za doporučení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-odmeny" onchange="upSave()"><span class="up-item-title">Doporučení nových kolegů — funguje jako dosud</span></label></div>
+<div class="up-item-desc">Systém odměn za doporučení nového pracovníka zůstává stejný jako nyní. Každý zaměstnanec může být zároveň i Hunter/Náborář (viz záložka Hunter).</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">12. 🏠 Bydlení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-bydleni" onchange="upSave()"><span class="up-item-title">Služba zajištění bydlení</span></label></div>
+<div class="up-item-desc">Popis služby — Dilibees pomáhá se zajištěním skutečného bydlení (ne ubytovna). Uvedena cena služby.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">13. 🏛️ Úřady</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-urady" onchange="upSave()"><span class="up-item-title">Pomoc s úřady v zahraničí</span></label></div>
+<div class="up-item-desc">Informace co, jak a proč vyřídit na úřadech v dané zemi. Cena za službu doprovodu/pomoci.</div>
+<div class="up-item-example">Příklad: Registrace na Finanzamt, přihlášení k pobytu na Einwohnermeldeamt — Dilibees Vás provede celým procesem.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">14. 🏥 Zdravotní pojišťovna</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-pojistovna" onchange="upSave()"><span class="up-item-title">Přehled zdravotního pojištění + pomoc s řešením</span></label></div>
+<div class="up-item-desc">Co, jak a proč ohledně zdravotního pojištění v zahraničí. Cena za jakoukoliv operaci s pojišťovnami (přeregistrace, změna, reklamace).</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">15. 🏦 Bankovní systém</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-banka" onchange="upSave()"><span class="up-item-title">Bankovní služby — účet, půjčka, hypotéka</span></label></div>
+<div class="up-item-desc">Seznam bankovních služeb, které Dilibees zprostředkovává: otevření bankovního účtu, žádost o půjčku, žádost o hypotéku. U každé služby uvedena cena.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">16. 🛡️ Pojištění rizik</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-pojisteni" onchange="upSave()"><span class="up-item-title">Vzdělávací obsah (video + E-Book)</span></label></div>
+<div class="up-item-desc">Dva typy obsahu:<br>• <strong>Video</strong> — výukové video přímo v E-Booku o pojištění pracovních rizik (co hrozí, jak se chránit, na co máte nárok).<br>• <strong>Obsah E-Booku</strong> — textový průvodce s podrobným vysvětlením pojištění, praktickými tipy a kontakty. Slouží jako reference, ke které se pracovník může kdykoliv vrátit.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">17. 🗺️ Kariérní poradenství</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-kariera" onchange="upSave()"><span class="up-item-title">Osobní kariérní mapa s plánovanou cestou</span></label></div>
+<div class="up-item-desc">Každý pracovník bude mít svou „kariérní mapu" — vizuální přehled jeho cesty. Naplánované kroky (milníky), rozepsané body co je potřeba udělat, a zaškrtávání splněných bodů (styl poznámky/to-do list). Cena služby: 199 €/hodinu s kariérním poradcem.</div>
+<div class="up-item-example">Příklad: Milník 1: „Získat svářečský certifikát" ✅ → Milník 2: „Najít práci v Německu" ✅ → Milník 3: „Zvýšit hodinovku na 20 €" → Milník 4: „Přivézt rodinu".</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">18. 📚 E-Booky</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-ebook" onchange="upSave()"><span class="up-item-title">Knihovna E-Booků — beze změn</span></label></div>
+<div class="up-item-desc">Elektronické knihy a průvodci pro pracovníky. Funguje stejně jako nyní.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">19. 🏷️ Slevové kódy</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-slevy" onchange="upSave()"><span class="up-item-title">Partnerské slevy (Dilibeespartners)</span></label></div>
+<div class="up-item-desc">Sekce se slevovými kódy od partnerů Dilibees — slevy na služby a produkty pro pracovníky.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">20. 🚪 Ukončení práce v zahraničí</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-ukonceni" onchange="upSave()"><span class="up-item-title">Kompletní průvodce ukončením + E-Book</span></label></div>
+<div class="up-item-desc">Krok za krokem průvodce, co vše vyřídit při ukončení práce v zahraničí: výpověď pracovní smlouvy, zrušení ubytování, odhlášení z úřadů, zrušení pojistek. Bude k dispozici i E-Book s detailním návodem.</div>
+<div class="up-item-example">Příklad: Pracovník se rozhodne vrátit do ČR → otevře průvodce → krok 1: „Dej výpověď 4 týdny předem" → krok 2: „Nahlás ukončení na Finanzamt" → krok 3: „Odhlas se z pojišťovny"...</div>
+</div>
+</div>
+</div>
+
+</div><!-- /t-up-emp -->
+
+<!-- ═══════ HUNTER / NÁBORÁŘ ═══════ -->
+<div id="t-up-hunt" class="tc">
+
+<div style="text-align:center;padding:30px 20px 10px">
+<h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">🎯 Profil Hunter / Náborář — Update Plan</h2>
+<p style="color:#888;font-size:.95em;margin-bottom:6px">Funkce pro náboráře, kteří doporučují nové pracovníky.</p>
+<p style="color:#666;font-size:.85em">Důležité: Tento profil je skrytý uvnitř profilu zaměstnance — každý registrovaný se může stát i Hunterem. Provize je u každého Huntera individuální (nastavuje admin).</p>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">1. 🔔 Oznámení</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-oznameni" onchange="upSave()"><span class="up-item-title">Oznámení o všech akcích (styl Facebook)</span></label></div>
+<div class="up-item-desc">Veškeré pohyby a akce — nový doporučený kandidát se zaregistroval, změna statusu, připsání provize. Stejný systém jako u ostatních rolí.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">2. 📨 Zprávy</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-zpravy" onchange="upSave()"><span class="up-item-title">Chat pouze s adminem</span></label></div>
+<div class="up-item-desc">Hunter komunikuje pouze s adminem. Nemá přímý kontakt na agenty ani zaměstnance — vše jde přes Dilibees.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">3. 📋 Poptávané pozice</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-pozice" onchange="upSave()"><span class="up-item-title">Seznam aktuálně poptávaných pozic od agentů</span></label></div>
+<div class="up-item-desc">Hunter vidí, jaké pozice agenti hledají — ale pouze základní informace (řemeslo, lokalita, počet osob). <strong>Nevidí, kdo přesně hledá</strong> (název firmy je skrytý). Díky tomu ví, koho má nabírat.</div>
+<div class="up-item-example">Příklad: „Hledají se: 3× svářeč MIG/MAG (oblast Mnichov), 2× elektrikář (oblast Berlín), 5× zedník (oblast Vídeň)" — ale bez jmen firem.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">4. 🔗 QR kód / Náborový link</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-qr" onchange="upSave()"><span class="up-item-title">Osobní náborový odkaz a QR kód</span></label></div>
+<div class="up-item-desc">Každý Hunter má svůj unikátní odkaz/QR kód. Když ho pošle kamarádovi nebo kolegovi a ten se zaregistruje, systém automaticky přiřadí nového registrovaného k tomuto Hunterovi. Poznámka: „provizní" odkaz bude přejmenován na „Náborový" odkaz s vysvětlením, o co jde.</div>
+<div class="up-item-example">Příklad: Hunter Jan pošle QR kód kolegovi Petrovi → Petr se zaregistruje → systém automaticky zapíše: „Petr K. — doporučen Janem" → po nástupu Petra dostane Jan provizi.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">5. 👤 Můj Profil</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-profil" onchange="upSave()"><span class="up-item-title">Přehled osobního profilu Huntera</span></label></div>
+<div class="up-item-desc">Stránka s přehledem osobních údajů Huntera — kontakt, nastavení, statistiky.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">6. 👥 Lidé</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-lide" onchange="upSave()"><span class="up-item-title">Seznam doporučených lidí + statistiky</span></label></div>
+<div class="up-item-desc">Seznam všech lidí, které Hunter doporučil (funguje jako nyní). Nově přidáme sekci <strong>Data a Grafy</strong>: frekvence nových lidí (jak často doporučuje) a úspěšnost (kolik z doporučených skutečně nastoupilo).</div>
+<div class="up-item-example">Příklad: „Tento měsíc: 8 doporučení, 5 registrací, 3 nástupy. Úspěšnost: 37,5 %." Grafy ukáží trend za posledních 6 měsíců.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">7. 💰 Odměny</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-odmeny" onchange="upSave()"><span class="up-item-title">Soupis odměn za předchozí měsíc</span></label></div>
+<div class="up-item-desc">Přehled provizí za předchozí měsíc. <strong>Důležité: Provize je u každého Huntera individuální</strong> — admin ji nastavuje dle dohody, nejde o fixní systémovou částku. Podrobné popisky budou dodány.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">8. 💶 Ceny Řemesel</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-ceny" onchange="upSave()"><span class="up-item-title">Přehled hodinových sazeb podle regionu</span></label></div>
+<div class="up-item-desc">Tabulka s přehledem běžných hodinových sazeb za různá řemesla v jednotlivých regionech. Toto je již hotové — pouze informační přehled.</div>
+<div class="up-item-example">Příklad: „Svářeč MIG/MAG: Bavorsko 16–20 €/hod., Sasko 14–17 €/hod., Rakousko 15–19 €/hod."</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">9. 🎓 Školení a Certifikace</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="hunt-skoleni" onchange="upSave()"><span class="up-item-title">Seznam školení a certifikací (informační)</span></label></div>
+<div class="up-item-desc">Seznam školení a certifikací, které je Dilibees schopno zajistit. Hunter tuto informaci může sdílet s kandidáty jako bonus — „registruj se a můžeš získat certifikát". Obsah bude doplněn.</div>
+</div>
+</div>
+</div>
+
+</div><!-- /t-up-hunt -->
+
+<!-- ═══════ MZDOVÁ KALKULAČKA ═══════ -->
+<div id="t-up-calc" class="tc">
+
+<div style="text-align:center;padding:30px 20px 10px">
+<h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">💰 Mzdová Kalkulačka — Update Plan</h2>
+<p style="color:#888;font-size:.95em;margin-bottom:6px">Kalkulačka čistého příjmu pro 5 zemí — používá se v profilu zaměstnance i agenta.</p>
+<p style="color:#666;font-size:.85em">Pracovník zadá brutto hodinovku → kalkulačka spočítá čistý měsíční příjem včetně diet, příspěvků na děti a odhadu vrácení daní.</p>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">🇩🇪 Německo</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="calc-de" onchange="upSave()"><span class="up-item-title">Brutto → Netto + dieta + Kindergeld + daňové přiznání</span></label></div>
+<div class="up-item-desc">
+<strong>Vstupy:</strong> brutto/hod., dieta (na hodinu nebo den), daňová třída (1–6).<br>
+<strong>Srážky dle daňové třídy:</strong> Třída 1: 31–32 %, Třída 2: 29–30 %, Třída 3: 25–26 %, Třída 4: 31–32 %, Třída 5: 37–38 %, Třída 6: 39–40 %.<br>
+<strong>Kindergeld:</strong> 250 € × dítě/měsíc (navázáno na počet dětí v profilu, zobrazí se i roční částka).<br>
+<strong>Daňové přiznání:</strong> odhad vrácení daní pro pendlery 1 000–3 000 €/rok.
+</div>
+<div class="up-item-example">Příklad: Brutto 18 €/hod., daňová třída 1, dieta 5 €/den, 2 děti → Netto ~12,6 €/hod., dieta +110 €/měs., Kindergeld +500 €/měs., vrácení daní ~2 000 €/rok.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">🇦🇹 Rakousko</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="calc-at" onchange="upSave()"><span class="up-item-title">Brutto → Netto + 13./14. plat + příspěvky na děti</span></label></div>
+<div class="up-item-desc">
+<strong>Navíc oproti DE:</strong> 13. a 14. plat (brutto/hod. × 316).<br>
+<strong>Výpočet roční mzdy:</strong> brutto/hod. × 1 700 = přibližný roční příjem → ten určí daňovou sazbu.<br>
+<strong>Daňová sazba dle ročního příjmu:</strong> do 11 693 € = 0 %, do 19 134 € = 20 %, do 32 075 € = 30 %, do 62 080 € = 41 %, do 93 120 € = 48 %, do 1 000 000 € = 50 %, nad 1 mil. = 55 %.<br>
+<strong>Příspěvky na děti:</strong> 245–290 € × dítě/měsíc (zobrazí rozmezí + roční částka).<br>
+<strong>Daňové přiznání:</strong> pendleři 1 000–3 000 €/rok.
+</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">🇳🇱 Nizozemsko</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="calc-nl" onchange="upSave()"><span class="up-item-title">Brutto → Netto dle tarifu + příspěvky + bonus na dítě</span></label></div>
+<div class="up-item-desc">
+<strong>Daňové tarify:</strong> Svobodný bezdětný = 24 %, Samoživitel + 1 dítě = 20–22 %, Ženatý (partner bez příjmu) = 22 %, Manželé (oba pracují) = 24 %, Vedlejší úvazek = 33–35 %.<br>
+<strong>Příspěvky na děti + Bonus:</strong> 200–380 € × dítě/měsíc.<br>
+<strong>Daňové přiznání:</strong> 1 000–3 000 €/rok.
+</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">🇨🇭 Švýcarsko</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="calc-ch" onchange="upSave()"><span class="up-item-title">Brutto → Netto dle kantonu + zdravotní pojištění + příspěvky</span></label></div>
+<div class="up-item-desc">
+<strong>Specifikum CH:</strong> daně se liší podle kantonu — systém zobrazí rozmezí „od–do" pro vybraný kanton a rodinný stav.<br>
+<strong>Zdravotní pojištění:</strong> povinné, výpočet: (měsíční platba × 12) + (prémie × 12) = roční součet ÷ 12 = měsíční srážka. Tato částka se odečte od netto mzdy.<br>
+<strong>Příspěvky na děti:</strong> do 16 let = 200 CHF/měs., do 25 let = 250 CHF/měs.<br>
+<strong>Daňové přiznání:</strong> vrácení 1 000–3 000 €/rok.
+</div>
+<div class="up-item-example">Příklad: Brutto 35 CHF/hod., kanton Zürich, ženatý, 1 dítě (12 let) → Netto po odečtení daní a pojištění ~27 CHF/hod. + Kindergeld 200 CHF/měs.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">🇱🇮 Lichtenštejnsko</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="calc-li" onchange="upSave()"><span class="up-item-title">Brutto → Netto (nízké daně) + zdravotní pojištění</span></label></div>
+<div class="up-item-desc">
+<strong>Daňové zatížení LI:</strong> pouze 4–7 % — ale následně platíte daně i v zemi, kde bydlíte (AT, CH, DE).<br>
+<strong>Zdravotní pojištění:</strong> stejný systém jako ve Švýcarsku (platba + prémie, odečítá se od netto).<br>
+<strong>Příspěvky na děti:</strong> do 16 let = 280 CHF/měs., do 25 let = 330 CHF/měs.<br>
+<strong>Daňové přiznání:</strong> 1 000–3 000 €/rok.
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- /t-up-calc -->
+
 </div><!-- /wrap -->
 
 <script>
@@ -7643,17 +8312,21 @@ function switchMode(mode) {
   const devTabs = document.getElementById('tabs-dev');
   const uxTabs = document.getElementById('tabs-ux');
   const protoTabs = document.getElementById('tabs-proto');
+  const updateTabs = document.getElementById('tabs-update');
   const btnDev = document.getElementById('btn-dev');
   const btnUx = document.getElementById('btn-ux');
   const btnProto = document.getElementById('btn-proto');
+  const btnUpdate = document.getElementById('btn-update');
   // Hide all tab content and tab bars
   document.querySelectorAll('.tc').forEach(t => t.classList.remove('on'));
   devTabs.style.display = 'none';
   uxTabs.style.display = 'none';
   protoTabs.style.display = 'none';
+  updateTabs.style.display = 'none';
   btnDev.classList.remove('mode-on');
   btnUx.classList.remove('mode-on');
   btnProto.classList.remove('mode-on');
+  btnUpdate.classList.remove('mode-on');
   // Reset all tab buttons
   document.querySelectorAll('.tabs .tbtn').forEach(b => b.classList.remove('on'));
   if (mode === 'dev') {
@@ -7671,6 +8344,11 @@ function switchMode(mode) {
     btnProto.classList.add('mode-on');
     document.getElementById('t-proto-hub').classList.add('on');
     protoTabs.querySelectorAll('.tbtn').forEach((b,i) => b.classList.toggle('on', i === 0));
+  } else if (mode === 'update') {
+    updateTabs.style.display = '';
+    btnUpdate.classList.add('mode-on');
+    document.getElementById('t-up-agent').classList.add('on');
+    updateTabs.querySelectorAll('.tbtn').forEach((b,i) => b.classList.toggle('on', i === 0));
   }
 }
 
@@ -7901,7 +8579,106 @@ async function resetUxTodos() {
   updateUxProgress();
 }
 
-document.addEventListener('DOMContentLoaded', () => { initTodos(); initUxTodos(); });
+document.addEventListener('DOMContentLoaded', () => { initTodos(); initUxTodos(); initUpTodos(); });
+
+/* ═══════════════════════════════════════════════════ */
+/* ██ UPDATE PLAN CHECKLIST — separátní localStorage ██ */
+/* ═══════════════════════════════════════════════════ */
+const UP_STORAGE_KEY = 'dilibees-up-todo-v1';
+const UP_ROW_ID = 'up-main';
+
+function getUpLocalState() { try { return JSON.parse(localStorage.getItem(UP_STORAGE_KEY)) || {}; } catch(e) { return {}; } }
+function saveUpLocalState(s) { localStorage.setItem(UP_STORAGE_KEY, JSON.stringify(s)); }
+
+async function getUpRemoteState() {
+  try {
+    const { data, error } = await sb.from('checklist').select('state').eq('id', UP_ROW_ID).single();
+    if (error && error.code === 'PGRST116') {
+      const { data: newData } = await sb.from('checklist').insert({ id: UP_ROW_ID, state: {} }).select('state').single();
+      return newData?.state || {};
+    }
+    if (error) throw error;
+    return data?.state || {};
+  } catch(e) {
+    console.warn('UP Supabase read failed, using localStorage:', e);
+    return null;
+  }
+}
+
+async function saveUpRemoteState(s) {
+  try {
+    await sb.from('checklist').upsert({ id: UP_ROW_ID, state: s, updated_at: new Date().toISOString() });
+  } catch(e) {
+    console.warn('UP Supabase write failed:', e);
+  }
+}
+
+function applyUpState(state) {
+  const boxes = document.querySelectorAll('.up-item-head input[data-up]');
+  boxes.forEach(cb => {
+    const key = cb.getAttribute('data-up');
+    cb.checked = !!state[key];
+  });
+  updateUpProgress();
+}
+
+function updateUpProgress() {
+  const all = document.querySelectorAll('.up-item-head input[data-up]');
+  const done = [...all].filter(c => c.checked).length;
+  const pct = all.length ? Math.round(done / all.length * 100) : 0;
+  const bar = document.getElementById('up-bar');
+  const pctEl = document.getElementById('up-pct');
+  const statsEl = document.getElementById('up-stats-text');
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + ' %';
+  if (statsEl) statsEl.textContent = done + ' / ' + all.length + ' bodů odsouhlaseno';
+  if (bar) bar.style.background = pct === 100 ? 'linear-gradient(90deg,#e6c200,#FFD600,#ffe44d)' : 'linear-gradient(90deg,#e6c200,#FFD600)';
+}
+
+/* upSave — called from checkbox onchange */
+function upSave() {
+  const s = getUpLocalState();
+  document.querySelectorAll('.up-item-head input[data-up]').forEach(cb => {
+    s[cb.getAttribute('data-up')] = cb.checked;
+  });
+  saveUpLocalState(s);
+  saveUpRemoteState(s);
+  updateUpProgress();
+}
+
+/* upLoad — called on DOMContentLoaded */
+async function initUpTodos() {
+  const remoteState = await getUpRemoteState();
+  const localState = getUpLocalState();
+  const state = remoteState !== null ? remoteState : localState;
+
+  if (remoteState !== null && Object.keys(remoteState).length === 0 && Object.keys(localState).length > 0) {
+    await saveUpRemoteState(localState);
+    applyUpState(localState);
+  } else {
+    applyUpState(state);
+    saveUpLocalState(state);
+  }
+
+  updateUpProgress();
+
+  // UP realtime subscription
+  sb.channel('checklist-up-changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'checklist', filter: 'id=eq.up-main' }, (payload) => {
+      const newState = payload.new?.state || {};
+      saveUpLocalState(newState);
+      applyUpState(newState);
+    })
+    .subscribe();
+}
+
+async function resetUpTodos() {
+  if (!confirm('Opravdu resetovat všechny Update Plan checkboxy?')) return;
+  localStorage.removeItem(UP_STORAGE_KEY);
+  await saveUpRemoteState({});
+  document.querySelectorAll('.up-item-head input[data-up]').forEach(cb => { cb.checked = false; });
+  updateUpProgress();
+}
 
 /* ═══════════════════════════════════════════
    AI ASK ASSISTANT v2 — Claude Sonnet 4.6
