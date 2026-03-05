@@ -7685,6 +7685,42 @@ flowchart LR
 <div id="up-stats-text" style="text-align:center;color:#666;font-size:.8em;margin-top:8px">0 / 0 bodů odsouhlaseno</div>
 </div>
 
+<!-- ── Agent: Statistický přehled ── -->
+<div style="margin:0 20px 20px;padding:20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:14px;text-align:center">📊 Přehled — 13 sekcí pro agentury</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#FFD600">4</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">📋 Správa &amp; Komunikace</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Oznámení, Zprávy, Profil, Historie</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#4fb169">5</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">👥 Nábor &amp; Práce</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Poptávka, Kandidáti, Lidé, Pozice, Docházka</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#2196F3">4</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">💰 Finance &amp; Služby</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Mzdová Kalkulačka, Smlouvy, Faktury, Doplňkové</div>
+</div>
+</div>
+</div>
+
+<!-- ── Agent: Workflow diagram ── -->
+<div style="margin:0 20px 20px;padding:16px 20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:12px;text-align:center">🔄 Workflow agentury v Dilibees</div>
+<div class="mermaid-up" style="background:#111;padding:20px;border-radius:8px;text-align:center;overflow-x:auto">
+flowchart LR
+    A["Vytvoreni poptavky"] --> B["System paruje kandidaty"]
+    B --> C["Vyber a Pohovory"]
+    C --> D["Smlouvy a Nastup"]
+    D --> E["Dochazka a Prace"]
+    E --> F["Fakturace a Vyplata"]
+    F --> G["Statistiky a Hodnoceni"]
+</div>
+</div>
+
 <div class="up-section">
 <div class="up-section-title">1. 🔔 Oznámení</div>
 <div class="up-section-body">
@@ -7886,7 +7922,56 @@ flowchart LR
 <div style="text-align:center;padding:30px 20px 10px">
 <h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">👷 Profil Zaměstnance — Update Plan</h2>
 <p style="color:#888;font-size:.95em;margin-bottom:6px">Kompletní přehled funkcí pro zaměstnance a uchazeče o práci.</p>
-<p style="color:#666;font-size:.85em">Největší profil v systému — 20 sekcí pokrývajících celou cestu pracovníka od registrace po ukončení práce.</p>
+<p style="color:#666;font-size:.85em">Největší profil v systému — 22 sekcí pokrývajících celou cestu pracovníka od registrace po ukončení práce.</p>
+</div>
+
+<!-- ── Statistický přehled kategorií ── -->
+<div style="margin:0 20px 20px;padding:20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:14px;text-align:center">📊 Přehled kategorií — 22 sekcí ve 4 oblastech</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#FFD600">5</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">🔧 Komunikace &amp; Profil</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Oznámení, Zprávy, Účet, Životopis, Plán</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#4fb169">5</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">📚 Práce &amp; Vzdělávání</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Docházka, Lekce, Certifikace, Smlouvy, Kariéra</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#2196F3">8</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">🏠 Finance &amp; Život v zahraničí</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Kindergeld, Daně, Bydlení, Úřady, Pojišťovna, Banka, Pojištění, Odměny</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:14px;text-align:center">
+<div style="font-size:2em;font-weight:800;color:#FF9800">4</div>
+<div style="color:#ccc;font-size:.85em;margin-top:4px">🎁 Nástroje &amp; Doplňky</div>
+<div style="color:#666;font-size:.75em;margin-top:4px">Pomocníci, E-Booky, Slevy, Ukončení</div>
+</div>
+</div>
+</div>
+
+<!-- ── Mermaid: Cesta zaměstnance ── -->
+<div style="margin:0 20px 20px;padding:16px 20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:12px;text-align:center">🗺️ Cesta zaměstnance v systému Dilibees</div>
+<div class="mermaid-up" style="background:#111;padding:20px;border-radius:8px;text-align:center;overflow-x:auto">
+flowchart LR
+    A["Registrace"] --> B["Profil a Zivotopis"]
+    B --> C["Plan a Smlouvy"]
+    C --> D["Prace a Dochazka"]
+    D --> E["Vyplata a Odmeny"]
+    E --> F["Vzdelavani"]
+    F --> G["Zivot v zahranici"]
+    G --> H["Ukonceni"]
+
+    D --> I["Certifikace"]
+    D --> J["Jazykove lekce"]
+    G --> K["Pojistovna"]
+    G --> L["Banka"]
+    G --> M["Urady"]
+    G --> N["Kindergeld"]
+</div>
 </div>
 
 <div class="up-section">
@@ -7901,7 +7986,18 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">2. 👤 Můj Účet</div>
+<div class="up-section-title">2. 💬 Zprávy</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-zpravy" onchange="upSave()"><span class="up-item-title">Komunikace s adminem</span></label></div>
+<div class="up-item-desc">Zaměstnanec bude moci psát zprávy přímo adminovi Dilibees — řešit otázky k práci, smlouvám, výplatám nebo čemukoliv dalšímu. Veškerá komunikace na jednom místě, přehledně a s historií.</div>
+<div class="up-item-example">Příklad: Pracovník napíše „Dobrý den, potřebuji přeložit svou novou pracovní smlouvu" → admin odpoví přímo v systému a přiloží překlad.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">3. 👤 Můj Účet</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-ucet" onchange="upSave()"><span class="up-item-title">Osobní nastavení — beze změn</span></label></div>
@@ -7911,7 +8007,7 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">3. 📄 Můj životopis</div>
+<div class="up-section-title">4. 📄 Můj životopis</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-zivotopis" onchange="upSave()"><span class="up-item-title">Životopis — beze změn, pouze přesun pod tlačítko</span></label></div>
@@ -7921,7 +8017,23 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">4. 🕐 Evidence docházky a Mzda</div>
+<div class="up-section-title">5. 🗺️ Můj plán (kariérní mapa)</div>
+<div class="up-section-body">
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-plan-ukoly" onchange="upSave()"><span class="up-item-title">Osobní plán — bod po bodu s checkboxy</span></label></div>
+<div class="up-item-desc">Při osobním rozhovoru se s pracovníkem dohodne kariérní postup. Ten se rozepíše do konkrétních bodů (styl poznámky), každý bod má kolečko na zaškrtnutí. Pracovník průběžně zaškrtává splněné úkoly a vidí svůj pokrok.</div>
+<div class="up-item-example">Příklad: „✅ Získat svářečský certifikát MIG/MAG ☐ Absolvovat jazykový kurz A2 ☐ Splnit 3 měsíce na zkušební pozici" — pracovník zaškrtává jak postupuje.</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-plan-mapa" onchange="upSave()"><span class="up-item-title">Interaktivní mapa — vizuální přehled cesty</span></label></div>
+<div class="up-item-desc">Pod úkoly bude interaktivní mapa zobrazující plánovanou kariérní cestu. Mapa musí být responzivní a správně fungovat na telefonu (nesmí ujíždět do stran).</div>
+<div class="up-item-example">Příklad: Mapa ukazuje: „Registrace → Certifikace → První pozice (Mnichov) → Stálá pozice (Hamburk) → Vedoucí týmu" s aktuální polohou pracovníka.</div>
+</div>
+</div>
+</div>
+
+<div class="up-section">
+<div class="up-section-title">6. 🕐 Evidence docházky a Mzda</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-dochazka" onchange="upSave()"><span class="up-item-title">Zápis hodin + mzdová kalkulačka</span></label></div>
@@ -7932,28 +8044,38 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">5. 🗣️ Jazykové lekce</div>
+<div class="up-section-title">7. 🗣️ Jazykové lekce</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-jazyky" onchange="upSave()"><span class="up-item-title">Popis služby + cena</span></label></div>
-<div class="up-item-desc">Informační stránka o jazykových lekcích, které Dilibees nabízí. Pracovník uvidí popis služby a cenu (299 €).</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-jazyky" onchange="upSave()"><span class="up-item-title">Individuální výuka 1-na-1 s profesionálním lektorem</span></label></div>
+<div class="up-item-desc">Žádné skupinové kurzy — výuka je čistě individuální (1 student + 1 lektor). Přizpůsobeno tempu, potřebám i cílům pracovníka.<br>
+<strong>Formát:</strong> balíček na 10 týdnů (~2,5 měsíce), pravidelná setkání dle rozvrhu, materiály a domácí úkoly na míru.<br>
+<strong>Zaměření:</strong> běžná komunikace, pracovní jazyk nebo odborná slovní zásoba.<br>
+<strong>Lektor:</strong> soudní tlumočnice a překladatelka s 20+ lety zkušeností, tisíce hodin výuky.<br>
+<strong>Cena:</strong> 299 EUR za celý balíček (10 týdnů).</div>
+<div class="up-item-example">Příklad: Pracovník si objedná kurz němčiny → 10 týdnů intenzivní výuky s lektorkou → naučí se komunikovat s kolegy i šéfem na pracovišti.</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">6. 🔧 Certifikace</div>
+<div class="up-section-title">8. 🔧 Certifikace a svářečské kurzy</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-certifikace" onchange="upSave()"><span class="up-item-title">Přehled dostupných certifikací</span></label></div>
-<div class="up-item-desc">Informace o tom, proč jsou certifikace důležité a jaké aktuálně zajišťujeme — zejména svářečské certifikáty všech druhů. U každého typu certifikace: popis služby a cena (od 599 €).</div>
-<div class="up-item-example">Příklad: „Svářečský certifikát EN ISO 9606-1 (MIG/MAG) — platnost 2 roky, cena 599 €. Zajistíme přihlášení, přípravu i dopravu na zkoušku."</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-certifikace" onchange="upSave()"><span class="up-item-title">Profesionální kurzy + mezinárodně platné zkoušky</span></label></div>
+<div class="up-item-desc">Informace proč jsou certifikace důležité a jaké aktuálně zajišťujeme přes naši Welding Academy.<br>
+<strong>Metody:</strong> MIG, MAG, TIG, MMA (elektroda) — kurzy pro začátečníky i zkušené svářeče.<br>
+<strong>Certifikace:</strong> EN ISO 9606-1 (mezinárodně platný svářečský průkaz), tréninkové dny pod vedením profesionálů.<br>
+<strong>Formát:</strong> výuka v malých skupinách nebo 1:1, partnerské školy po celé ČR i Evropě.<br>
+<strong>Co získáte:</strong> certifikát/průkaz dle normy, praktické zkušenosti, přednostní nabídky práce od partnerů v zahraničí, možnost dalšího růstu (i podvodní svařování).<br>
+<strong>Cena:</strong> od 599 EUR (dle typu kurzu, délky a požadovaných zkoušek — nabídku vytvoříme na míru).</div>
+<div class="up-item-example">Příklad: Pracovník chce svářečský certifikát MIG/MAG → přihlásíme ho do partnerské školy → za 2 týdny má mezinárodně platný průkaz EN ISO 9606-1 → hned dostane nabídky pozic s vyšší hodinovkou.</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">7. 📑 Smlouvy</div>
+<div class="up-section-title">9. 📑 Smlouvy</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-smlouvy" onchange="upSave()"><span class="up-item-title">Pracovní smlouva (foto + překlad) a výpověď</span></label></div>
@@ -7964,18 +8086,22 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">8. 👶 Příspěvky na děti (Kindergeld)</div>
+<div class="up-section-title">10. 👶 Příspěvky na děti (Kindergeld)</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-deti" onchange="upSave()"><span class="up-item-title">Kompletní průvodce + potřebné dokumenty</span></label></div>
-<div class="up-item-desc">Vysvětlení co je Kindergeld, jak ho získat, kolik dostanete a jaké dokumenty potřebujete. Cena služby za vyřízení: uvedena u služby. Potřebné dokumenty: formulář KG1, rodné listy dětí, ID, potvrzení o zaměstnání, výplatní pásky, potvrzení o bydlišti, bankovní spojení. Pro děti žijící v jiné zemi: formuláře E401 a E411 (CZ) + potvrzení, že druhý rodič nepobírá příspěvky.</div>
-<div class="up-item-example">Příklad: Pracovník se 2 dětmi v Německu → Kindergeld 250 € × 2 = 500 €/měsíc = 6 000 €/rok navíc. Dilibees pomůže s vyplněním formuláře a podáním žádosti.</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-deti" onchange="upSave()"><span class="up-item-title">Kompletní vyřízení Kindergeldu — my to zařídíme za vás</span></label></div>
+<div class="up-item-desc">Kindergeld je finanční příspěvek na děti od státu. Nárok má každý, kdo pracuje a odvádí daně v Německu/Rakousku/Švýcarsku — i když děti žijí v jiné zemi EU (CZ, SK, PL).<br>
+<strong>Co za vás uděláme:</strong> kompletní zpracování a podání žádosti, překlad a vyplnění dokumentů, komunikace s úřadem, kontrola nároku + zpětné vyplacení až 6 měsíců zpětně.<br>
+<strong>Podpora:</strong> v češtině, slovenštině i polštině.<br>
+<strong>Potřebné dokumenty:</strong> formulář KG1, rodné listy dětí, ID, potvrzení o zaměstnání, výplatní pásky, potvrzení o bydlišti, bankovní spojení. Pro děti v jiné zemi: E401 a E411 (CZ) + potvrzení, že druhý rodič nepobírá.<br>
+<strong>Cena služby:</strong> 249 EUR.</div>
+<div class="up-item-example">Příklad: Pracovník se 2 dětmi v Německu → Kindergeld 250 € × 2 = 500 €/měsíc = 6 000 €/rok navíc. Za 249 € mu Dilibees zařídí vše — sám nemusí řešit žádný formulář.</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">9. 📊 Daňové přiznání</div>
+<div class="up-section-title">11. 📊 Daňové přiznání</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-dane" onchange="upSave()"><span class="up-item-title">Služba + složky na soubory</span></label></div>
@@ -7993,18 +8119,27 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">10. 🧭 Pomocníci v novém prostředí</div>
+<div class="up-section-title">12. 🧭 Pomocníci v novém prostředí</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-pomocnici" onchange="upSave()"><span class="up-item-title">Chat GPT rádce + Mapy</span></label></div>
-<div class="up-item-desc">Dva praktické návody: jak používat Chat GPT jako univerzálního rádce (překlad, orientace, doprava) a jak se zorientovat v nové lokalitě pomocí map.</div>
-<div class="up-item-example">Příklad: Pracovník přijede do nového města → otevře návod „Mapy" → zjistí kde je nejbližší obchod, lékař, úřad.</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-pomocnici-gpt" onchange="upSave()"><span class="up-item-title">Návod: Jak používat ChatGPT jako řemeslník v zahraničí</span></label></div>
+<div class="up-item-desc">Detailní průvodce krok za krokem — jak si stáhnout aplikaci ChatGPT (odkaz na App Store i Google Play), jak pokládat otázky, co všechno umí najít.<br>
+<strong>Jazyková pomoc:</strong> překlad e-mailu, příprava odpovědi šéfovi, vysvětlení složitých vět.<br>
+<strong>Praktické info:</strong> nejbližší obchod, pumpa, bankomat, nemocnice, doprava z letiště.<br>
+<strong>Organizace:</strong> seznam úkolů, plán školení, jednoduché návody.<br>
+<strong>Osobní rozvoj:</strong> učení jazyka, trénink pohovorů, odborná témata.<br>
+<strong>Tip:</strong> Piš krátce a jasně, vždy uveď město. „Kde je nejbližší Lidl v Berlíně?" je lepší než „Kde je obchod?"</div>
+<div class="up-item-example">Příklad: „Jak se dostanu z letiště v Madridu do centra?" → ChatGPT odpoví: „Metro linka 8 do Nuevos Ministerios, cena 4,50 €, jede 15 minut."</div>
+</div>
+<div class="up-item">
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-pomocnici-mapy" onchange="upSave()"><span class="up-item-title">Návod: Google Mapy — orientace v nové lokalitě</span></label></div>
+<div class="up-item-desc">Praktický průvodce jak používat Google Mapy k zorientování se v novém městě — najít cestu do práce, obchod, lékaře nebo úřad. Včetně offline map pro případ, že nemáte internet.</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">11. 🎁 Odměny za doporučení</div>
+<div class="up-section-title">13. 🎁 Odměny a Provize</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-odmeny" onchange="upSave()"><span class="up-item-title">Doporučení nových kolegů — funguje jako dosud</span></label></div>
@@ -8014,17 +8149,18 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">12. 🏠 Bydlení</div>
+<div class="up-section-title">14. 🏠 Bydlení</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-bydleni" onchange="upSave()"><span class="up-item-title">Služba zajištění bydlení</span></label></div>
-<div class="up-item-desc">Popis služby — Dilibees pomáhá se zajištěním skutečného bydlení (ne ubytovna). Uvedena cena služby.</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-bydleni" onchange="upSave()"><span class="up-item-title">Zajištění skutečného bydlení (ne ubytovna)</span></label></div>
+<div class="up-item-desc">Pomoc při hledání a zařízení skutečného bydlení v zahraničí — nájem, energie, smlouvy. Vše zařídíme online (WhatsApp / telefon / e-mail) ve vašem jménu a jazyce.<br>
+<strong>Cena:</strong> 1,29 EUR/minuta (účtováno po minutách, žádné skryté poplatky).</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">13. 🏛️ Úřady</div>
+<div class="up-section-title">15. 🏛️ Úřady</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-urady" onchange="upSave()"><span class="up-item-title">Pomoc s úřady v zahraničí</span></label></div>
@@ -8035,17 +8171,18 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">14. 🏥 Zdravotní pojišťovna</div>
+<div class="up-section-title">16. 🏥 Zdravotní pojišťovna</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-pojistovna" onchange="upSave()"><span class="up-item-title">Přehled zdravotního pojištění + pomoc s řešením</span></label></div>
-<div class="up-item-desc">Co, jak a proč ohledně zdravotního pojištění v zahraničí. Cena za jakoukoliv operaci s pojišťovnami (přeregistrace, změna, reklamace).</div>
+<div class="up-item-desc">Kompletní přehled o zdravotním pojištění v zahraničí — co potřebujete, jak to funguje, na co máte nárok. Pomůžeme s komunikací s pojišťovnami (veřejné i soukromé) — přeregistrace, změna, reklamace.<br>
+<strong>Cena:</strong> 1,29 EUR/minuta za veškeré operace s pojišťovnami.</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">15. 🏦 Bankovní systém</div>
+<div class="up-section-title">17. 🏦 Bankovní systém</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-banka" onchange="upSave()"><span class="up-item-title">Bankovní služby — účet, půjčka, hypotéka</span></label></div>
@@ -8055,7 +8192,7 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">16. 🛡️ Pojištění rizik</div>
+<div class="up-section-title">18. 🛡️ Pojištění rizik</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-pojisteni" onchange="upSave()"><span class="up-item-title">Vzdělávací obsah (video + E-Book)</span></label></div>
@@ -8065,18 +8202,23 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">17. 🗺️ Kariérní poradenství</div>
+<div class="up-section-title">19. 🗺️ Kariérní poradenství</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-kariera" onchange="upSave()"><span class="up-item-title">Osobní kariérní mapa s plánovanou cestou</span></label></div>
-<div class="up-item-desc">Každý pracovník bude mít svou „kariérní mapu" — vizuální přehled jeho cesty. Naplánované kroky (milníky), rozepsané body co je potřeba udělat, a zaškrtávání splněných bodů (styl poznámky/to-do list). Cena služby: 199 €/hodinu s kariérním poradcem.</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-kariera" onchange="upSave()"><span class="up-item-title">Kariérní poradenství s profesionálním vedením</span></label></div>
+<div class="up-item-desc">Při osobním rozhovoru se společně dohodnete na kariérním postupu odpovídajícím zkušenostem, dovednostem a cílům pracovníka.<br>
+<strong>Ceník:</strong><br>
+• Úvodní vstupní poradenství — <strong>ZDARMA</strong> (rozbor situace a možností)<br>
+• Následná konzultace do 30 min — <strong>ZDARMA</strong> (konkrétní kroky)<br>
+• Další kariérní poradenství — <strong>199 EUR/hodina</strong> (intenzivní vedení, mentoring, konkrétní doporučení)<br>
+Dilibees má dlouholeté zkušenosti s pracovními trhy v zahraničí a díky dosahu a datům perfektní přehled o tom, jak to v Evropě funguje.</div>
 <div class="up-item-example">Příklad: Milník 1: „Získat svářečský certifikát" ✅ → Milník 2: „Najít práci v Německu" ✅ → Milník 3: „Zvýšit hodinovku na 20 €" → Milník 4: „Přivézt rodinu".</div>
 </div>
 </div>
 </div>
 
 <div class="up-section">
-<div class="up-section-title">18. 📚 E-Booky</div>
+<div class="up-section-title">20. 📚 E-Booky</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-ebook" onchange="upSave()"><span class="up-item-title">Knihovna E-Booků — beze změn</span></label></div>
@@ -8086,7 +8228,7 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">19. 🏷️ Slevové kódy</div>
+<div class="up-section-title">21. 🏷️ Slevové kódy</div>
 <div class="up-section-body">
 <div class="up-item">
 <div class="up-item-head"><label><input type="checkbox" data-up="emp-slevy" onchange="upSave()"><span class="up-item-title">Partnerské slevy (Dilibeespartners)</span></label></div>
@@ -8096,12 +8238,17 @@ flowchart LR
 </div>
 
 <div class="up-section">
-<div class="up-section-title">20. 🚪 Ukončení práce v zahraničí</div>
+<div class="up-section-title">22. 🚪 Ukončení práce v zahraničí</div>
 <div class="up-section-body">
 <div class="up-item">
-<div class="up-item-head"><label><input type="checkbox" data-up="emp-ukonceni" onchange="upSave()"><span class="up-item-title">Kompletní průvodce ukončením + E-Book</span></label></div>
-<div class="up-item-desc">Krok za krokem průvodce, co vše vyřídit při ukončení práce v zahraničí: výpověď pracovní smlouvy, zrušení ubytování, odhlášení z úřadů, zrušení pojistek. Bude k dispozici i E-Book s detailním návodem.</div>
-<div class="up-item-example">Příklad: Pracovník se rozhodne vrátit do ČR → otevře průvodce → krok 1: „Dej výpověď 4 týdny předem" → krok 2: „Nahlás ukončení na Finanzamt" → krok 3: „Odhlas se z pojišťovny"...</div>
+<div class="up-item-head"><label><input type="checkbox" data-up="emp-ukonceni" onchange="upSave()"><span class="up-item-title">Kompletní průvodce ukončením — 4 kroky + E-Book</span></label></div>
+<div class="up-item-desc">Krok za krokem průvodce, co vše vyřídit při ukončení práce v zahraničí:<br>
+<strong>1. Výpověď v zaměstnání:</strong> písemně (osobně nebo doporučeně), zkontrolovat výpovědní lhůtu ve smlouvě (2 dny–2 měsíce), ponechat si kopii s potvrzením, vyzvednout poslední výplatní pásku a roční přehled příjmů.<br>
+<strong>2. Ubytování:</strong> písemná výpověď nájemní smlouvy (obvykle 1 měsíc), vrátit pokoj v pořádku, předávací protokol + fotodokumentace, odhlásit energie.<br>
+<strong>3. Úřady:</strong> odhlášení z pobytu (DE = Abmeldung), často lze i poštou nebo online, předejít problémům s poštou/pojištěním/daněmi.<br>
+<strong>4. Pojišťovny:</strong> vypovědět zahraniční pojištění ke dni ukončení práce, vyžádat si potvrzení, po návratu se přihlásit zpět ke své pojišťovně (doložit pojištění v zahraničí).<br>
+Navíc: E-Book s detailním návodem pro každou zemi. Potřebujete-li asistenci, Dilibees to vyřídí za vás.</div>
+<div class="up-item-example">Příklad: Pracovník se rozhodne vrátit do ČR → otevře průvodce → „Dej výpověď 4 týdny předem" → „Napiš Abmeldung" → „Zruš pojistku" → „Přihlas se zpět u VZP" → hotovo, žádné dluhy.</div>
 </div>
 </div>
 </div>
@@ -8115,6 +8262,19 @@ flowchart LR
 <h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">🎯 Profil Hunter / Náborář — Update Plan</h2>
 <p style="color:#888;font-size:.95em;margin-bottom:6px">Funkce pro náboráře, kteří doporučují nové pracovníky.</p>
 <p style="color:#666;font-size:.85em">Důležité: Tento profil je skrytý uvnitř profilu zaměstnance — každý registrovaný se může stát i Hunterem. Provize je u každého Huntera individuální (nastavuje admin).</p>
+</div>
+
+<!-- ── Hunter: Workflow diagram ── -->
+<div style="margin:0 20px 20px;padding:16px 20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:12px;text-align:center">🔄 Jak funguje Hunter program</div>
+<div class="mermaid-up" style="background:#111;padding:20px;border-radius:8px;text-align:center;overflow-x:auto">
+flowchart LR
+    A["Sdileni odkazu"] --> B["Kandidat se registruje"]
+    B --> C["Overeni a Schvaleni"]
+    C --> D["Kandidat nastoupi"]
+    D --> E["Provize pripsana"]
+    E --> F["Statistiky a Hodnoceni"]
+</div>
 </div>
 
 <div class="up-section">
@@ -8220,6 +8380,51 @@ flowchart LR
 <h2 style="font-size:1.6em;color:#FFD600;font-weight:800;margin-bottom:8px">💰 Mzdová Kalkulačka — Update Plan</h2>
 <p style="color:#888;font-size:.95em;margin-bottom:6px">Kalkulačka čistého příjmu pro 5 zemí — používá se v profilu zaměstnance i agenta.</p>
 <p style="color:#666;font-size:.85em">Pracovník zadá brutto hodinovku → kalkulačka spočítá čistý měsíční příjem včetně diet, příspěvků na děti a odhadu vrácení daní.</p>
+</div>
+
+<!-- ── Kalkulačka: Přehled zemí ── -->
+<div style="margin:0 20px 20px;padding:20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:14px;text-align:center">🌍 Podporované země — 5 kalkulaček</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;text-align:center">
+<div style="font-size:1.8em">🇩🇪</div>
+<div style="color:#ccc;font-size:.85em;font-weight:600;margin-top:4px">Německo</div>
+<div style="color:#666;font-size:.7em">6 daňových tříd</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;text-align:center">
+<div style="font-size:1.8em">🇦🇹</div>
+<div style="color:#ccc;font-size:.85em;font-weight:600;margin-top:4px">Rakousko</div>
+<div style="color:#666;font-size:.7em">13./14. plat</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;text-align:center">
+<div style="font-size:1.8em">🇳🇱</div>
+<div style="color:#ccc;font-size:.85em;font-weight:600;margin-top:4px">Nizozemsko</div>
+<div style="color:#666;font-size:.7em">30 % ruling</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;text-align:center">
+<div style="font-size:1.8em">🇧🇪</div>
+<div style="color:#ccc;font-size:.85em;font-weight:600;margin-top:4px">Belgie</div>
+<div style="color:#666;font-size:.7em">Flexi příjem</div>
+</div>
+<div style="background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:12px;text-align:center">
+<div style="font-size:1.8em">🇨🇿</div>
+<div style="color:#ccc;font-size:.85em;font-weight:600;margin-top:4px">Česko</div>
+<div style="color:#666;font-size:.7em">Superhrubá mzda</div>
+</div>
+</div>
+</div>
+
+<!-- ── Kalkulačka: Výpočetní flow ── -->
+<div style="margin:0 20px 20px;padding:16px 20px;background:#111;border:1px solid #222;border-radius:12px">
+<div style="color:#FFD600;font-weight:700;font-size:.95em;margin-bottom:12px;text-align:center">⚙️ Jak kalkulačka funguje</div>
+<div class="mermaid-up" style="background:#111;padding:20px;border-radius:8px;text-align:center;overflow-x:auto">
+flowchart LR
+    A["Brutto / hod."] --> B["Volba zeme a tridy"]
+    B --> C["Vypocet srazek"]
+    C --> D["Netto prijem"]
+    D --> E["Dieta + Kindergeld"]
+    E --> F["Celkovy cisty prijem"]
+</div>
 </div>
 
 <div class="up-section">
@@ -8349,6 +8554,19 @@ function switchMode(mode) {
     btnUpdate.classList.add('mode-on');
     document.getElementById('t-up-agent').classList.add('on');
     updateTabs.querySelectorAll('.tbtn').forEach((b,i) => b.classList.toggle('on', i === 0));
+    // Lazy-render Mermaid diagrams (they fail when rendered while display:none)
+    setTimeout(function(){
+      document.querySelectorAll('.mermaid-up').forEach(function(el, idx){
+        if(el.dataset.rendered) return;
+        var code = el.textContent.trim();
+        if(code){
+          mermaid.render('up-d-'+idx, code).then(function(r){
+            el.innerHTML = r.svg;
+            el.dataset.rendered = '1';
+          }).catch(function(e){ console.warn('Mermaid render error:', e); });
+        }
+      });
+    }, 150);
   }
 }
 
