@@ -111,25 +111,41 @@ tr:hover td{background:rgba(88,166,255,.04)}
 .mode-dev-hide{display:none!important}
 .mode-ux-hide{display:none!important}
 
-/* AI ASK ASSISTANT */
+/* AI ASK ASSISTANT v2 — Chat UI + Streaming */
 .ai-bar{margin:16px 0 8px;background:#111111;border:1px solid #222222;border-radius:10px;padding:12px 16px}
-.ai-bar-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ai-bar-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .ai-bar-header span{color:#FFD600;font-weight:700;font-size:.95em}
 .ai-bar-header .ai-model{color:#666;font-size:.78em;font-weight:400}
-.ai-bar-header .ai-settings-btn{margin-left:auto;background:none;border:1px solid #333;border-radius:6px;color:#888;cursor:pointer;padding:4px 10px;font-size:.8em;font-family:inherit;transition:.2s}
-.ai-bar-header .ai-settings-btn:hover{color:#FFD600;border-color:#FFD600}
+.ai-bar-header .ai-header-btns{margin-left:auto;display:flex;gap:6px;align-items:center}
+.ai-bar-header .ai-settings-btn,.ai-bar-header .ai-clear-btn{background:none;border:1px solid #333;border-radius:6px;color:#888;cursor:pointer;padding:4px 10px;font-size:.8em;font-family:inherit;transition:.2s}
+.ai-bar-header .ai-settings-btn:hover,.ai-bar-header .ai-clear-btn:hover{color:#FFD600;border-color:#FFD600}
+.ai-chat-history{max-height:500px;overflow-y:auto;margin-bottom:10px;display:none;scroll-behavior:smooth}
+.ai-chat-history.visible{display:block}
+.ai-msg{margin-bottom:10px;display:flex}
+.ai-msg-user{justify-content:flex-end}
+.ai-msg-ai{justify-content:flex-start}
+.ai-msg-bubble{max-width:85%;padding:10px 14px;border-radius:10px;font-size:.92em;line-height:1.7;word-wrap:break-word}
+.ai-msg-user .ai-msg-bubble{background:#1a1a00;border:1px solid #333300;color:#e0e0e0;border-bottom-right-radius:3px}
+.ai-msg-ai .ai-msg-bubble{background:#0a0a0a;border:1px solid #222;color:#e0e0e0;border-bottom-left-radius:3px}
+.ai-msg-bubble code{background:#1a1a1a;padding:1px 6px;border-radius:3px;font-size:.88em;color:#FFD600;font-family:'Fira Code',monospace}
+.ai-msg-bubble pre{background:#0d0d0d;border:1px solid #222;border-radius:6px;padding:10px 12px;overflow-x:auto;margin:8px 0}
+.ai-msg-bubble pre code{background:none;padding:0;color:#ccc;font-size:.85em}
+.ai-msg-bubble strong{color:#FFD600}
+.ai-msg-bubble .ai-typing{color:#FFD600;animation:aiBlink 1s infinite}
 .ai-input-row{display:flex;gap:8px}
 .ai-input-row input{flex:1;background:#0a0a0a;border:1px solid #333;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:.92em;font-family:inherit;outline:none;transition:.2s}
 .ai-input-row input:focus{border-color:#FFD600;box-shadow:0 0 0 2px rgba(255,214,0,.15)}
 .ai-input-row input::placeholder{color:#555}
-.ai-input-row button{background:linear-gradient(135deg,#FFD600,#e6c200);color:#000;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:.92em;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
-.ai-input-row button:hover{background:linear-gradient(135deg,#ffe033,#FFD600);box-shadow:0 2px 12px rgba(255,214,0,.3)}
+.ai-input-row button{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:.92em;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+.ai-input-row .ai-ask-btn{background:linear-gradient(135deg,#FFD600,#e6c200);color:#000}
+.ai-input-row .ai-ask-btn:hover{background:linear-gradient(135deg,#ffe033,#FFD600);box-shadow:0 2px 12px rgba(255,214,0,.3)}
+.ai-input-row .ai-stop-btn{background:linear-gradient(135deg,#ff4444,#cc0000);color:#fff}
+.ai-input-row .ai-stop-btn:hover{background:linear-gradient(135deg,#ff6666,#ff4444);box-shadow:0 2px 12px rgba(255,68,68,.3)}
 .ai-input-row button:disabled{opacity:.5;cursor:not-allowed}
-.ai-response{margin-top:12px;display:none}
-.ai-response.visible{display:block}
-.ai-response-box{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:16px;color:#e0e0e0;font-size:.92em;line-height:1.7;max-height:400px;overflow-y:auto;white-space:pre-wrap;word-wrap:break-word}
-.ai-response-box code{background:#1a1a1a;padding:1px 6px;border-radius:3px;font-size:.88em;color:#FFD600;font-family:'Fira Code',monospace}
-.ai-response-box .ai-typing{color:#FFD600;animation:aiBlink 1s infinite}
+.ai-cost{display:flex;justify-content:flex-end;gap:12px;margin-top:6px;font-size:.72em;color:#555}
+.ai-cost span{display:inline-flex;align-items:center;gap:3px}
+.ai-cost .cached{color:#4a9}
+.ai-cost .total{color:#888}
 @keyframes aiBlink{0%,100%{opacity:1}50%{opacity:.3}}
 .ai-key-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center}
 .ai-key-modal-box{background:#111;border:1px solid #333;border-radius:12px;padding:28px;max-width:440px;width:90%}
@@ -254,20 +270,23 @@ tr:hover td{background:rgba(88,166,255,.04)}
 <a href="gap-analysis-report.html" class="mode-btn" style="text-decoration:none;display:inline-block">📊 Gap Analysis</a>
 </div>
 
-<!-- AI ASK ASSISTANT -->
+<!-- AI ASK ASSISTANT v2 -->
 <div class="ai-bar" id="ai-bar">
 <div class="ai-bar-header">
 <span>🤖 AI Asistent</span>
 <span class="ai-model">Claude Sonnet 4.6</span>
+<div class="ai-header-btns">
+<button class="ai-clear-btn" onclick="aiClearChat()" title="Vymazat historii chatu">🗑️ Vymazat chat</button>
 <button class="ai-settings-btn" onclick="aiShowKeyModal()" title="Nastavení API klíče">⚙️ API klíč</button>
 </div>
+</div>
+<div class="ai-chat-history" id="ai-chat-history"></div>
 <div class="ai-input-row">
-<input type="text" id="ai-question" placeholder="Zeptej se na cokoliv v dokumentaci..." onkeydown="if(event.key==='Enter')aiAsk()">
-<button id="ai-ask-btn" onclick="aiAsk()">Zeptat se</button>
+<input type="text" id="ai-question" placeholder="Zeptej se na cokoliv v dokumentaci..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)aiAsk()">
+<button id="ai-ask-btn" class="ai-ask-btn" onclick="aiAsk()">Zeptat se</button>
+<button id="ai-stop-btn" class="ai-stop-btn" onclick="aiStop()" style="display:none">Stop</button>
 </div>
-<div class="ai-response" id="ai-response">
-<div class="ai-response-box" id="ai-response-box"></div>
-</div>
+<div class="ai-cost" id="ai-cost"></div>
 </div>
 
 <div class="meta">
@@ -7885,10 +7904,69 @@ async function resetUxTodos() {
 document.addEventListener('DOMContentLoaded', () => { initTodos(); initUxTodos(); });
 
 /* ═══════════════════════════════════════════
-   AI ASK ASSISTANT — Claude Sonnet 4.6
+   AI ASK ASSISTANT v2 — Claude Sonnet 4.6
+   Rich prompt + Full extraction + Streaming + Chat history + Cost
    ═══════════════════════════════════════════ */
 const AI_KEY_STORAGE = 'dilibees-ai-api-key';
+let AI_DOC_CACHE = null;
+let AI_CHAT_HISTORY = [];
+const AI_MAX_HISTORY = 10;
+let AI_ABORT = null;
+let AI_STREAMING = false;
+let AI_TOTAL_COST = 0;
 
+/* ── RICH SYSTEM PROMPT ── */
+const AI_SYSTEM_PROMPT = `Jsi expertní AI asistent pro projekt **Dilibees 2.0** — komplexní agenturní HR systém pro dělnické profese (SaaS B2B platforma).
+
+## Co je Dilibees
+Dilibees je platforma pro personální agentury, které pronajímají (zapůjčují) dělníky klientským firmám. Systém řeší celý lifecycle: nábor pracovníka → přidělení ke klientovi → plánování směn → docházka → mzdové podklady → fakturace klientovi.
+
+## Uživatelské role
+- **Admin agentury** — správce celého systému, zakládá klienty, spravuje pracovníky, nastavuje mzdové sazby, vidí vše
+- **Klient (firma)** — objednává pracovníky, schvaluje docházku, vidí přiřazené pracovníky na svých zakázkách
+- **Pracovník (dělník)** — vidí své směny, zapisuje docházku, žádá o volno, vidí výplatní pásky
+- **Dispečer** — operativní plánování směn, řeší záskoky, přiřazuje pracovníky na pozice
+
+## Technologický stack
+- **Backend:** Supabase (PostgreSQL + Row Level Security + Edge Functions + Realtime)
+- **Mobilní app:** Flutter (Dart) — pro pracovníky
+- **Web dashboard:** Next.js + React + TypeScript + Tailwind CSS — pro adminy/klienty
+- **Auth:** Supabase Auth (email + magic link)
+- **Storage:** Supabase Storage (dokumenty, fotky)
+- **Notifikace:** Push (FCM), Email, In-app
+
+## Design systém
+- Primární barva: #000000 (černá), Accent: #FFD434 (žlutá Dilibees), Pozadí: #F8F8F8
+- Font: Exo 2 (headings), Inter (body)
+- Dark-first UI, minimalistický styl, žluté akcenty
+- Komponenty: Karty se zaoblenými rohy, status badge s tečkou, bottom navigation (mobilní)
+
+## Klíčové pojmy
+- **Zápůjčka (Assignment)** — přidělení pracovníka ke klientovi na určité období
+- **Směna (Shift)** — konkrétní pracovní blok (datum, čas od-do, pozice, místo)
+- **Docházka (Attendance)** — záznam odpracovaných hodin (check-in/out, přestávky)
+- **Přidělení (Allocation)** — mapování pracovník → směna
+- **Mzdová kalkulačka** — výpočet hrubé/čisté mzdy s příplatky (noc, víkend, svátek)
+- **Gap Analysis** — porovnání specifikace vs. implementace, identifikace chybějících částí
+- **RLS (Row Level Security)** — PostgreSQL politiky zajišťující, že uživatel vidí jen svá data
+
+## Struktura dokumentace
+Tato dokumentace má 3 módy:
+- **DEV mód** — technický (databáze, API, Edge Functions, RLS, testy)
+- **UI/UX mód** — design, wireframy, uživatelské flows, komponenty
+- **Prototypy mód** — interaktivní HTML prototypy obrazovek
+
+## Jak odpovídat
+1. Odpovídej **ČESKY**, srozumitelně a přesně
+2. Používej **odrážky a tučné písmo** pro přehlednost
+3. Když odpověď souvisí s více sekcemi, **odkaž na ně** (např. "viz DEV > Edge Functions")
+4. Pokud informace **není v dokumentaci**, řekni to upřímně a navrhni, kde by mohla být
+5. Pro technické dotazy uváděj **konkrétní tabulky, sloupce, funkce**
+6. Při vysvětlování flows popisuj **krok po kroku**
+7. Buď stručný ale kompletní — nepřeskakuj důležité detaily
+8. Pokud se uživatel ptá na něco mimo scope dokumentace, můžeš odpovědět na základě obecných znalostí, ale jasně označ, že to není z dokumentace`;
+
+/* ── API KEY ── */
 function aiGetKey() { return localStorage.getItem(AI_KEY_STORAGE) || ''; }
 function aiSetKey(k) { localStorage.setItem(AI_KEY_STORAGE, k); }
 
@@ -7916,55 +7994,213 @@ function aiSaveKey() {
   if (k) { aiSetKey(k); document.getElementById('ai-key-modal').remove(); }
 }
 
-function aiExtractContext() {
-  // Extrahuje textový obsah z aktuálně viditelných sekcí
-  const visibleSections = [];
+/* ── FULL DOCUMENTATION EXTRACTION ── */
+function aiExtractAllDocs() {
+  if (AI_DOC_CACHE) return AI_DOC_CACHE;
+  const sections = [];
 
-  // Zjisti aktivní mód
-  const devTabs = document.getElementById('tabs-dev');
-  const uxTabs = document.getElementById('tabs-ux');
-  const isDev = devTabs && devTabs.style.display !== 'none';
-  const isUx = uxTabs && uxTabs.style.display !== 'none';
-  const mode = isDev ? 'DEV' : isUx ? 'UI/UX' : 'Prototypy';
-
-  // Najdi aktivní tab content
-  const activeTabs = document.querySelectorAll('.tc.on');
-  activeTabs.forEach(tab => {
-    const text = tab.innerText.substring(0, 15000); // max 15k znaků per tab
-    if (text.trim()) visibleSections.push(text);
+  // DEV taby (button.tbtn v #tabs-dev) → obsah v .tc s ID t-over, t-hunt, t-agent atd.
+  const devTabBtns = document.querySelectorAll('#tabs-dev .tbtn');
+  const devIds = ['t-over','t-hunt','t-agent','t-emp','t-calc','t-arch','t-auto','t-legacy','t-todo'];
+  devTabBtns.forEach((btn, i) => {
+    const tc = document.getElementById(devIds[i]);
+    if (tc) {
+      const text = tc.innerText.trim();
+      if (text) sections.push(`[DEV > ${btn.textContent.trim()}]\n${text.substring(0, 4500)}`);
+    }
   });
 
-  // Pokud nic není viditelné, extrahuj celý wrap (zkrácený)
-  if (visibleSections.length === 0) {
-    const wrap = document.querySelector('.wrap');
-    if (wrap) visibleSections.push(wrap.innerText.substring(0, 30000));
+  // UX taby
+  const uxTabBtns = document.querySelectorAll('#tabs-ux .tbtn');
+  const uxIds = ['t-ux-system','t-ux-admin','t-ux-emp','t-ux-hunt','t-ux-agent','t-ux-flows','t-ux-todo'];
+  uxTabBtns.forEach((btn, i) => {
+    const tc = document.getElementById(uxIds[i]);
+    if (tc) {
+      const text = tc.innerText.trim();
+      if (text) sections.push(`[UI/UX > ${btn.textContent.trim()}]\n${text.substring(0, 5000)}`);
+    }
+  });
+
+  // Prototypy
+  const protoTc = document.getElementById('t-proto-hub');
+  if (protoTc) {
+    const text = protoTc.innerText.trim();
+    if (text) sections.push(`[Prototypy]\n${text.substring(0, 3000)}`);
   }
 
-  return { mode, content: visibleSections.join('\n\n---\n\n').substring(0, 50000) };
+  // Fallback
+  if (sections.length === 0) {
+    const wrap = document.querySelector('.wrap');
+    if (wrap) sections.push(wrap.innerText.substring(0, 60000));
+  }
+
+  AI_DOC_CACHE = sections.join('\n\n════════════════════\n\n').substring(0, 90000);
+  return AI_DOC_CACHE;
 }
 
+/* ── CHAT HISTORY UI ── */
+function aiAddMessage(role, text) {
+  const history = document.getElementById('ai-chat-history');
+  history.classList.add('visible');
+  const msg = document.createElement('div');
+  msg.className = `ai-msg ai-msg-${role}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'ai-msg-bubble';
+  if (role === 'user') {
+    bubble.textContent = text;
+  } else {
+    bubble.innerHTML = text;
+  }
+  msg.appendChild(bubble);
+  history.appendChild(msg);
+  history.scrollTop = history.scrollHeight;
+  return bubble;
+}
+
+function aiClearChat() {
+  AI_CHAT_HISTORY = [];
+  AI_TOTAL_COST = 0;
+  const history = document.getElementById('ai-chat-history');
+  history.innerHTML = '';
+  history.classList.remove('visible');
+  document.getElementById('ai-cost').innerHTML = '';
+}
+
+/* ── STREAMING + ABORT ── */
+function aiStop() {
+  if (AI_ABORT) { AI_ABORT.abort(); AI_ABORT = null; }
+}
+
+function aiSetUI(streaming) {
+  AI_STREAMING = streaming;
+  const askBtn = document.getElementById('ai-ask-btn');
+  const stopBtn = document.getElementById('ai-stop-btn');
+  const input = document.getElementById('ai-question');
+  if (streaming) {
+    askBtn.style.display = 'none';
+    stopBtn.style.display = '';
+    input.disabled = true;
+  } else {
+    askBtn.style.display = '';
+    stopBtn.style.display = 'none';
+    input.disabled = false;
+    input.focus();
+  }
+}
+
+/* ── COST TRACKING ── */
+function aiUpdateCost(usage) {
+  if (!usage) return;
+  const inputTokens = usage.input_tokens || 0;
+  const outputTokens = usage.output_tokens || 0;
+  const cacheRead = usage.cache_read_input_tokens || 0;
+  const cacheCreate = usage.cache_creation_input_tokens || 0;
+  const uncachedInput = inputTokens - cacheRead;
+
+  // Sonnet 4.6 pricing: input $3/MTok, cached $0.375/MTok, output $15/MTok, cache write $3.75/MTok
+  const costInput = (uncachedInput / 1000000) * 3;
+  const costCached = (cacheRead / 1000000) * 0.375;
+  const costCacheWrite = (cacheCreate / 1000000) * 3.75;
+  const costOutput = (outputTokens / 1000000) * 15;
+  const totalCall = costInput + costCached + costCacheWrite + costOutput;
+  AI_TOTAL_COST += totalCall;
+
+  const costDiv = document.getElementById('ai-cost');
+  const pct = inputTokens > 0 ? Math.round((cacheRead / inputTokens) * 100) : 0;
+  costDiv.innerHTML = `<span class="cached">⚡ Cache: ${pct}%</span>` +
+    `<span>Tento dotaz: $${totalCall.toFixed(4)}</span>` +
+    `<span class="total">Celkem: $${AI_TOTAL_COST.toFixed(4)}</span>`;
+}
+
+/* ── MARKDOWN RENDERER ── */
+function aiRenderMarkdown(text) {
+  // Escape HTML
+  let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Code blocks (fenced)
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (m, lang, code) => {
+    return `<pre><code>${code.trim()}</code></pre>`;
+  });
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Headers
+  html = html.replace(/^### (.+)$/gm, '<strong style="color:#FFD600;font-size:1em;display:block;margin:10px 0 4px">$1</strong>');
+  html = html.replace(/^## (.+)$/gm, '<strong style="color:#FFD600;font-size:1.05em;display:block;margin:12px 0 6px">$1</strong>');
+  html = html.replace(/^# (.+)$/gm, '<strong style="color:#FFD600;font-size:1.1em;display:block;margin:14px 0 6px">$1</strong>');
+  // Unordered lists
+  html = html.replace(/^- (.+)$/gm, '  ▸ $1');
+  // Ordered lists
+  html = html.replace(/^\d+\. (.+)$/gm, (m, p1, o, s) => {
+    const num = s.substring(0, o).split('\n').filter(l => /^\d+\. /.test(l)).length + 1;
+    return `  ${num}. ${p1}`;
+  });
+  // Line breaks
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+/* ── MAIN ASK FUNCTION (SSE STREAMING) ── */
 async function aiAsk() {
   const key = aiGetKey();
   if (!key) { aiShowKeyModal(); return; }
+  if (AI_STREAMING) return;
 
   const input = document.getElementById('ai-question');
   const question = input.value.trim();
   if (!question) return;
 
-  const btn = document.getElementById('ai-ask-btn');
-  const responseDiv = document.getElementById('ai-response');
-  const responseBox = document.getElementById('ai-response-box');
+  input.value = '';
+  aiSetUI(true);
 
-  btn.disabled = true;
-  btn.textContent = 'Přemýšlím...';
-  responseDiv.classList.add('visible');
-  responseBox.innerHTML = '<span class="ai-typing">●●●</span>';
+  // Add user message to chat
+  aiAddMessage('user', question);
 
-  const ctx = aiExtractContext();
+  // Add to conversation history
+  AI_CHAT_HISTORY.push({ role: 'user', content: question });
+  if (AI_CHAT_HISTORY.length > AI_MAX_HISTORY * 2) {
+    AI_CHAT_HISTORY = AI_CHAT_HISTORY.slice(-AI_MAX_HISTORY * 2);
+  }
+
+  // Create AI response bubble with typing indicator
+  const aiBubble = aiAddMessage('ai', '<span class="ai-typing">●●●</span>');
+
+  // Extract full documentation
+  const docsContext = aiExtractAllDocs();
+
+  // Detect active mode
+  const devTabs = document.getElementById('tabs-dev');
+  const uxTabs = document.getElementById('tabs-ux');
+  const isDev = devTabs && devTabs.style.display !== 'none';
+  const isUx = uxTabs && uxTabs.style.display !== 'none';
+  const activeMode = isDev ? 'DEV' : isUx ? 'UI/UX' : 'Prototypy';
+
+  // Build messages array with history
+  const messages = [];
+  // Add documentation context as first user message (will be cached)
+  messages.push({
+    role: 'user',
+    content: `Kontext dokumentace (aktuální mód: ${activeMode}):\n\n${docsContext}`
+  });
+  messages.push({
+    role: 'assistant',
+    content: 'Rozumím, mám načtenou kompletní dokumentaci Dilibees 2.0. Na co se chceš zeptat?'
+  });
+  // Add conversation history
+  AI_CHAT_HISTORY.forEach(msg => {
+    messages.push({ role: msg.role, content: msg.content });
+  });
+
+  AI_ABORT = new AbortController();
+  let fullText = '';
+  let lastUsage = null;
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
+      signal: AI_ABORT.signal,
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': key,
@@ -7973,60 +8209,106 @@ async function aiAsk() {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 2048,
-        system: `Jsi AI asistent pro dokumentaci projektu Dilibees 2.0 — agenturní HR systém pro dělnické profese.
-Odpovídej ČESKY, stručně a přesně na základě kontextu dokumentace.
-Pokud odpověď není v dokumentaci, řekni to.
-Aktuální mód dokumentace: ${ctx.mode}.
-Formátuj odpovědi čistě — používej odrážky, tučné písmo kde to dává smysl.`,
-        messages: [{
-          role: 'user',
-          content: `Kontext dokumentace:\n\n${ctx.content}\n\n---\n\nOtázka: ${question}`
-        }]
+        max_tokens: 4096,
+        stream: true,
+        system: [
+          {
+            type: 'text',
+            text: AI_SYSTEM_PROMPT,
+            cache_control: { type: 'ephemeral' }
+          }
+        ],
+        messages: messages
       })
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       if (res.status === 401) {
-        responseBox.textContent = '❌ Neplatný API klíč. Klikni na ⚙️ API klíč a zadej platný klíč.';
+        aiBubble.innerHTML = '❌ Neplatný API klíč. Klikni na ⚙️ API klíč a zadej platný klíč.';
       } else if (res.status === 429) {
-        responseBox.textContent = '⏳ Rate limit — zkus to za chvíli znovu.';
+        aiBubble.innerHTML = '⏳ Rate limit — zkus to za chvíli znovu.';
       } else {
-        responseBox.textContent = `❌ Chyba API (${res.status}): ${err.error?.message || 'Neznámá chyba'}`;
+        aiBubble.innerHTML = `❌ Chyba API (${res.status}): ${err.error?.message || 'Neznámá chyba'}`;
       }
+      aiSetUI(false);
       return;
     }
 
-    const data = await res.json();
-    const text = data.content?.[0]?.text || 'Žádná odpověď.';
+    // SSE streaming parser
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
 
-    // Jednoduchý markdown rendering
-    responseBox.innerHTML = aiRenderMarkdown(text);
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6);
+        if (data === '[DONE]') continue;
+
+        try {
+          const event = JSON.parse(data);
+
+          if (event.type === 'content_block_delta' && event.delta?.text) {
+            fullText += event.delta.text;
+            aiBubble.innerHTML = aiRenderMarkdown(fullText) + '<span class="ai-typing">▌</span>';
+            // Auto-scroll
+            const history = document.getElementById('ai-chat-history');
+            history.scrollTop = history.scrollHeight;
+          }
+
+          if (event.type === 'message_delta' && event.usage) {
+            lastUsage = { ...lastUsage, ...event.usage };
+          }
+
+          if (event.type === 'message_start' && event.message?.usage) {
+            lastUsage = { ...event.message.usage };
+          }
+
+          if (event.type === 'message_stop') {
+            break;
+          }
+        } catch (e) { /* skip unparseable */ }
+      }
+    }
+
+    // Final render
+    if (fullText) {
+      aiBubble.innerHTML = aiRenderMarkdown(fullText);
+      AI_CHAT_HISTORY.push({ role: 'assistant', content: fullText });
+    } else {
+      aiBubble.innerHTML = 'Žádná odpověď.';
+    }
+
+    // Update cost
+    aiUpdateCost(lastUsage);
 
   } catch (e) {
-    responseBox.textContent = '❌ Chyba připojení: ' + e.message;
+    if (e.name === 'AbortError') {
+      if (fullText) {
+        aiBubble.innerHTML = aiRenderMarkdown(fullText) + '<br><em style="color:#888;font-size:.85em">⏹ Zastaveno</em>';
+        AI_CHAT_HISTORY.push({ role: 'assistant', content: fullText });
+      } else {
+        aiBubble.innerHTML = '<em style="color:#888">⏹ Zastaveno</em>';
+      }
+    } else {
+      aiBubble.innerHTML = '❌ Chyba připojení: ' + e.message;
+    }
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Zeptat se';
+    AI_ABORT = null;
+    aiSetUI(false);
   }
 }
 
-function aiRenderMarkdown(text) {
-  return text
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^### (.+)$/gm, '<strong style="color:#FFD600;font-size:1em;display:block;margin:10px 0 4px">$1</strong>')
-    .replace(/^## (.+)$/gm, '<strong style="color:#FFD600;font-size:1.05em;display:block;margin:12px 0 6px">$1</strong>')
-    .replace(/^# (.+)$/gm, '<strong style="color:#FFD600;font-size:1.1em;display:block;margin:14px 0 6px">$1</strong>')
-    .replace(/^- (.+)$/gm, '  ▸ $1')
-    .replace(/^\d+\. (.+)$/gm, (m, p1, o, s) => {
-      const num = s.substring(0, o).split('\n').filter(l => /^\d+\. /.test(l)).length + 1;
-      return `  ${num}. ${p1}`;
-    })
-    .replace(/\n/g, '<br>');
-}
+/* ── INIT: Extract docs on page load ── */
+window.addEventListener('load', () => { setTimeout(aiExtractAllDocs, 2000); });
 </script>
 </body>
 </html>
